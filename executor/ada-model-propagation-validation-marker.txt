@@ -1,0 +1,1 @@
+ADA automatic Codex model propagation validation marker — safe to delete.
