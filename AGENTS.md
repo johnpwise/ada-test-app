@@ -24,7 +24,7 @@ This app inherits shared workflow rules and React stack guidance from:
 - `unit`: `npm run test:unit`
 - `component`: `npm run test:component`
 - `integration`: `npm run test`
-- `e2e`: `npm run test:e2e`
+- `e2e`: Playwright via `npm run test:e2e`
 
 ### Working model
 
