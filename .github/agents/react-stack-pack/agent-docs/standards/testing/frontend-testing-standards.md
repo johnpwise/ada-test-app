@@ -63,7 +63,7 @@ Usually prefer:
 - do not hard-code `data-id` selector values in JSX for asserted targets
 - configure Testing Library with `testIdAttribute: "data-id"` before using `getByTestId` queries
 - query asserted targets by configured `data-id` in component/integration tests (example: `screen.getByTestId(APP_SHELL_TEST_IDS.shell)`)
-- use canonical Cypress selector syntax for asserted targets: `cy.get('[data-id="app-shell"]')`
+- configure Playwright with `testIdAttribute: "data-id"` and use app-owned constants with `page.getByTestId(APP_SHELL_TEST_IDS.shell)` for asserted E2E targets; prefer stable role/accessible-name locators first
 
 ### Common omissions to catch
 - duplicate-submit protection

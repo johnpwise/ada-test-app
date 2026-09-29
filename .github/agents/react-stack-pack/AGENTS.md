@@ -49,7 +49,7 @@ Unless a repo-local overlay says otherwise, agents should assume:
 - keep workflow entry through `delivery-engineer`; one primary context then owns the slice end-to-end (plan/test/implement/verify/review as states)
 - emit a completion block (artifact path + continue-workflow line) only for a cross-context dispatch or a workflow-owner reentry state
 - continue in the primary context while `workflow_status: in-progress` and `reentry_reason: none`; re-enter the workflow-owner role explicitly for `blocked`, `awaiting-approval`, or `ready-for-closeout`
-- review is applied inline via `skills/review-change/`: the correctness lens runs on every code change before closeout; the accessibility lens runs only when the diff changes interactive UI; the composition lens runs only when component/hook/context boundaries move; the state-ownership lens runs when owner/tier choice is unclear or state is shared across features
+- review is applied inline via `skills/review-change/` from the conservative manifest: correctness always; uncertainty includes; model additions only; only selected React lens references load
 - delegate the review to `Independent-Reviewer` only when the Delegation Gate is met (e.g. an auth / data-boundary / cross-feature shared-state change)
 - a blocking review-lens finding routes scoped rework inline, then the affected lenses re-run
 - after the applicable review lenses pass with no blockers, the Delivery Engineer commits + pushes via the `commit-and-push` skill and records commit SHA(s) + push evidence (remote + branch/ref)
@@ -109,7 +109,7 @@ React-specific testing guidance:
 - prefer component/integration tests over implementation-coupled tests
 - for `*.component.test.tsx` formatting, AAA annotation/spacing, and required co-location rules, follow `agent-docs/standards/coding/component-test-file-coding-standards.md`
 - for `*.unit.test.ts` formatting and AAA annotation/spacing rules, follow `agent-docs/standards/coding/unit-test-file-coding-standards.md`
-- for Cypress test formatting and AAA annotation/spacing rules, follow `agent-docs/standards/coding/cypress-test-file-coding-standards.md`
+- for Playwright test formatting and AAA annotation/spacing rules, follow `agent-docs/standards/coding/playwright-test-file-coding-standards.md`
 - add unit tests for isolated transformation or branching logic where justified
 - plan `e2e` coverage early and author/finalize it when the vertical flow exists
 - discourage snapshot tests by default; prefer behavior-focused assertions
@@ -125,7 +125,7 @@ This React pack ships **no agent files**. React-specific review, accessibility r
 state-ownership review, component-composition review, and API contract modelling are all inline
 lenses of `skills/review-change/` (`references/{correctness,accessibility,react-composition,state-ownership,api-contracts}.md`).
 
-Review is diff-classified. Exactly one lens is always-on — correctness — and every other lens runs only when the diff actually touches its concern (see `agent-docs/workflows/feature-workflow-routing.md`). Lenses are `delegation: inline` unless the Delegation Gate is met, in which case the review is delegated to `Independent-Reviewer`. Diff classification never relaxes mandatory fail-closed workflow intake, bootstrap artifacts, or the always-on correctness lens; the closeout step record lists which lenses ran and why each skipped one was skipped.
+Review uses the conservative `review-lens-manifest.json`: correctness is always included; uncertainty includes a lens; model judgment may add but never remove; only `loadReferences` are loaded. Lenses are `delegation: inline` unless the Delegation Gate is met. The closeout record links the manifest path/hash and retains skipped machine reason codes.
 
 Frontend feature and bug review lenses (diff-classified — full trigger table in `agent-docs/workflows/feature-workflow-routing.md`), applied inline via `skills/review-change/`:
 - correctness lens — runs on **every** code change before PR-ready closeout
