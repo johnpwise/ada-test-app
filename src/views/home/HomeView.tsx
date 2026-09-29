@@ -6,8 +6,6 @@ export default function HomeView() {
     <section className="space-y-6">
       <header className="space-y-1">
         <h1 className="text-2xl font-semibold">Home View</h1>
-        <h2>hello world</h2>
-        <h3>HellO wOrld</h3>
         <p className="text-sm text-muted-foreground">
           Configure your theme and color mode preferences.
         </p>
