@@ -84,5 +84,5 @@ Treat this as a production-readiness review for a React frontend that may alread
 ## Stack-Aware Add-On
 
 ```text
-Pay special attention to the conventions and failure modes of the libraries actually used in this repository, such as React Router, TanStack Query, Zustand, Formik, React Hook Form, Zod, SCSS modules, Jest, React Testing Library, Cypress, Vite, or Next.js.
+Pay special attention to the conventions and failure modes of the libraries actually used in this repository, such as React Router, TanStack Query, Zustand, Formik, React Hook Form, Zod, SCSS modules, Jest, React Testing Library, Playwright, Vite, or Next.js.
 ```
