@@ -30,7 +30,7 @@ review, component-composition review, and API contract modelling are all inline 
 - `standards/coding/css-coding-standards.md`
 - `standards/coding/component-test-file-coding-standards.md`
 - `standards/coding/unit-test-file-coding-standards.md`
-- `standards/coding/cypress-test-file-coding-standards.md`
+- `standards/coding/playwright-test-file-coding-standards.md`
 - `standards/testing/frontend-testing-standards.md`
 - `standards/architecture/frontend-state-ownership-standards.md`
 - `standards/reliability/frontend-styling-and-accessibility-standards.md`
@@ -74,7 +74,7 @@ Copy these files together:
 - `agent-docs/standards/coding/css-coding-standards.md`
 - `agent-docs/standards/coding/component-test-file-coding-standards.md`
 - `agent-docs/standards/coding/unit-test-file-coding-standards.md`
-- `agent-docs/standards/coding/cypress-test-file-coding-standards.md`
+- `agent-docs/standards/coding/playwright-test-file-coding-standards.md`
 - `agent-docs/checklists/pr-ready-checklist.md`
 - `AGENTS.md`
 
