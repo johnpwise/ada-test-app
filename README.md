@@ -1,5 +1,7 @@
 # README.md
 
+This is a test note -- safe to delete
+
 This project includes installed agent packs:
 
 - `agents-core`: `.github/agents/agents-core`
