@@ -13,6 +13,10 @@ export default function HomeView() {
       </header>
       <ModeToggle />
       <ThemePicker />
+      <div
+        aria-label="Red bordered square"
+        className="mx-auto size-[200px] rounded-[10px] border-2 border-red-500"
+      />
     </section>
   );
 }
