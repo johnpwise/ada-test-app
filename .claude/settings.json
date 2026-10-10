@@ -1,0 +1,14 @@
+{
+  "enabledPlugins": {
+    "ada-react@ada": true,
+    "ada-core@ada": true
+  },
+  "extraKnownMarketplaces": {
+    "ada": {
+      "source": {
+        "source": "github",
+        "repo": "johnpwise/agents"
+      }
+    }
+  }
+}
