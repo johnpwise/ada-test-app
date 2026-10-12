@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "change-home-view-border-to-green",
+    "workflowId": "change-home-view-border-to-green",
+    "revision": 2,
+    "hash": "ed21a22c7e7f19d656693cb31a7db2466aae7973d8f1362b05b027f9c67865e6"
+  },
+  "diff": {
+    "files": [
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "ed8c7a006b56d778495f1a4980eefab9fb51090140d92bbb4691baa3acab1e9e"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-change"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md"
+  ],
+  "hash": "de3ae6a6cfbf3241a341b957ab4793959009c3407a462fcdc601818d3d91e090"
+}

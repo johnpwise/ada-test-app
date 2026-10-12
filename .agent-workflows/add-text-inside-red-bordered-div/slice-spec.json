@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-text-inside-red-bordered-div",
+  "workflowId": "add-text-inside-red-bordered-div",
+  "kind": "feature",
+  "revision": 3,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-10-10T12:00:00.000Z",
+  "updatedAt": "2026-10-10T12:15:00.000Z",
+  "objective": {
+    "statement": "On HomeView, show the text \"ADA plugin test\" centered horizontally and vertically inside the red bordered div.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One localized JSX/class change in a single view; no contracts, state or approval-boundary work.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The red bordered div in HomeView.tsx contains the text \"ADA plugin test\".",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The text is aligned horizontally and vertically within the div.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The text is size 8 (interpreted as 8px).",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "src/views/home/HomeView.tsx, plus its colocated component test and test-id constants.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Changing the div's size, border or position; other views or components.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "\"Size 8\" is interpreted as font-size 8px (text-[8px]); Tailwind has no built-in size 8 text class.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "evidence",
+      "statement": "The red bordered div is the aria-label=\"Red bordered square\" element, 200px square with border-red-500.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "New Feature request in conversation",
+      "capturedAt": "2026-10-10T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "delivery-engineer planning",
+      "capturedAt": "2026-10-10T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, AGENTS.md",
+      "capturedAt": "2026-10-10T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React local state/hooks",
+      "rationale": "Static presentational text; no state needed.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand",
+      "rationale": "Not used by this slice.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary",
+      "rationale": "Not used by this slice.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic or branching.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered text and centering classes are component behavior.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module flow changes; npm run test is run as regression.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text with no user flow; component test covers it.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView renders \"ADA plugin test\" centered at 8px inside the red bordered div.",
+      "doneWhen": "t-1 passes and the full test suite stays green.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "HomeView shows \"ADA plugin test\" inside the red bordered div, centered both ways, at 8px.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "Red bordered div has no text content / no centering classes.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "3 of 3 tests failed: unable to find element with data-id home-view-red-bordered-square (div has no data-id, text or centering classes)."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm run test, npm run lint and npm run build pass.",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm test && npm run lint && npm run build",
+      "exitCode": 0,
+      "result": "7/7 tests pass (3 files), lint clean, build ok"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}

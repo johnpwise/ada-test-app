@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "change-home-view-border-to-green",
+  "workflowId": "change-home-view-border-to-green",
+  "kind": "bug",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-10-12T00:00:00.000Z",
+  "updatedAt": "2026-10-12T00:00:00.000Z",
+  "objective": {
+    "statement": "Change the border colour of the bordered div in HomeView.tsx from red to green.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One localized Tailwind class change in a single view; no contracts, state or approval-boundary work.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The bordered div in HomeView.tsx has a green border and no longer has a red border.",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "src/views/home/HomeView.tsx and its colocated component test.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Renaming the aria-label, test-id key or test titles that still say red; size, text or other views.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "\"Green\" is taken as Tailwind border-green-500, mirroring the existing border-red-500 shade.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    { "id": "p-user", "sourceType": "user", "source": "Bug Fix request in conversation", "capturedAt": "2026-10-12T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-inferred", "sourceType": "inferred", "source": "delivery-engineer planning", "capturedAt": "2026-10-12T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-repo", "sourceType": "repository", "source": "src/views/home/HomeView.tsx, AGENTS.md", "capturedAt": "2026-10-12T00:00:00.000Z", "capturedBy": "delivery-engineer" }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    { "key": "local_ui_state_owner", "owner": "React local state/hooks", "rationale": "Static presentational class; no state.", "provenanceRef": "p-repo" },
+    { "key": "shared_client_state_owner", "owner": "Zustand", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" },
+    { "key": "server_state_owner", "owner": "React Query + Axios boundary", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" }
+  ],
+  "testMatrix": {
+    "unit": { "requirement": "N/A", "rationale": "No isolated logic.", "provenanceRef": "p-inferred" },
+    "component": { "requirement": "required", "rationale": "Border class is rendered component behaviour.", "provenanceRef": "p-inferred" },
+    "integration": { "requirement": "N/A", "rationale": "No cross-module flow change; npm run test run as regression.", "provenanceRef": "p-inferred" },
+    "e2e": { "requirement": "N/A", "rationale": "Static styling with no user flow.", "provenanceRef": "p-inferred" }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The HomeView bordered div uses border-green-500 instead of border-red-500.",
+      "doneWhen": "t-1 passes and the full suite stays green.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-1"],
+      "verificationIds": ["v-1"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "HomeView bordered div has border-green-500 and not border-red-500.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "Div class contains border-red-500, not border-green-500.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "1 of 4 tests failed: expected className to contain border-green-500; received border-red-500."
+    }
+  ],
+  "verification": [
+    { "id": "v-1", "layer": "component", "requirement": "npm run test, npm run lint and npm run build pass.", "status": "passing", "provenanceRef": "p-inferred", "command": "npm test && npm run lint && npm run build", "exitCode": 0, "result": "8/8 tests pass (3 files), lint clean, build ok" }
+  ],
+  "e2eStatus": { "status": "N/A", "provenanceRef": "p-inferred" }
+}
