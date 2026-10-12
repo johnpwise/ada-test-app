@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-navbar-with-home-about-contact-links",
+  "workflowId": "add-navbar-with-home-about-contact-links",
+  "kind": "feature",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-10-12T00:00:00.000Z",
+  "updatedAt": "2026-10-12T00:00:00.000Z",
+  "objective": {
+    "statement": "Add a navbar positioned at the top of the app with Home, About and Contact links; About and Contact are skeleton views only and Home links back to HomeView.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "New shared component, two new views and two new routes across the app shell and router, delivered as three small TDD increments; no contracts, state or approval-boundary work.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    { "id": "ac-1", "statement": "A navbar is rendered at the top of the app, above the routed view content.", "provenanceRef": "p-user" },
+    { "id": "ac-2", "statement": "The navbar has Home, About and Contact links.", "provenanceRef": "p-user" },
+    { "id": "ac-3", "statement": "The Home link navigates to the route that renders HomeView.", "provenanceRef": "p-user" },
+    { "id": "ac-4", "statement": "About and Contact each have a skeleton view (heading only) reachable from their navbar link.", "provenanceRef": "p-user" }
+  ],
+  "scope": {
+    "in": [
+      { "id": "s-1", "statement": "New Navbar component, AboutView and ContactView skeletons, /about and /contact routes, and rendering the navbar in the App shell.", "provenanceRef": "p-user" }
+    ],
+    "out": [
+      { "id": "s-2", "statement": "Real About/Contact content, forms, mobile hamburger menu, branding/logo, and changes to HomeView content.", "provenanceRef": "p-inferred" }
+    ]
+  },
+  "observations": [
+    { "id": "o-1", "category": "assumption", "statement": "Routes are /, /about and /contact; Home is the existing index route.", "provenanceRef": "p-inferred" },
+    { "id": "o-2", "category": "assumption", "statement": "No new dependency: react-router-dom NavLink and existing Tailwind tokens are used.", "provenanceRef": "p-repo" }
+  ],
+  "provenance": [
+    { "id": "p-user", "sourceType": "user", "source": "New Feature request in conversation", "capturedAt": "2026-10-12T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-inferred", "sourceType": "inferred", "source": "delivery-engineer planning", "capturedAt": "2026-10-12T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-repo", "sourceType": "repository", "source": "AGENTS.md, src/App.tsx, src/router/index.ts", "capturedAt": "2026-10-12T00:00:00.000Z", "capturedBy": "delivery-engineer" }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    { "key": "local_ui_state_owner", "owner": "React local state/hooks", "rationale": "Active-link state comes from the router's NavLink; no component state.", "provenanceRef": "p-repo" },
+    { "key": "shared_client_state_owner", "owner": "Zustand", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" },
+    { "key": "server_state_owner", "owner": "React Query + Axios boundary", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" }
+  ],
+  "testMatrix": {
+    "unit": { "requirement": "N/A", "rationale": "No isolated logic.", "provenanceRef": "p-inferred" },
+    "component": { "requirement": "required", "rationale": "Navbar, views and App shell composition are rendered component behaviour.", "provenanceRef": "p-inferred" },
+    "integration": { "requirement": "N/A", "rationale": "No cross-module data flow; npm run test is run as regression.", "provenanceRef": "p-inferred" },
+    "e2e": { "requirement": "N/A", "rationale": "Skeleton navigation only; routing is covered by component tests with a memory router.", "provenanceRef": "p-inferred" }
+  },
+  "increments": [
+    { "id": "inc-1", "behavior": "Navbar renders Home, About and Contact links to /, /about and /contact.", "doneWhen": "t-1 passes.", "capabilityOwnerKeys": ["local_ui_state_owner"], "testIds": ["t-1"], "verificationIds": ["v-1"], "status": "complete", "provenanceRef": "p-inferred" },
+    { "id": "inc-2", "behavior": "AboutView and ContactView skeletons render a heading.", "doneWhen": "t-2 and t-3 pass.", "capabilityOwnerKeys": ["local_ui_state_owner"], "testIds": ["t-2", "t-3"], "verificationIds": ["v-1"], "status": "complete", "provenanceRef": "p-inferred" },
+    { "id": "inc-3", "behavior": "App shell renders the navbar above the outlet and the router serves the new views.", "doneWhen": "t-4 passes.", "capabilityOwnerKeys": ["local_ui_state_owner"], "testIds": ["t-4"], "verificationIds": ["v-1"], "status": "complete", "provenanceRef": "p-inferred" }
+  ],
+  "tests": [
+    { "id": "t-1", "layer": "component", "description": "Navbar shows Home, About, Contact links with the expected hrefs.", "command": "npx vitest run --config vitest.component.config.ts src/components/navbar/Navbar.component.test.tsx", "preImplementation": true, "provenanceRef": "p-inferred" },
+    { "id": "t-2", "layer": "component", "description": "AboutView renders an About heading.", "command": "npx vitest run --config vitest.component.config.ts src/views/about/AboutView.component.test.tsx", "preImplementation": true, "provenanceRef": "p-inferred" },
+    { "id": "t-3", "layer": "component", "description": "ContactView renders a Contact heading.", "command": "npx vitest run --config vitest.component.config.ts src/views/contact/ContactView.component.test.tsx", "preImplementation": true, "provenanceRef": "p-inferred" },
+    { "id": "t-4", "layer": "component", "description": "App renders the navbar before the routed content, and the router navigates to About/Contact/Home views.", "command": "npx vitest run --config vitest.component.config.ts src/App.component.test.tsx", "preImplementation": true, "provenanceRef": "p-inferred" }
+  ],
+  "expectedRedEvidence": [
+    { "id": "r-1", "testId": "t-1", "expectedFailure": "Navbar module does not exist.", "status": "captured", "provenanceRef": "p-inferred", "command": "npx vitest run --config vitest.component.config.ts", "exitCode": 1, "observedFailure": "Failed to resolve import ./Navbar" },
+    { "id": "r-2", "testId": "t-2", "expectedFailure": "AboutView module does not exist.", "status": "captured", "provenanceRef": "p-inferred", "command": "npx vitest run --config vitest.component.config.ts", "exitCode": 1, "observedFailure": "Failed to resolve import ./AboutView" },
+    { "id": "r-3", "testId": "t-3", "expectedFailure": "ContactView module does not exist.", "status": "captured", "provenanceRef": "p-inferred", "command": "npx vitest run --config vitest.component.config.ts", "exitCode": 1, "observedFailure": "Failed to resolve import ./ContactView" },
+    { "id": "r-4", "testId": "t-4", "expectedFailure": "No navbar in App; no /about or /contact routes.", "status": "captured", "provenanceRef": "p-inferred", "command": "npx vitest run --config vitest.component.config.ts", "exitCode": 1, "observedFailure": "5 App tests failed: routes export undefined (createMemoryRouter TypeError)" }
+  ],
+  "verification": [
+    { "id": "v-1", "layer": "component", "requirement": "npm test, npm run lint and npm run build pass.", "status": "passing", "provenanceRef": "p-inferred", "command": "npm test && npm run lint && npm run build", "exitCode": 0, "result": "unit 4/4, component 19/19 (7 files), lint clean, build ok" }
+  ],
+  "e2eStatus": { "status": "N/A", "provenanceRef": "p-inferred" }
+}
