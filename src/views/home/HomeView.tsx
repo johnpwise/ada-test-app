@@ -16,7 +16,7 @@ export default function HomeView() {
       <ThemePicker />
       <div
         aria-label="Red bordered square"
-        className="mx-auto flex size-[200px] items-center justify-center rounded-[10px] border-2 border-red-500 text-[8px]"
+        className="mx-auto flex size-[200px] items-center justify-center rounded-[10px] border-2 border-green-500 text-[8px]"
         data-id={HOME_VIEW_TEST_IDS.redBorderedSquare}
       >
         ADA plugin test
