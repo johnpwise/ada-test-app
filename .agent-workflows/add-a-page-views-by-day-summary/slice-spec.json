@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-a-page-views-by-day-summary",
+  "workflowId": "add-a-page-views-by-day-summary",
+  "kind": "feature",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-10-25T01:00:00.000Z",
+  "updatedAt": "2026-10-25T01:30:00.000Z",
+  "objective": {
+    "statement": "Add a \"page views by day\" summary, in its own panel on the page, showing how many times the page was viewed on each of the last 7 days.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "New pure helper, persisted store state and a new component; no external contract or dependency.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The home page renders its own \"Page views by day\" panel.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The panel lists the last 7 days (today and the 6 days before), one row per day, with the view count for that day; days without views show 0.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "Loading the app records one page view for the current day, and counts persist across reloads.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "A pure per-day counting helper, page view state in the Zustand app store persisted to localStorage, a PageViewsPanel component shown in HomeView, and colocated tests.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Header or footer placement, today-only or all-time views, server-side analytics, charts, new dependencies, pruning of old stored days.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "The repository has no backend or analytics source. A page view is one load of the app in this browser, counted per local calendar day and stored in localStorage under ada-test-app:pageViewsByDay.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "Client-side route changes do not count as views; only app loads do. The panel is shown on the home page only. Days are keyed by local date (YYYY-MM-DD) and listed oldest first, with today last.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "New Feature request and owner answers placement (Its own panel on the page), period (Last 7 days, shown per day)",
+      "capturedAt": "2026-10-25T01:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "delivery-engineer planning",
+      "capturedAt": "2026-10-25T01:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/store/appStore.ts, src/views/home/HomeView.tsx, AGENTS.md",
+      "capturedAt": "2026-10-25T01:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React local state/hooks",
+      "rationale": "Panel is presentational; no local state.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand",
+      "rationale": "Per-day counts are app-wide client state persisted like theme and dark mode.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary",
+      "rationale": "No remote data in this slice.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "Day keys, counting and the 7-day window are isolated logic; store load recording and persistence.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Panel rendering and its placement in HomeView are component behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "npm run test run as regression.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "No new user flow; panel is read-only.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "Pure helpers: toDayKey, incrementDay, lastDays (7 entries oldest first, zero-filled).",
+      "doneWhen": "t-1 passes.",
+      "capabilityOwnerKeys": [
+        "shared_client_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "The app store records one view per load, persists the counts, and restores them.",
+      "doneWhen": "t-2 passes.",
+      "capabilityOwnerKeys": [
+        "shared_client_state_owner"
+      ],
+      "testIds": [
+        "t-2"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-3",
+      "behavior": "PageViewsPanel shows the last 7 days with counts and is rendered in HomeView.",
+      "doneWhen": "t-3 passes and the full suite stays green.",
+      "capabilityOwnerKeys": [
+        "shared_client_state_owner",
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-3"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "unit",
+      "description": "pageViews helpers: day key, increment, 7-day window.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/pageViews.unit.test.ts",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-2",
+      "layer": "unit",
+      "description": "appStore records a view on load, persists and restores counts.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/app/appStore.unit.test.ts",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-3",
+      "layer": "component",
+      "description": "PageViewsPanel renders 7 rows with counts; HomeView includes the panel.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/page-views-panel src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "Module pageViews does not exist.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./pageViews; suite failed to load."
+    },
+    {
+      "id": "r-2",
+      "testId": "t-2",
+      "expectedFailure": "Store has no pageViewsByDay state.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts",
+      "exitCode": 1,
+      "observedFailure": "appStore.unit.test.ts could not load: ../lib/pageViews missing, so pageViewsByDay state was absent."
+    },
+    {
+      "id": "r-3",
+      "testId": "t-3",
+      "expectedFailure": "Module PageViewsPanel does not exist.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/page-views-panel src/views/home",
+      "exitCode": 1,
+      "observedFailure": "PageViewsPanel module missing; HomeView could not find data-id page-views-panel."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm run test, npm run lint and npm run build pass.",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm test && npm run lint && npm run build",
+      "exitCode": 0,
+      "result": "unit 16/16, component 29/29, lint clean, build ok"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "add-a-page-views-by-day-summary",
+    "workflowId": "add-a-page-views-by-day-summary",
+    "revision": 1,
+    "hash": "f76408ded0ae64306096ee89e0de4b9d1d8e3b9ee046e98df5a089b595ce6c40"
+  },
+  "diff": {
+    "files": [
+      "src/app/appStore.unit.test.ts",
+      "src/store/appStore.ts",
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "904d26650d0b6f393c5e80d1522263331d5eda84706502d839c98785db413434"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-change"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "state-ownership-path"
+      ]
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "api-contract-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md",
+    "references/state-ownership.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "8bc787881cf3e22a2415099262595b6601fdf49b8b0503fde875cc7a602d11f4"
+}
