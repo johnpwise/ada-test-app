@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { APP_SHELL_TEST_IDS } from "./app/appShell.testIds";
+import LastUpdatedFooter from "./components/last-updated-footer/LastUpdatedFooter";
 import Navbar from "./components/navbar/Navbar";
 
 export default function App() {
+  const [updatedAt] = useState(() => Date.now());
+
   return (
     <>
       <Navbar />
@@ -15,6 +19,7 @@ export default function App() {
           <Outlet />
         </div>
       </main>
+      <LastUpdatedFooter updatedAt={updatedAt} />
     </>
   );
 }
