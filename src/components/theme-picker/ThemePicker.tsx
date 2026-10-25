@@ -14,6 +14,8 @@ export default function ThemePicker() {
   const theme = useAppStore((state) => state.theme);
   const setTheme = useAppStore((state) => state.setTheme);
 
+  const activeThemeLabel = THEME_OPTIONS.find((option) => option.value === theme)?.label ?? "";
+
   const handleThemeChange = (event: ChangeEvent<HTMLSelectElement>): void => {
     setTheme(event.target.value);
   };
@@ -27,19 +29,27 @@ export default function ThemePicker() {
       >
         Theme
       </label>
-      <select
-        id="theme-picker"
-        data-id={THEME_PICKER_TEST_IDS.select}
-        value={theme}
-        className="block w-full rounded-md border border-border bg-surface px-3 py-2 text-surface-foreground shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        onChange={handleThemeChange}
-      >
-        {THEME_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div className="flex items-center gap-3">
+        <select
+          id="theme-picker"
+          data-id={THEME_PICKER_TEST_IDS.select}
+          value={theme}
+          className="block w-full rounded-md border border-border bg-surface px-3 py-2 text-surface-foreground shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          onChange={handleThemeChange}
+        >
+          {THEME_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <span
+          data-id={THEME_PICKER_TEST_IDS.activeThemeLabel}
+          className="shrink-0 text-sm font-medium text-surface-foreground"
+        >
+          {activeThemeLabel}
+        </span>
+      </div>
     </section>
   );
 }

@@ -47,4 +47,28 @@ describe("ThemePicker", () => {
     expect(select.value).toBe("theme-ocean");
     expect(document.documentElement.getAttribute("data-theme")).toBe("theme-ocean");
   });
+
+  it("should show the active theme name as a label that is not hidden on small screens", () => {
+    // Arrange
+
+    // Act
+    render(<ThemePicker />);
+
+    // Assert
+    const activeLabel = screen.getByTestId(THEME_PICKER_TEST_IDS.activeThemeLabel);
+    expect(activeLabel.textContent).toBe("Default");
+    expect(activeLabel.className).not.toMatch(/\bhidden\b/);
+  });
+
+  it("should update the active theme label when the theme changes", () => {
+    // Arrange
+    render(<ThemePicker />);
+    const select = screen.getByTestId(THEME_PICKER_TEST_IDS.select) as HTMLSelectElement;
+
+    // Act
+    fireEvent.change(select, { target: { value: "theme-ocean" } });
+
+    // Assert
+    expect(screen.getByTestId(THEME_PICKER_TEST_IDS.activeThemeLabel).textContent).toBe("Ocean");
+  });
 });

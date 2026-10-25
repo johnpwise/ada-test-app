@@ -1,0 +1,50 @@
+{
+  "status": "ready-for-closeout",
+  "updatedAt": "2026-10-25T19:35:00.000Z",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "ThemePicker shows the active theme name as text next to the select and updates on change.",
+      "doneWhen": "Component tests for the label pass and the full suite is green.",
+      "capabilityOwnerKeys": ["local_ui_state_owner", "shared_client_state_owner"],
+      "testIds": ["t-1"],
+      "verificationIds": ["v-1", "v-2"],
+      "status": "complete",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Unable to find an element by the active theme label test id.",
+      "status": "captured",
+      "provenanceRef": "p-plan",
+      "command": "npm run test:component -- src/components/theme-picker",
+      "exitCode": 1,
+      "observedFailure": "2 of 4 tests failed: Unable to find an element by: [data-id=\"theme-picker-active-theme-label\"]"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "Component tests pass.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 9/9 and component 26/26 passed; tsc and eslint clean"
+    },
+    {
+      "id": "v-2",
+      "layer": "integration",
+      "requirement": "Full suite passes.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "full suite green"
+    }
+  ]
+}
