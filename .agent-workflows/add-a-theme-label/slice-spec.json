@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-a-theme-label",
+  "workflowId": "add-a-theme-label",
+  "kind": "feature",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-10-25T00:00:00.000Z",
+  "updatedAt": "2026-10-25T19:35:00.000Z",
+  "objective": {
+    "statement": "Add a text label next to the theme picker that shows which theme is active.",
+    "provenanceRef": "p-card"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One presentational element in one existing component, reading existing store state.",
+    "provenanceRef": "p-plan"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "A label next to the theme select shows the active theme's name as text (e.g. \"Default\", \"Ocean\").",
+      "provenanceRef": "p-answer-content"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The label updates when the theme changes.",
+      "provenanceRef": "p-card"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The label is visible at all screen sizes, with no responsive hiding.",
+      "provenanceRef": "p-answer-mobile"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-in-1",
+        "statement": "ThemePicker component: render the active theme name beside the select.",
+        "provenanceRef": "p-card"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-out-1",
+        "statement": "Icons, breakpoint-based hiding, new dependencies, store or theme option changes.",
+        "provenanceRef": "p-answer-content"
+      }
+    ]
+  },
+  "observations": [],
+  "provenance": [
+    {
+      "id": "p-card",
+      "sourceType": "user",
+      "source": "Card: New Feature - Add a theme label",
+      "capturedAt": "2026-10-25T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-answer-content",
+      "sourceType": "user",
+      "source": "Owner answer label_content: theme name as text",
+      "capturedAt": "2026-10-25T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-answer-mobile",
+      "sourceType": "user",
+      "source": "Owner answer mobile_visibility: always visible on all screen sizes",
+      "capturedAt": "2026-10-25T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-plan",
+      "sourceType": "repository",
+      "source": "AGENTS.md capability owners and src/components/theme-picker",
+      "capturedAt": "2026-10-25T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React component (derived from store value, no new state)",
+      "rationale": "Label is derived render output of the existing theme value.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand (src/store/appStore.ts)",
+      "rationale": "Theme already lives there; read only.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary (unused)",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic beyond a lookup.",
+      "provenanceRef": "p-plan"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered behaviour of ThemePicker.",
+      "provenanceRef": "p-plan"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour added; the full suite is still run as regression verification.",
+      "provenanceRef": "p-plan"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "ThemePicker is not mounted in a routed flow worth a new e2e; component test covers it.",
+      "provenanceRef": "p-plan"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "ThemePicker shows the active theme name as text next to the select and updates on change.",
+      "doneWhen": "Component tests for the label pass and the full suite is green.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner",
+        "shared_client_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1",
+        "v-2"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "ThemePicker renders the active theme name label and updates it on change.",
+      "command": "npm run test:component",
+      "preImplementation": true,
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Unable to find an element by the active theme label test id.",
+      "status": "captured",
+      "provenanceRef": "p-plan",
+      "command": "npm run test:component -- src/components/theme-picker",
+      "exitCode": 1,
+      "observedFailure": "2 of 4 tests failed: Unable to find an element by: [data-id=\"theme-picker-active-theme-label\"]"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "Component tests pass.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 9/9 and component 26/26 passed; tsc and eslint clean"
+    },
+    {
+      "id": "v-2",
+      "layer": "integration",
+      "requirement": "Full suite passes.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "full suite green"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-plan"
+  }
+}
