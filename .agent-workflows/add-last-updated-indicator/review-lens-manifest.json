@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "add-last-updated-indicator",
+    "workflowId": "add-last-updated-indicator",
+    "revision": 2,
+    "hash": "1a42c2f6145b30500f80f794a30f52877ae01fc869d143ee4d6f39fb2781d051"
+  },
+  "diff": {
+    "files": [
+      "src/App.component.test.tsx",
+      "src/App.tsx"
+    ],
+    "hash": "274eb8da4ce7456bfbcd1f6da308f3567c24e2f4134053af648d2243946678da"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "SLICE_SPEC_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-slice-signal"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md"
+  ],
+  "hash": "229b76c436efedb351038c40d2cc9532422fcd7e7129a179a5a7ad1eb1e32a33"
+}
