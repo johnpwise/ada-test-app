@@ -1,12 +1,16 @@
 import { create } from "zustand";
 
+import { incrementDay, parsePageViewsByDay, type PageViewsByDay } from "../lib/pageViews";
+
 const DARK_MODE_STORAGE_KEY = "ada-test-app:isDarkMode";
 const THEME_STORAGE_KEY = "ada-test-app:theme";
+const PAGE_VIEWS_STORAGE_KEY = "ada-test-app:pageViewsByDay";
 const DEFAULT_THEME = "theme";
 
 interface AppState {
   isDarkMode: boolean;
   theme: string;
+  pageViewsByDay: PageViewsByDay;
   toggleDarkMode: () => void;
   setTheme: (theme: string) => void;
 }
@@ -26,6 +30,14 @@ function readPersistedString(key: string, fallback: string): string {
     return stored === null ? fallback : stored;
   } catch {
     return fallback;
+  }
+}
+
+function readPersistedPageViews(): PageViewsByDay {
+  try {
+    return parsePageViewsByDay(localStorage.getItem(PAGE_VIEWS_STORAGE_KEY));
+  } catch {
+    return {};
   }
 }
 
@@ -53,9 +65,14 @@ const initialTheme = readPersistedString(THEME_STORAGE_KEY, DEFAULT_THEME);
 applyDarkModeSideEffect(initialIsDarkMode);
 applyThemeSideEffect(initialTheme);
 
+const initialPageViewsByDay = incrementDay(readPersistedPageViews(), Date.now());
+
+persistValue(PAGE_VIEWS_STORAGE_KEY, JSON.stringify(initialPageViewsByDay));
+
 export const useAppStore = create<AppState>((set, get) => ({
   isDarkMode: initialIsDarkMode,
   theme: initialTheme,
+  pageViewsByDay: initialPageViewsByDay,
   toggleDarkMode: () => {
     const nextIsDarkMode = !get().isDarkMode;
     applyDarkModeSideEffect(nextIsDarkMode);

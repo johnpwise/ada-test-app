@@ -1,5 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { toDayKey } from "../lib/pageViews";
+
 describe("appStore", () => {
   beforeEach(() => {
     // Arrange
@@ -71,5 +73,46 @@ describe("appStore", () => {
     expect(useAppStore.getState().theme).toBe("theme-harvest");
     expect(document.documentElement.getAttribute("data-theme")).toBe("theme-harvest");
     expect(localStorage.getItem("ada-test-app:theme")).toBe("theme-harvest");
+  });
+
+  it("should record one page view for today on load and persist it", async () => {
+    // Arrange
+    const today = toDayKey(Date.now());
+
+    // Act
+    const { useAppStore } = await import("../store/appStore");
+
+    // Assert
+    expect(useAppStore.getState().pageViewsByDay).toEqual({ [today]: 1 });
+    expect(JSON.parse(localStorage.getItem("ada-test-app:pageViewsByDay") ?? "{}")).toEqual({
+      [today]: 1,
+    });
+  });
+
+  it("should add to persisted page view counts on load", async () => {
+    // Arrange
+    const today = toDayKey(Date.now());
+    localStorage.setItem(
+      "ada-test-app:pageViewsByDay",
+      JSON.stringify({ "2026-01-01": 5, [today]: 2 }),
+    );
+
+    // Act
+    const { useAppStore } = await import("../store/appStore");
+
+    // Assert
+    expect(useAppStore.getState().pageViewsByDay).toEqual({ "2026-01-01": 5, [today]: 3 });
+  });
+
+  it("should ignore corrupt persisted page view counts", async () => {
+    // Arrange
+    const today = toDayKey(Date.now());
+    localStorage.setItem("ada-test-app:pageViewsByDay", "not json");
+
+    // Act
+    const { useAppStore } = await import("../store/appStore");
+
+    // Assert
+    expect(useAppStore.getState().pageViewsByDay).toEqual({ [today]: 1 });
   });
 });
