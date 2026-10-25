@@ -8,6 +8,7 @@ import { CONTACT_VIEW_TEST_IDS } from "./views/contact/ContactView.testIds";
 import { HOME_VIEW_TEST_IDS } from "./views/home/HomeView.testIds";
 import { APP_SHELL_TEST_IDS } from "./app/appShell.testIds";
 import { NAVBAR_TEST_IDS } from "./components/navbar/Navbar.testIds";
+import { LAST_UPDATED_FOOTER_TEST_IDS } from "./components/last-updated-footer/LastUpdatedFooter.testIds";
 
 describe("App", () => {
   afterEach(() => {
@@ -25,6 +26,20 @@ describe("App", () => {
     const navbar = screen.getByTestId(NAVBAR_TEST_IDS.nav);
     const shell = screen.getByTestId(APP_SHELL_TEST_IDS.shell);
     expect(navbar.compareDocumentPosition(shell) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it("should render the last updated footer after the routed content", () => {
+    // Arrange
+    const router = createMemoryRouter(routes, { initialEntries: ["/"] });
+
+    // Act
+    render(<RouterProvider router={router} />);
+
+    // Assert
+    const shell = screen.getByTestId(APP_SHELL_TEST_IDS.shell);
+    const footer = screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.footer);
+    expect(shell.compareDocumentPosition(footer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(footer).toHaveTextContent("Last updated just now");
   });
 
   it("should render the HomeView at the root route", () => {

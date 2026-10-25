@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-last-updated-indicator",
+  "workflowId": "add-last-updated-indicator",
+  "kind": "feature",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-10-25T00:00:00.000Z",
+  "updatedAt": "2026-10-25T00:30:00.000Z",
+  "objective": {
+    "statement": "Add a \"last updated\" indicator to the board, shown in the footer with a relative time such as \"5 min ago\".",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "New component, a pure formatting helper and a timed refresh; no external contract or dependency.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "A footer is rendered below the routed content on every page and contains the \"last updated\" indicator.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The time is shown relative to now (for example \"Last updated just now\", \"Last updated 5 min ago\").",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The relative text refreshes over time without a reload.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "A footer component in the app shell, a pure relative-time helper, and their colocated tests.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Page header or per-card placement, absolute date formats, new dependencies, server or persisted timestamps.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "The repository has no board, cards or data source. \"Updated\" is taken as the time the app shell was loaded, held in local component state and displayed in the shell footer.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "Relative buckets: under 1 min \"just now\"; under 60 min \"N min ago\"; under 24 h \"N h ago\"; otherwise \"N d ago\". Refreshes every 60 seconds.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "New Feature request and owner answers q1 (Footer), q2 (Relative)",
+      "capturedAt": "2026-10-25T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "delivery-engineer planning",
+      "capturedAt": "2026-10-25T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/App.tsx, AGENTS.md",
+      "capturedAt": "2026-10-25T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React local state/hooks",
+      "rationale": "Timestamp and ticking clock are component-local.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand",
+      "rationale": "Not used by this slice.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary",
+      "rationale": "No remote data in this slice.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "Relative-time formatting is isolated branching logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Footer rendering and refresh are component behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "npm run test run as regression.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static footer text; no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "formatRelativeTime returns just now / N min ago / N h ago / N d ago.",
+      "doneWhen": "t-1 passes.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "The app shell renders a footer with the last updated text, refreshing every minute.",
+      "doneWhen": "t-2 passes and the full suite stays green.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-2"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "unit",
+      "description": "formatRelativeTime buckets.",
+      "command": "npx vitest run src/lib/formatRelativeTime.unit.test.ts",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-2",
+      "layer": "component",
+      "description": "LastUpdatedFooter shows relative text and updates as time advances; App renders it after the main content.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/last-updated-footer/LastUpdatedFooter.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "Module formatRelativeTime does not exist.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/formatRelativeTime.unit.test.ts",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./formatRelativeTime; suite failed to load."
+    },
+    {
+      "id": "r-2",
+      "testId": "t-2",
+      "expectedFailure": "Module LastUpdatedFooter does not exist.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/last-updated-footer src/App.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "LastUpdatedFooter module missing; App test could not find data-id last-updated-footer."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm run test, npm run lint and npm run build pass.",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm test && npm run lint && npm run build",
+      "exitCode": 0,
+      "result": "unit 9/9, component 24/24, lint clean, build ok"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
