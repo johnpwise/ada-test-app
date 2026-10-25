@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 
+import { PAGE_VIEWS_PANEL_TEST_IDS } from "../../components/page-views-panel/PageViewsPanel.testIds";
 import HomeView from "./HomeView";
 import { HOME_VIEW_TEST_IDS } from "./HomeView.testIds";
 
@@ -54,5 +55,15 @@ describe("HomeView", () => {
     const square = screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare);
     expect(square.className).toContain("border-green-500");
     expect(square.className).not.toContain("border-red-500");
+  });
+
+  it("should render the page views by day panel", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    expect(screen.getByTestId(PAGE_VIEWS_PANEL_TEST_IDS.panel)).toBeInTheDocument();
   });
 });
