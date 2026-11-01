@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, render, screen } from "@testing-library/react";
 
+import { APP_VERSION } from "../../lib/appVersion";
 import LastUpdatedFooter from "./LastUpdatedFooter";
 import { LAST_UPDATED_FOOTER_TEST_IDS } from "./LastUpdatedFooter.testIds";
 
@@ -40,6 +41,37 @@ describe("LastUpdatedFooter", () => {
     // Assert
     expect(screen.getByRole("contentinfo")).toBe(
       screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.footer),
+    );
+  });
+
+  it("should show the app version label inside the footer", () => {
+    // Arrange
+    const updatedAt = Date.now();
+
+    // Act
+    render(<LastUpdatedFooter updatedAt={updatedAt} />);
+
+    // Assert
+    const label = screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.version);
+    expect(label).toHaveTextContent(`v${APP_VERSION}`);
+    expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.footer)).toContainElement(label);
+    expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text)).toHaveTextContent(
+      "Last updated just now",
+    );
+  });
+
+  it.each(["", "   "])("should omit the version label for blank version %j", (version) => {
+    // Arrange
+    const updatedAt = Date.now();
+
+    // Act
+    render(<LastUpdatedFooter updatedAt={updatedAt} version={version} />);
+
+    // Assert
+    expect(screen.queryByTestId(LAST_UPDATED_FOOTER_TEST_IDS.version)).not.toBeInTheDocument();
+    expect(screen.getByRole("contentinfo")).not.toHaveTextContent(/\bv\s*$/);
+    expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text)).toHaveTextContent(
+      "Last updated just now",
     );
   });
 
