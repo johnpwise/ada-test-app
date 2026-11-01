@@ -8,15 +8,15 @@
 - **Active owner:** delivery-engineer
 - **Status:** `awaiting-approval`
 - **Source of truth:** .agent-workflows/wrong-border-colour/slice-spec.json
-- **Canonical slice spec:** `.agent-workflows/wrong-border-colour/slice-spec.json` (wrong-border-colour, revision 1, hash `9d7975db2cc0fddec25a070438352f3bc6f04ebeb80f8fbdb0bf6f45d385891d`)
-- **Current event:** `event-000002`
-- **Ledger head hash:** `6e12eda47c81807705242fc5fa1478cbf8bee44da11022d7ec22d07e3fa41259`
-- **Last updated (UTC):** 2026-11-01T20:00:02.000Z
+- **Canonical slice spec:** `.agent-workflows/wrong-border-colour/slice-spec.json` (wrong-border-colour, revision 2, hash `ad5f953be8732f4decf6360ea3c52060c2e5fdcaef3114247c58a5b23d0b7a27`)
+- **Current event:** `event-000003`
+- **Ledger head hash:** `c8cc31a59612805c2fbf650ea5d4274fe9c2825f9efc0f73e2c9485220223f6f`
+- **Last updated (UTC):** 2026-11-01T21:00:01.000Z
 
 ## Current Position
 
-- **Summary:** Planned gate valid; plan approval pending. No test or production file written.
-- **Next action:** Owner approves the plan; then record approval, pass implementation-ready, and start RED.
+- **Summary:** Plan revised after owner rejection (p-feedback): dashed border only, keep green. Planned gate valid at revision 2; plan approval pending. No test or production file written.
+- **Next action:** Owner approves the revised plan; then record approval, pass implementation-ready, and start RED.
 - **Pending dispatch:** none
 
 ## Derived Views
@@ -29,5 +29,6 @@
 
 | Recorded (UTC) | Event | Type | Actor | Status | Summary |
 | --- | --- | --- | --- | --- | --- |
+| 2026-11-01T21:00:01.000Z | `event-000003` | `step-recorded` | delivery-engineer | `awaiting-approval` | Plan revised after owner rejection (p-feedback): dashed border only, keep green. Planned gate valid at revision 2; plan approval pending. No test or production file written. |
 | 2026-11-01T20:00:02.000Z | `event-000002` | `step-recorded` | delivery-engineer | `awaiting-approval` | Planned gate valid; plan approval pending. No test or production file written. |
 | 2026-11-01T20:00:01.000Z | `event-000001` | `workflow-started` | delivery-engineer | `in-progress` | Bug Fix intake and planning complete: Home View bordered div must be blue and dashed. Planned gate valid; plan approval pending. |

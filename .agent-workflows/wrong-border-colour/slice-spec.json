@@ -3,24 +3,24 @@
   "sliceId": "wrong-border-colour",
   "workflowId": "wrong-border-colour",
   "kind": "bug",
-  "revision": 1,
+  "revision": 2,
   "status": "planned",
   "createdAt": "2026-11-01T20:00:00.000Z",
-  "updatedAt": "2026-11-01T20:00:00.000Z",
+  "updatedAt": "2026-11-01T21:00:00.000Z",
   "objective": {
-    "statement": "Fix the Home View bordered div so its border is blue and dashed instead of green.",
-    "provenanceRef": "p-card"
+    "statement": "Fix the Home View bordered div so its border is dashed, keeping the existing green colour (owner feedback: dashed border only, keep the green colour).",
+    "provenanceRef": "p-feedback"
   },
   "complexity": {
     "classification": "trivial",
-    "rationale": "Two Tailwind class changes on one element in HomeView.tsx plus the one test that asserts the old colour; no new state, dependency or contract.",
+    "rationale": "One Tailwind class added to one element in HomeView.tsx plus one new component test; no new state, dependency or contract.",
     "provenanceRef": "p-plan"
   },
   "acceptanceCriteria": [
     {
       "id": "ac-1",
-      "statement": "The bordered div on the Home View renders a blue border (border-blue-500) instead of green.",
-      "provenanceRef": "p-card"
+      "statement": "The bordered div on the Home View keeps its green border colour (border-green-500); the colour is not changed to blue.",
+      "provenanceRef": "p-feedback"
     },
     {
       "id": "ac-2",
@@ -29,7 +29,7 @@
     },
     {
       "id": "ac-3",
-      "statement": "The div no longer carries border-green-500 or border-red-500, and its other behaviour (200px size, centred 8px text, 2px width, rounded corners, text) is unchanged.",
+      "statement": "The div carries neither border-blue-500 nor border-red-500, and its other behaviour (200px size, centred 8px text, 2px width, rounded corners, text) is unchanged.",
       "provenanceRef": "p-assume-regression"
     }
   ],
@@ -37,19 +37,19 @@
     "in": [
       {
         "id": "s-in-1",
-        "statement": "src/views/home/HomeView.tsx: change the bordered div's colour class from border-green-500 to border-blue-500 and add border-dashed.",
-        "provenanceRef": "p-card"
+        "statement": "src/views/home/HomeView.tsx: add border-dashed to the bordered div's classes and keep border-green-500 unchanged.",
+        "provenanceRef": "p-feedback"
       },
       {
         "id": "s-in-2",
-        "statement": "src/views/home/HomeView.component.test.tsx: replace the green-border assertion with blue and dashed assertions.",
+        "statement": "src/views/home/HomeView.component.test.tsx: add one dashed-border test; keep the existing green-border test as the colour regression guard.",
         "provenanceRef": "p-assume-regression"
       }
     ],
     "out": [
       {
         "id": "s-out-1",
-        "statement": "Renaming the redBorderedSquare test id, the aria-label \"Red bordered square\", or the test titles that mention red; any other element's border; theme tokens; new dependencies or config.",
+        "statement": "Changing the border colour to blue or any other colour; renaming the redBorderedSquare test id, the aria-label \"Red bordered square\", or the test titles that mention red; any other element's border; theme tokens; new dependencies or config.",
         "provenanceRef": "p-assume-naming"
       }
     ]
@@ -64,20 +64,26 @@
     {
       "id": "o-2",
       "category": "context",
-      "statement": "The green colour was introduced deliberately by the earlier change-home-view-border-to-green workflow; this card supersedes it. HomeView.component.test.tsx 'should render a green border instead of a red one' asserts the old class and must be replaced, not left failing.",
+      "statement": "The green colour was introduced deliberately by the earlier change-home-view-border-to-green workflow and is now explicitly kept by the owner. HomeView.component.test.tsx 'should render a green border instead of a red one' stays valid and stays unchanged.",
       "provenanceRef": "p-repo"
     },
     {
       "id": "o-3",
       "category": "assumption",
-      "statement": "\"Blue\" means the Tailwind palette blue-500, the same shade step as the previous green-500, and \"dashed\" means the border-dashed utility with the existing 2px width. Raw palette classes are already used on this element rather than theme tokens.",
-      "provenanceRef": "p-assume-blue"
+      "statement": "\"Dashed\" means the border-dashed utility with the existing 2px width. Raw palette classes are already used on this element rather than theme tokens.",
+      "provenanceRef": "p-assume-dashed"
     },
     {
       "id": "o-4",
       "category": "assumption",
       "statement": "The 'green bordered div' is the single bordered div in HomeView; the legacy red-bordered naming of its test id and aria-label is left alone to keep the fix minimal.",
       "provenanceRef": "p-assume-naming"
+    },
+    {
+      "id": "o-5",
+      "category": "context",
+      "statement": "Revision 2 supersedes the rejected revision 1 plan, which also changed the colour to blue (border-blue-500, p-assume-blue). The owner rejected that: the colour stays green and only the dashed style is added. p-assume-blue is kept in provenance as history only.",
+      "provenanceRef": "p-feedback"
     }
   ],
   "provenance": [
@@ -105,7 +111,7 @@
     {
       "id": "p-assume-regression",
       "sourceType": "inferred",
-      "source": "Existing behaviour of the div (size, centring, text size, text) must stay as covered by existing tests; the stale green assertion is replaced.",
+      "source": "Existing behaviour of the div (size, centring, text size, text) must stay as covered by existing tests.",
       "capturedAt": "2026-11-01T20:00:00.000Z",
       "capturedBy": "delivery-engineer"
     },
@@ -128,6 +134,20 @@
       "sourceType": "inferred",
       "source": "Executor notice ADA_PLAN_APPROVAL=required: the owner must approve the plan before implementation.",
       "capturedAt": "2026-11-01T20:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-feedback",
+      "sourceType": "user",
+      "source": "Owner rejected the revision 1 plan (gate record caa52b1947f14a413b98315420af3d461ee38766de5818182750a171336a849c). Feedback (quoted data): \"Use a dashed border only, keep the green colour\".",
+      "capturedAt": "2026-11-01T21:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-assume-dashed",
+      "sourceType": "inferred",
+      "source": "Feedback says dashed without a width; conservative choice is the border-dashed utility with the existing border-2 width.",
+      "capturedAt": "2026-11-01T21:00:00.000Z",
       "capturedBy": "delivery-engineer"
     }
   ],
@@ -177,7 +197,7 @@
     },
     "component": {
       "requirement": "required",
-      "rationale": "The rendered HomeView element must carry the blue and dashed classes and not the green one.",
+      "rationale": "The rendered HomeView element must carry the dashed class while keeping the green one.",
       "provenanceRef": "p-plan"
     },
     "integration": {
@@ -194,14 +214,13 @@
   "increments": [
     {
       "id": "inc-1",
-      "behavior": "The Home View bordered div renders border-blue-500 and border-dashed instead of border-green-500.",
-      "doneWhen": "The component tests for blue and dashed pass, the stale green assertion is gone, the full suite is green, and tsc and eslint are clean.",
+      "behavior": "The Home View bordered div renders border-dashed and keeps border-green-500.",
+      "doneWhen": "The dashed component test passes, the existing green-border test still passes unchanged, the full suite is green, and tsc and eslint are clean.",
       "capabilityOwnerKeys": [
         "local_ui_state_owner"
       ],
       "testIds": [
-        "t-1",
-        "t-2"
+        "t-1"
       ],
       "verificationIds": [
         "v-1",
@@ -215,14 +234,6 @@
     {
       "id": "t-1",
       "layer": "component",
-      "description": "HomeView bordered div has class border-blue-500 and carries neither border-green-500 nor border-red-500.",
-      "command": "npm run test:component -- src/views/home",
-      "preImplementation": true,
-      "provenanceRef": "p-card"
-    },
-    {
-      "id": "t-2",
-      "layer": "component",
       "description": "HomeView bordered div has class border-dashed.",
       "command": "npm run test:component -- src/views/home",
       "preImplementation": true,
@@ -233,13 +244,6 @@
     {
       "id": "red-1",
       "testId": "t-1",
-      "expectedFailure": "expect(className).toContain('border-blue-500') fails because the div still has border-green-500.",
-      "status": "planned",
-      "provenanceRef": "p-card"
-    },
-    {
-      "id": "red-2",
-      "testId": "t-2",
       "expectedFailure": "expect(className).toContain('border-dashed') fails because the div has no dashed utility.",
       "status": "planned",
       "provenanceRef": "p-card"
@@ -249,7 +253,7 @@
     {
       "id": "v-1",
       "layer": "component",
-      "requirement": "HomeView component tests for blue and dashed pass and the other HomeView tests still pass.",
+      "requirement": "HomeView dashed test passes and the other HomeView tests, including the green-border test, still pass.",
       "status": "planned",
       "provenanceRef": "p-plan"
     },
