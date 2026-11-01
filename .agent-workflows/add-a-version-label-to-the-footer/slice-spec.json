@@ -3,10 +3,10 @@
   "sliceId": "add-a-version-label-to-the-footer",
   "workflowId": "add-a-version-label-to-the-footer",
   "kind": "feature",
-  "revision": 1,
+  "revision": 2,
   "status": "planned",
   "createdAt": "2026-11-01T00:00:00.000Z",
-  "updatedAt": "2026-11-01T00:00:00.000Z",
+  "updatedAt": "2026-11-01T00:00:03.000Z",
   "objective": {
     "statement": "Place an application version label in the footer.",
     "provenanceRef": "p-card"
@@ -31,13 +31,18 @@
       "id": "ac-3",
       "statement": "The label is visible at all screen sizes and sits inside the existing footer landmark next to the Last updated text.",
       "provenanceRef": "p-assume-placement"
+    },
+    {
+      "id": "ac-4",
+      "statement": "Empty state: when no usable version is available (empty or whitespace-only), the footer renders no version label and no bare \"v\"; the Last updated text and footer landmark still render.",
+      "provenanceRef": "p-feedback"
     }
   ],
   "scope": {
     "in": [
       {
         "id": "s-in-1",
-        "statement": "src/components/last-updated-footer: render the version label inside the existing footer.",
+        "statement": "src/components/last-updated-footer: render the version label inside the existing footer (optional version prop defaulting to APP_VERSION; label omitted when blank).",
         "provenanceRef": "p-card"
       },
       {
@@ -72,6 +77,12 @@
       "category": "context",
       "statement": "The footer is LastUpdatedFooter, mounted in src/App.tsx; its tests are co-located and use data-id test ids from LastUpdatedFooter.testIds.ts.",
       "provenanceRef": "p-repo"
+    },
+    {
+      "id": "o-4",
+      "category": "assumption",
+      "statement": "The footer has no data-driven empty state today (updatedAt is always set). \"Empty state\" is read as the version being unavailable: blank or whitespace-only. The footer takes an optional version prop defaulting to APP_VERSION so the empty case is testable without mocking JSON; the label is omitted, not shown as \"v\" or a placeholder.",
+      "provenanceRef": "p-assume-empty"
     }
   ],
   "provenance": [
@@ -108,6 +119,20 @@
       "sourceType": "repository",
       "source": "src/components/last-updated-footer/LastUpdatedFooter.tsx and its component test",
       "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-feedback",
+      "sourceType": "user",
+      "source": "Owner feedback rejecting the plan (gate record 9ecb354a37e9c64a9b02bd12268ef17b7a7808b4882fcc3052e0c728669a897b): \"also cover the empty state\"",
+      "capturedAt": "2026-11-01T00:00:03.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-assume-empty",
+      "sourceType": "inferred",
+      "source": "Feedback does not define the empty state; the footer has none today. Conservative reading: version blank or unavailable, label omitted.",
+      "capturedAt": "2026-11-01T00:00:03.000Z",
       "capturedBy": "delivery-engineer"
     },
     {
@@ -181,14 +206,15 @@
   "increments": [
     {
       "id": "inc-1",
-      "behavior": "The footer shows \"v<package.json version>\" in a version label, sourced from a new appVersion module.",
-      "doneWhen": "Unit and component tests for the version pass, the full suite is green, and tsc and eslint are clean.",
+      "behavior": "The footer shows \"v<package.json version>\" in a version label, sourced from a new appVersion module, and omits the label when the version is blank.",
+      "doneWhen": "Unit and component tests for the version, including the empty state, pass, the full suite is green, and tsc and eslint are clean.",
       "capabilityOwnerKeys": [
         "local_ui_state_owner"
       ],
       "testIds": [
         "t-1",
-        "t-2"
+        "t-2",
+        "t-3"
       ],
       "verificationIds": [
         "v-1",
@@ -214,6 +240,14 @@
       "command": "npm run test:component -- src/components/last-updated-footer",
       "preImplementation": true,
       "provenanceRef": "p-plan"
+    },
+    {
+      "id": "t-3",
+      "layer": "component",
+      "description": "LastUpdatedFooter with an empty or whitespace-only version renders no version label (no bare \"v\"), while the Last updated text and footer landmark still render.",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "preImplementation": true,
+      "provenanceRef": "p-feedback"
     }
   ],
   "expectedRedEvidence": [
@@ -230,6 +264,13 @@
       "expectedFailure": "Unable to find an element by the version label test id inside the footer.",
       "status": "planned",
       "provenanceRef": "p-plan"
+    },
+    {
+      "id": "red-3",
+      "testId": "t-3",
+      "expectedFailure": "Rendering with a version prop is not supported yet, so the blank-version case still shows the real version label and the absence assertion fails.",
+      "status": "planned",
+      "provenanceRef": "p-feedback"
     }
   ],
   "verification": [
