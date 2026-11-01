@@ -1,0 +1,38 @@
+{
+  "status": "ready-for-closeout",
+  "updatedAt": "2026-11-01T19:20:00.000Z",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The footer shows \"v<package.json version>\" in a version label, sourced from a new appVersion module, and omits the label when the version is blank.",
+      "doneWhen": "Unit and component tests for the version, including the empty state, pass, the full suite is green, and tsc and eslint are clean.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-1", "t-2", "t-3"],
+      "verificationIds": ["v-1", "v-2"],
+      "status": "complete",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "Unit and component tests for the version label pass.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 23/23 and component 40/40 passed"
+    },
+    {
+      "id": "v-2",
+      "layer": "integration",
+      "requirement": "Full suite, tsc build and eslint pass with no regression in existing footer and App tests.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "tsc and vite build succeeded; npm run lint clean; independent reviewer ADA-VERDICT approve-with-notes"
+    }
+  ]
+}

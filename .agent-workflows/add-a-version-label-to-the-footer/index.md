@@ -5,7 +5,7 @@
 - **Workflow ID:** add-a-version-label-to-the-footer
 - **Active Owner:** `delivery-engineer`
 - **Current Artifact ID:** artifact-002
-- **Status:** planned; plan approval pending (no test or production file written)
+- **Status:** ready-for-closeout (plan approved; RED/GREEN complete; independent review approve-with-notes; commit/push executor-owned). Slice spec now revision 5 (closeout-validated); the hash above is from revision 2. Review manifest: `review-lens-manifest.json`.
 - **Canonical slice spec:** `.agent-workflows/add-a-version-label-to-the-footer/slice-spec.json`, slice ID `add-a-version-label-to-the-footer`, revision 2, SHA-256 `30292856813658f429711e30cdfe708072d823fbc0fb03fbb5489c8695ec1b11`
 - **Base:** `develop` @ `9565a29c35216f1630fa96ffcb56cddc2740ae0e`; work branch executor-owned
 - **Last Updated (UTC):** 2026-11-01T00:00:04Z

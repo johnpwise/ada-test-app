@@ -3,10 +3,10 @@
   "sliceId": "add-a-version-label-to-the-footer",
   "workflowId": "add-a-version-label-to-the-footer",
   "kind": "feature",
-  "revision": 2,
-  "status": "planned",
+  "revision": 5,
+  "status": "ready-for-closeout",
   "createdAt": "2026-11-01T00:00:00.000Z",
-  "updatedAt": "2026-11-01T00:00:03.000Z",
+  "updatedAt": "2026-11-01T19:20:00.000Z",
   "objective": {
     "statement": "Place an application version label in the footer.",
     "provenanceRef": "p-card"
@@ -141,6 +141,13 @@
       "source": "Executor notice ADA_PLAN_APPROVAL=required: the owner must approve the plan before implementation.",
       "capturedAt": "2026-11-01T00:00:00.000Z",
       "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approved the plan. gate record 419f1eeced322dce1c92448bbd8a910b5a671e7d4b632935dd2e9c5629a6d99a; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-01T19:04:08.169Z",
+      "capturedAt": "2026-11-01T19:05:00.000Z",
+      "capturedBy": "delivery-engineer"
     }
   ],
   "approvals": [
@@ -157,6 +164,14 @@
           "provenanceRef": "p-plan-approval",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-01T00:00:00.000Z"
+        },
+        {
+          "id": "d-plan-2",
+          "status": "approved",
+          "rationale": "Owner approved the revised plan (gate record 419f1eec...).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-01T19:04:08.169Z"
         }
       ]
     }
@@ -220,7 +235,7 @@
         "v-1",
         "v-2"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-plan"
     }
   ],
@@ -255,22 +270,31 @@
       "id": "red-1",
       "testId": "t-1",
       "expectedFailure": "Failed to resolve import ./appVersion (module does not exist yet).",
-      "status": "planned",
-      "provenanceRef": "p-plan"
+      "status": "captured",
+      "provenanceRef": "p-plan",
+      "command": "npm run test:unit -- src/lib/appVersion",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import \"./appVersion\" from src/lib/appVersion.unit.test.ts"
     },
     {
       "id": "red-2",
       "testId": "t-2",
       "expectedFailure": "Unable to find an element by the version label test id inside the footer.",
-      "status": "planned",
-      "provenanceRef": "p-plan"
+      "status": "captured",
+      "provenanceRef": "p-plan",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "exitCode": 1,
+      "observedFailure": "Suite failed: Failed to resolve import \"../../lib/appVersion\" (module missing; the suite imports APP_VERSION)"
     },
     {
       "id": "red-3",
       "testId": "t-3",
       "expectedFailure": "Rendering with a version prop is not supported yet, so the blank-version case still shows the real version label and the absence assertion fails.",
-      "status": "planned",
-      "provenanceRef": "p-feedback"
+      "status": "captured",
+      "provenanceRef": "p-feedback",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "exitCode": 1,
+      "observedFailure": "Same suite failed to resolve import \"../../lib/appVersion\" before any test ran"
     }
   ],
   "verification": [
@@ -278,17 +302,21 @@
       "id": "v-1",
       "layer": "component",
       "requirement": "Unit and component tests for the version label pass.",
-      "status": "planned",
+      "status": "passing",
       "provenanceRef": "p-plan",
-      "command": "npm run test"
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 23/23 and component 40/40 passed"
     },
     {
       "id": "v-2",
       "layer": "integration",
       "requirement": "Full suite, tsc build and eslint pass with no regression in existing footer and App tests.",
-      "status": "planned",
+      "status": "passing",
       "provenanceRef": "p-plan",
-      "command": "npm run build"
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "tsc and vite build succeeded; npm run lint clean; independent reviewer ADA-VERDICT approve-with-notes"
     }
   ],
   "e2eStatus": {
