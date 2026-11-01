@@ -3,10 +3,10 @@
   "sliceId": "wrong-border-colour",
   "workflowId": "wrong-border-colour",
   "kind": "bug",
-  "revision": 2,
+  "revision": 3,
   "status": "planned",
   "createdAt": "2026-11-01T20:00:00.000Z",
-  "updatedAt": "2026-11-01T21:00:00.000Z",
+  "updatedAt": "2026-11-01T22:00:00.000Z",
   "objective": {
     "statement": "Fix the Home View bordered div so its border is dashed, keeping the existing green colour (owner feedback: dashed border only, keep the green colour).",
     "provenanceRef": "p-feedback"
@@ -31,6 +31,11 @@
       "id": "ac-3",
       "statement": "The div carries neither border-blue-500 nor border-red-500, and its other behaviour (200px size, centred 8px text, 2px width, rounded corners, text) is unchanged.",
       "provenanceRef": "p-assume-regression"
+    },
+    {
+      "id": "ac-4",
+      "statement": "HomeView.tsx carries a short comment next to the bordered div explaining why its border is dashed. The comment is source-only and changes no rendered output.",
+      "provenanceRef": "p-feedback-2"
     }
   ],
   "scope": {
@@ -44,6 +49,11 @@
         "id": "s-in-2",
         "statement": "src/views/home/HomeView.component.test.tsx: add one dashed-border test; keep the existing green-border test as the colour regression guard.",
         "provenanceRef": "p-assume-regression"
+      },
+      {
+        "id": "s-in-3",
+        "statement": "src/views/home/HomeView.tsx: add one short comment explaining the dashed border, placed beside the bordered div.",
+        "provenanceRef": "p-feedback-2"
       }
     ],
     "out": [
@@ -84,6 +94,12 @@
       "category": "context",
       "statement": "Revision 2 supersedes the rejected revision 1 plan, which also changed the colour to blue (border-blue-500, p-assume-blue). The owner rejected that: the colour stays green and only the dashed style is added. p-assume-blue is kept in provenance as history only.",
       "provenanceRef": "p-feedback"
+    },
+    {
+      "id": "o-6",
+      "category": "assumption",
+      "statement": "The comment is a short JSX or line comment of one or two lines, written in the style of the surrounding code, stating that the border is dashed on purpose. It is verified by review, not by a test, because a comment has no runtime behaviour.",
+      "provenanceRef": "p-assume-comment"
     }
   ],
   "provenance": [
@@ -148,6 +164,20 @@
       "sourceType": "inferred",
       "source": "Feedback says dashed without a width; conservative choice is the border-dashed utility with the existing border-2 width.",
       "capturedAt": "2026-11-01T21:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-feedback-2",
+      "sourceType": "user",
+      "source": "Owner rejected the revision 2 plan (gate record a5588506a5d6e6eea02de1f716cc79917a5d690d1d7032390ed924508908de1d). Feedback (quoted data): \"Also add a short comment explaining the dashed border\".",
+      "capturedAt": "2026-11-01T22:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-assume-comment",
+      "sourceType": "inferred",
+      "source": "Feedback does not say what the comment should say or where; conservative choice is one short comment directly above the bordered div.",
+      "capturedAt": "2026-11-01T22:00:00.000Z",
       "capturedBy": "delivery-engineer"
     }
   ],
@@ -214,8 +244,8 @@
   "increments": [
     {
       "id": "inc-1",
-      "behavior": "The Home View bordered div renders border-dashed and keeps border-green-500.",
-      "doneWhen": "The dashed component test passes, the existing green-border test still passes unchanged, the full suite is green, and tsc and eslint are clean.",
+      "behavior": "The Home View bordered div renders border-dashed, keeps border-green-500, and a short comment explains the dashed border.",
+      "doneWhen": "The dashed component test passes, the existing green-border test still passes unchanged, the explanatory comment is present, the full suite is green, and tsc and eslint are clean.",
       "capabilityOwnerKeys": [
         "local_ui_state_owner"
       ],
@@ -224,7 +254,8 @@
       ],
       "verificationIds": [
         "v-1",
-        "v-2"
+        "v-2",
+        "v-3"
       ],
       "status": "planned",
       "provenanceRef": "p-plan"
@@ -263,6 +294,13 @@
       "requirement": "Full suite (npm run test), tsc build and eslint pass with no regression in App tests.",
       "status": "planned",
       "provenanceRef": "p-plan"
+    },
+    {
+      "id": "v-3",
+      "layer": "component",
+      "requirement": "Review of the diff confirms a short comment explaining the dashed border sits beside the bordered div in HomeView.tsx and nothing else in the rendered output changed.",
+      "status": "planned",
+      "provenanceRef": "p-feedback-2"
     }
   ],
   "e2eStatus": {

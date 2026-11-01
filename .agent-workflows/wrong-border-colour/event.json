@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "type": "step-recorded",
   "workflowId": "wrong-border-colour",
-  "recordedAt": "2026-11-01T21:00:01.000Z",
+  "recordedAt": "2026-11-01T22:00:01.000Z",
   "actor": "delivery-engineer",
   "status": "awaiting-approval",
   "sourceOfTruth": ".agent-workflows/wrong-border-colour/slice-spec.json",
   "sliceSpec": {
     "path": ".agent-workflows/wrong-border-colour/slice-spec.json",
     "sliceId": "wrong-border-colour",
-    "revision": 2,
-    "hash": "ad5f953be8732f4decf6360ea3c52060c2e5fdcaef3114247c58a5b23d0b7a27"
+    "revision": 3,
+    "hash": "36cfc925f709a50ec42e953fccd8591a855739db80df140e712b00b17cb28eb1"
   },
-  "summary": "Plan revised after owner rejection (p-feedback): dashed border only, keep green. Planned gate valid at revision 2; plan approval pending. No test or production file written.",
+  "summary": "Plan revised after owner rejection (p-feedback-2): also add a short comment explaining the dashed border. Planned gate valid at revision 3; plan approval pending. No test or production file written.",
   "nextAction": "Owner approves the revised plan; then record approval, pass implementation-ready, and start RED.",
   "tdd": {
     "state": "n/a",
@@ -23,23 +23,21 @@
   "commands": [
     { "command": "git status --short", "exitCode": 0, "result": "clean" },
     { "command": "git rev-parse --abbrev-ref HEAD", "exitCode": 0, "result": "develop" },
-    { "command": "git rev-parse HEAD", "exitCode": 0, "result": "f17d64b766fe7d1ba82be889729ce6252b74d137" },
-    { "command": "node plugins/ada-core/scripts/slice-spec.mjs validate --stage planned", "exitCode": 0, "result": "Validated wrong-border-colour revision 2 at planned stage." }
+    { "command": "git rev-parse HEAD", "exitCode": 0, "result": "fa9990e313201103ae46502a68a2af38780e24b3" },
+    { "command": "node plugins/ada-core/scripts/slice-spec.mjs validate --stage planned", "exitCode": 0, "result": "Validated wrong-border-colour revision 3 at planned stage." }
   ],
-  "shas": [{ "kind": "base", "value": "f17d64b766fe7d1ba82be889729ce6252b74d137" }],
+  "shas": [{ "kind": "base", "value": "fa9990e313201103ae46502a68a2af38780e24b3" }],
   "changedAreas": [
     ".agent-workflows/wrong-border-colour/"
   ],
   "decisions": [
-    "Owner feedback recorded as user provenance p-feedback: add border-dashed only and keep border-green-500; the blue colour change is dropped.",
-    "Dashed read as border-dashed with the existing border-2 width (inferred p-assume-dashed). The existing green-border test stays unchanged as the colour regression guard; the only new test is the dashed one."
+    "Owner feedback recorded as user provenance p-feedback-2: add a short comment explaining the dashed border. Appended ac-4, s-in-3, o-6, v-3; inc-1 widened to include the comment.",
+    "Comment wording and placement inferred (p-assume-comment): one short comment directly above the bordered div. It is verified by diff review, not by a test, because it has no runtime behaviour. The test plan (t-1, red-1) is unchanged."
   ],
   "risks": [],
   "blockers": [],
   "approvals": [
     "plan-approval: pending (a-plan)"
   ],
-  "exceptions": [
-    "Revision 2 rewrote the superseded revision 1 items (objective, ac-1, scope items, t-2/red-2) in place, because the merge command treats them as append-only and could not drop the rejected blue change. Provenance stays append-only: p-card and p-assume-blue are retained, and p-feedback and p-assume-dashed were appended."
-  ]
+  "exceptions": []
 }
