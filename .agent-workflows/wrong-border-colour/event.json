@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "type": "step-recorded",
+  "workflowId": "wrong-border-colour",
+  "recordedAt": "2026-11-01T20:00:02.000Z",
+  "actor": "delivery-engineer",
+  "status": "awaiting-approval",
+  "sourceOfTruth": ".agent-workflows/wrong-border-colour/slice-spec.json",
+  "sliceSpec": {
+    "path": ".agent-workflows/wrong-border-colour/slice-spec.json",
+    "sliceId": "wrong-border-colour",
+    "revision": 1,
+    "hash": "9d7975db2cc0fddec25a070438352f3bc6f04ebeb80f8fbdb0bf6f45d385891d"
+  },
+  "summary": "Planned gate valid; plan approval pending. No test or production file written.",
+  "nextAction": "Owner approves the plan; then record approval, pass implementation-ready, and start RED.",
+  "tdd": {
+    "state": "n/a",
+    "command": "none",
+    "result": "no test written (plan approval required)",
+    "exitCode": 0
+  },
+  "commands": [
+    { "command": "node plugins/ada-core/scripts/slice-spec.mjs validate --stage planned", "exitCode": 0, "result": "Validated revision 1 at planned stage" }
+  ],
+  "shas": [{ "kind": "base", "value": "b9cacee1af7410cc0d23d66dbbed2aa6ce1cfd9a" }],
+  "changedAreas": [
+    ".agent-workflows/wrong-border-colour/"
+  ],
+  "decisions": [],
+  "risks": [],
+  "blockers": [],
+  "approvals": [
+    "plan-approval: pending (a-plan)"
+  ],
+  "exceptions": []
+}
