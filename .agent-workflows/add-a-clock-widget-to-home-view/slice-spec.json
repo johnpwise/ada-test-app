@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-a-clock-widget-to-home-view",
+  "workflowId": "add-a-clock-widget-to-home-view",
+  "kind": "feature",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-01T00:00:00.000Z",
+  "updatedAt": "2026-11-01T00:00:00.000Z",
+  "objective": {
+    "statement": "On HomeView, display a digital clock widget (digits only, no clock face, e.g. 14:54.00) that the user can switch between 12 hour and 24 hour view.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "New pure formatter, a new ticking and interactive component, and a HomeView change; no external contract, dependency or store change.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders a clock widget showing the current local time as digits only, with no clock face.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The clock shows hours, minutes and seconds in the pattern of the owner's example (14:54.00): two-digit hours, a colon, two-digit minutes, a dot, two-digit seconds.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "A control switches the clock between 24 hour view (default, e.g. 14:54.00) and 12 hour view (e.g. 02:54.00 PM), and switches back; the control exposes which view is active.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-4",
+      "statement": "The clock updates every second while mounted and stops its timer on unmount.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-5",
+      "statement": "12 hour view maps midnight to 12 AM and noon to 12 PM; 24 hour view shows 00 to 23.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "A pure clock formatting helper, a Clock component with local view state and a one second tick, its testIds file, colocated unit and component tests, and rendering the Clock in HomeView.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Analog clock face, time zone selection, persisting the 12/24 choice, store changes, new dependencies, date display, e2e tests, changes to existing HomeView behaviour.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "The example 14:54.00 is read literally as HH:MM.SS (seconds after a dot). 12 hour view uses the same pattern plus an AM/PM suffix, e.g. 02:54.00 PM. Time is the browser's local time.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "The 24 hour view is the default, and the choice is local component state that resets on reload; it is not written to the Zustand store or localStorage.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-3",
+      "category": "assumption",
+      "statement": "The clock is placed in its own section below the header and above ModeToggle in HomeView, using the existing section styling of ModeToggle. Existing HomeView tests stay unchanged.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-4",
+      "category": "constraint",
+      "statement": "Follow repository conventions: components in src/components/<name>/ with <Name>.testIds.ts and <Name>.component.test.tsx, helpers in src/lib with *.unit.test.ts, data-id attributes for test ids, AAA test layout, no any.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "o-5",
+      "category": "risk",
+      "statement": "Timer tests need vitest fake timers; the existing LastUpdatedFooter component is the pattern for the setInterval with cleanup.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "New Feature request: A 6th clock attempt - display a clock widget on HomeView.tsx, switchable between 12 and 24 hour view, digits only (e.g. 14:54.00), no clock face",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "delivery-engineer planning",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "AGENTS.md, src/views/home/HomeView.tsx, src/components/last-updated-footer/LastUpdatedFooter.tsx, src/components/mode-toggle/ModeToggle.tsx, package.json",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-1",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p-user",
+      "decisions": [
+        {
+          "id": "ap-1-d1",
+          "status": "pending",
+          "rationale": "Plan approval is required for this run; the plan is saved and implementation has not started.",
+          "provenanceRef": "p-user",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React local state/hooks",
+      "rationale": "The 12/24 choice and the current time are component-local; useState plus a useEffect interval.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand",
+      "rationale": "Not used: nothing else needs the clock choice and it is not persisted (o-2).",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary",
+      "rationale": "No remote data in this slice.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "12/24 hour formatting, zero padding and midnight/noon edges are isolated pure logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendering, the view switch, the per second tick and HomeView placement are component behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module or API flow; npm run test is run as regression.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Small self-contained widget with no new route or vertical flow; component tests cover the behaviour.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "Pure formatClock(date, hourCycle) returns HH:MM.SS for 24 hour and hh:MM.SS AM/PM for 12 hour.",
+      "doneWhen": "t-1 passes.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "Clock component shows the formatted current time, ticks each second, cleans up its timer, and a toggle button switches 24h and 12h views; HomeView renders it.",
+      "doneWhen": "t-2 passes and the full suite stays green.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-2",
+        "t-3"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "unit",
+      "description": "formatClock: 24h padding (00:05.09, 14:54.00), 12h with AM/PM, midnight is 12 AM, noon is 12 PM.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/formatClock.unit.test.ts",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-2",
+      "layer": "component",
+      "description": "Clock renders the time in 24h by default, toggles to 12h and back via a button with aria-pressed, advances after one second with fake timers, and clears its interval on unmount.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/clock",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-3",
+      "layer": "component",
+      "description": "HomeView renders the clock widget; existing HomeView tests are unchanged.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "Module src/lib/formatClock does not exist, so the suite fails to load.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "r-2",
+      "testId": "t-2",
+      "expectedFailure": "Module Clock does not exist, so the suite fails to load.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "r-3",
+      "testId": "t-3",
+      "expectedFailure": "HomeView has no element with the clock widget data-id.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm run test, npm run lint and npm run build pass.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
