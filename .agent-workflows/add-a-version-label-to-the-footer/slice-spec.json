@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-a-version-label-to-the-footer",
+  "workflowId": "add-a-version-label-to-the-footer",
+  "kind": "feature",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-01T00:00:00.000Z",
+  "updatedAt": "2026-11-01T00:00:00.000Z",
+  "objective": {
+    "statement": "Place an application version label in the footer.",
+    "provenanceRef": "p-card"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One presentational element in the existing footer component plus a one-line version module; no new state, dependency or contract.",
+    "provenanceRef": "p-plan"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The footer shows an application version label.",
+      "provenanceRef": "p-card"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The label text is the version from package.json prefixed with \"v\" (currently \"v0.14.0\").",
+      "provenanceRef": "p-assume-source"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The label is visible at all screen sizes and sits inside the existing footer landmark next to the Last updated text.",
+      "provenanceRef": "p-assume-placement"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-in-1",
+        "statement": "src/components/last-updated-footer: render the version label inside the existing footer.",
+        "provenanceRef": "p-card"
+      },
+      {
+        "id": "s-in-2",
+        "statement": "A small src/lib/appVersion.ts module exporting the version read from package.json.",
+        "provenanceRef": "p-assume-source"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-out-1",
+        "statement": "New dependencies, vite/vitest/tsconfig changes, build-time define injection, git SHA or build number in the label, release tooling, and any change to the Last updated text.",
+        "provenanceRef": "p-assume-source"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "\"Application version\" means the package.json version field (0.14.0), imported as a named JSON export; Vite tree-shakes the rest and tsc bundler resolution allows it without config changes.",
+      "provenanceRef": "p-assume-source"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "Label format is \"v<version>\" and it lives in the existing footer (LastUpdatedFooter) rather than a new footer component, as a sibling element in the same footer landmark.",
+      "provenanceRef": "p-assume-placement"
+    },
+    {
+      "id": "o-3",
+      "category": "context",
+      "statement": "The footer is LastUpdatedFooter, mounted in src/App.tsx; its tests are co-located and use data-id test ids from LastUpdatedFooter.testIds.ts.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-card",
+      "sourceType": "user",
+      "source": "Card: New Feature - Add a version label to the footer. Place an application version label to the footer.",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-assume-source",
+      "sourceType": "inferred",
+      "source": "Card does not say where the version comes from; conservative choice is the package.json version, with no new dependency or build config.",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-assume-placement",
+      "sourceType": "inferred",
+      "source": "Card does not specify placement or format; conservative choice is the existing footer, text \"v<version>\", always visible.",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-plan",
+      "sourceType": "repository",
+      "source": "AGENTS.md capability owners; src/components/last-updated-footer; src/App.tsx; package.json; tsconfig.app.json",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/components/last-updated-footer/LastUpdatedFooter.tsx and its component test",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-plan-approval",
+      "sourceType": "inferred",
+      "source": "Executor notice ADA_PLAN_APPROVAL=required: the owner must approve the plan before implementation.",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-plan-approval",
+      "decisions": [
+        {
+          "id": "d-plan-1",
+          "status": "pending",
+          "rationale": "Awaiting owner approval of the plan.",
+          "provenanceRef": "p-plan-approval",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React component (no new state)",
+      "rationale": "The label is static render output; the existing footer clock state is untouched.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand (src/store/appStore.ts), unused",
+      "rationale": "The version is a build-constant, not client state.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary (unused)",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "src/lib/appVersion.ts is a new module; assert it exports a semver-shaped string.",
+      "provenanceRef": "p-plan"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered behaviour: the footer shows the v-prefixed version inside the footer landmark.",
+      "provenanceRef": "p-plan"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour beyond the footer; the full npm test suite is still run as regression verification.",
+      "provenanceRef": "p-plan"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text in an already component-tested footer; no new routed flow.",
+      "provenanceRef": "p-plan"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The footer shows \"v<package.json version>\" in a version label, sourced from a new appVersion module.",
+      "doneWhen": "Unit and component tests for the version pass, the full suite is green, and tsc and eslint are clean.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1",
+        "t-2"
+      ],
+      "verificationIds": [
+        "v-1",
+        "v-2"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "unit",
+      "description": "APP_VERSION from src/lib/appVersion.ts is a semver-shaped string.",
+      "command": "npm run test:unit -- src/lib/appVersion",
+      "preImplementation": true,
+      "provenanceRef": "p-plan"
+    },
+    {
+      "id": "t-2",
+      "layer": "component",
+      "description": "LastUpdatedFooter renders the version label \"v<APP_VERSION>\" inside the footer landmark alongside the Last updated text.",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "preImplementation": true,
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Failed to resolve import ./appVersion (module does not exist yet).",
+      "status": "planned",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "id": "red-2",
+      "testId": "t-2",
+      "expectedFailure": "Unable to find an element by the version label test id inside the footer.",
+      "status": "planned",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "Unit and component tests for the version label pass.",
+      "status": "planned",
+      "provenanceRef": "p-plan",
+      "command": "npm run test"
+    },
+    {
+      "id": "v-2",
+      "layer": "integration",
+      "requirement": "Full suite, tsc build and eslint pass with no regression in existing footer and App tests.",
+      "status": "planned",
+      "provenanceRef": "p-plan",
+      "command": "npm run build"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-plan"
+  }
+}
