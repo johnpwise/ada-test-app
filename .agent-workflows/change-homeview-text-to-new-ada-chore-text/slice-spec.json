@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "change-homeview-text-to-new-ada-chore-text",
+  "workflowId": "change-homeview-text-to-new-ada-chore-text",
+  "kind": "feature",
+  "revision": 1,
+  "status": "in-progress",
+  "createdAt": "2026-11-01T12:00:00.000Z",
+  "updatedAt": "2026-11-01T12:00:00.000Z",
+  "objective": {
+    "statement": "Change the text on HomeView.tsx from \"ADA plugin test\" to \"New ADA chore text\".",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One literal text change in a single view and its component test.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The red bordered square in HomeView.tsx shows \"New ADA chore text\" and no longer shows \"ADA plugin test\".",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "src/views/home/HomeView.tsx and its colocated component test.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Styling, size, border or any other view or component.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "evidence",
+      "statement": "The text is the child of the div with data-id HOME_VIEW_TEST_IDS.redBorderedSquare in HomeView.tsx.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "New Feature card: Change text 1",
+      "capturedAt": "2026-11-01T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "delivery-engineer planning",
+      "capturedAt": "2026-11-01T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx",
+      "capturedAt": "2026-11-01T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React local state/hooks",
+      "rationale": "Static presentational text; no state needed.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand",
+      "rationale": "Not used by this slice.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary",
+      "rationale": "Not used by this slice.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered text is component behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module flow changes; full suite run as regression.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text with no user flow; component test covers it.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView renders \"New ADA chore text\" inside the red bordered square.",
+      "doneWhen": "t-1 passes and the full test suite stays green.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "HomeView shows \"New ADA chore text\" inside the red bordered square.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "Square still contains \"ADA plugin test\" instead of \"New ADA chore text\".",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "1 of 6 tests failed: expected text content \"New ADA chore text\", received \"ADA plugin test\"."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm test, npm run lint and npm run build pass.",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm test; npm run lint; npm run build",
+      "exitCode": 0,
+      "result": "24 unit and 40 component tests pass, lint clean, build ok; independent reviewer: approve-with-notes"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}

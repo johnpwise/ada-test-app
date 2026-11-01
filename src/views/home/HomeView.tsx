@@ -23,7 +23,7 @@ export default function HomeView() {
         className="mx-auto flex size-[200px] items-center justify-center rounded-[10px] border-2 border-green-500 text-[8px]"
         data-id={HOME_VIEW_TEST_IDS.redBorderedSquare}
       >
-        ADA plugin test
+        New ADA chore text
       </div>
     </section>
   );
