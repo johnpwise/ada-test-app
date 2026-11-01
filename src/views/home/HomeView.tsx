@@ -1,3 +1,4 @@
+import Clock from "../../components/clock/Clock";
 import ModeToggle from "../../components/mode-toggle/ModeToggle";
 import PageViewsPanel from "../../components/page-views-panel/PageViewsPanel";
 import ThemePicker from "../../components/theme-picker/ThemePicker";
@@ -13,6 +14,7 @@ export default function HomeView() {
           Configure your theme and color mode preferences.
         </p>
       </header>
+      <Clock />
       <ModeToggle />
       <ThemePicker />
       <PageViewsPanel />
