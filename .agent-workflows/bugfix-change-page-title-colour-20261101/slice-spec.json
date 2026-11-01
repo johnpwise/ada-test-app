@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "bugfix-change-page-title-colour-20261101",
+  "workflowId": "bugfix-change-page-title-colour-20261101",
+  "kind": "bug",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-01T00:00:00.000Z",
+  "updatedAt": "2026-11-01T00:00:00.000Z",
+  "objective": {
+    "statement": "Change the page title colour to turquoise.",
+    "provenanceRef": "prov-1"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "A styling-class change on three static h1 headings; no logic, state, API or dependency change.",
+    "provenanceRef": "prov-2"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The page title (h1) renders in turquoise.",
+      "provenanceRef": "prov-1"
+    },
+    {
+      "id": "ac-2",
+      "statement": "Assumed: the colour applies to the h1 title of every view (Home, About, Contact) so titles stay consistent.",
+      "provenanceRef": "prov-2"
+    },
+    {
+      "id": "ac-3",
+      "statement": "Assumed: turquoise is the CSS named colour turquoise (#40E0D0), applied identically in light and dark mode.",
+      "provenanceRef": "prov-2"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "scope-in-1",
+        "statement": "className of the h1 in src/views/home/HomeView.tsx, src/views/about/AboutView.tsx and src/views/contact/ContactView.tsx.",
+        "provenanceRef": "prov-3"
+      }
+    ],
+    "out": [
+      {
+        "id": "scope-out-1",
+        "statement": "Theme tokens, ThemePicker behaviour, other headings (h3), body text, new dependencies and any other styling.",
+        "provenanceRef": "prov-2"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "obs-1",
+      "category": "evidence",
+      "statement": "Each view renders an h1 with className 'text-2xl font-semibold' and no colour class; the colour is inherited from the theme.",
+      "provenanceRef": "prov-3"
+    },
+    {
+      "id": "obs-2",
+      "category": "assumption",
+      "statement": "The card says 'the page title' without naming a page; all three view h1 elements are treated as page titles. Conservative alternative: Home only.",
+      "provenanceRef": "prov-2"
+    },
+    {
+      "id": "obs-3",
+      "category": "assumption",
+      "statement": "Turquoise is expressed as a Tailwind arbitrary-value class (text-[#40E0D0]) rather than a new theme token, to avoid touching the theme system. Contrast against light surfaces is low and is not addressed by this card.",
+      "provenanceRef": "prov-2"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "prov-1",
+      "sourceType": "user",
+      "source": "Card: Bug Fix - Change the page title colour. Change it to turquoise.",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "prov-2",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer; the card leaves it open.",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "prov-3",
+      "sourceType": "repository",
+      "source": "src/views/{home,about,contact}/*View.tsx and AGENTS.md",
+      "capturedAt": "2026-11-01T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "appr-1",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "prov-1",
+      "decisions": [
+        {
+          "id": "appr-1-d1",
+          "status": "pending",
+          "rationale": "Awaiting owner approval of the plan; the run stops at the planned gate.",
+          "provenanceRef": "prov-1",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React local state/hooks (none needed)",
+      "rationale": "Static styling; no state involved.",
+      "provenanceRef": "prov-3"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand (not touched)",
+      "rationale": "No shared state change.",
+      "provenanceRef": "prov-3"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary (not touched)",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "prov-3"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic or branching.",
+      "provenanceRef": "prov-2"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Behaviour is the rendered heading's colour class, checked per view.",
+      "provenanceRef": "prov-2"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module interaction changes; existing suite guards regressions.",
+      "provenanceRef": "prov-2"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static styling of a heading; no new user flow.",
+      "provenanceRef": "prov-2"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "Each view's h1 title renders with the turquoise colour class.",
+      "doneWhen": "Component tests for Home, About and Contact titles pass and the existing suite stays green.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["test-1"],
+      "verificationIds": ["ver-1"],
+      "status": "planned",
+      "provenanceRef": "prov-2"
+    }
+  ],
+  "tests": [
+    {
+      "id": "test-1",
+      "layer": "component",
+      "description": "The h1 title of HomeView, AboutView and ContactView has the turquoise colour class (text-[#40E0D0]).",
+      "command": "npm run test:component",
+      "preImplementation": true,
+      "provenanceRef": "prov-2"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "test-1",
+      "expectedFailure": "Assertion fails because the h1 has no turquoise colour class.",
+      "status": "planned",
+      "provenanceRef": "prov-2"
+    }
+  ],
+  "verification": [
+    {
+      "id": "ver-1",
+      "layer": "component",
+      "requirement": "npm run test:component passes, then the full suite (npm run test) passes once at the checkpoint.",
+      "status": "planned",
+      "provenanceRef": "prov-2"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "prov-2"
+  }
+}
