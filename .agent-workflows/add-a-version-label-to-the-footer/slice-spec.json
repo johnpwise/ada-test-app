@@ -3,10 +3,10 @@
   "sliceId": "add-a-version-label-to-the-footer",
   "workflowId": "add-a-version-label-to-the-footer",
   "kind": "feature",
-  "revision": 5,
+  "revision": 6,
   "status": "ready-for-closeout",
   "createdAt": "2026-11-01T00:00:00.000Z",
-  "updatedAt": "2026-11-01T19:20:00.000Z",
+  "updatedAt": "2026-11-01T19:30:00.000Z",
   "objective": {
     "statement": "Place an application version label in the footer.",
     "provenanceRef": "p-card"
@@ -36,6 +36,11 @@
       "id": "ac-4",
       "statement": "Empty state: when no usable version is available (empty or whitespace-only), the footer renders no version label and no bare \"v\"; the Last updated text and footer landmark still render.",
       "provenanceRef": "p-feedback"
+    },
+    {
+      "id": "ac-5",
+      "statement": "A test asserts that APP_VERSION equals the package.json version field.",
+      "provenanceRef": "p-feedback-2"
     }
   ],
   "scope": {
@@ -148,6 +153,13 @@
       "source": "Owner approved the plan. gate record 419f1eeced322dce1c92448bbd8a910b5a671e7d4b632935dd2e9c5629a6d99a; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-01T19:04:08.169Z",
       "capturedAt": "2026-11-01T19:05:00.000Z",
       "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-feedback-2",
+      "sourceType": "user",
+      "source": "Owner feedback rejecting PR #119 at gate delivery.merge_develop (gate record 9af48d8b6fb6c637b18da72b8ec3abdee144253ad341f4eb2852ce7778c571bc, head 5fd8056): \"Also assert that APP_VERSION equals the package.json version\"",
+      "capturedAt": "2026-11-01T19:30:00.000Z",
+      "capturedBy": "delivery-engineer"
     }
   ],
   "approvals": [
@@ -229,7 +241,8 @@
       "testIds": [
         "t-1",
         "t-2",
-        "t-3"
+        "t-3",
+        "t-4"
       ],
       "verificationIds": [
         "v-1",
@@ -263,6 +276,14 @@
       "command": "npm run test:component -- src/components/last-updated-footer",
       "preImplementation": true,
       "provenanceRef": "p-feedback"
+    },
+    {
+      "id": "t-4",
+      "layer": "unit",
+      "description": "APP_VERSION strictly equals the version field read from package.json.",
+      "command": "npm run test:unit -- src/lib/appVersion",
+      "preImplementation": true,
+      "provenanceRef": "p-feedback-2"
     }
   ],
   "expectedRedEvidence": [
@@ -295,6 +316,16 @@
       "command": "npm run test:component -- src/components/last-updated-footer",
       "exitCode": 1,
       "observedFailure": "Same suite failed to resolve import \"../../lib/appVersion\" before any test ran"
+    },
+    {
+      "id": "red-4",
+      "testId": "t-4",
+      "expectedFailure": "The implementation already reads package.json, so the test passes as written; RED is shown by mutation: with APP_VERSION temporarily set to \"0.0.0\" the assertion fails.",
+      "status": "captured",
+      "provenanceRef": "p-feedback-2",
+      "command": "npm run test:unit -- src/lib/appVersion",
+      "exitCode": 1,
+      "observedFailure": "AssertionError: expected \"0.0.0\" to be \"0.14.0\" (source mutation, reverted)"
     }
   ],
   "verification": [
@@ -306,7 +337,7 @@
       "provenanceRef": "p-plan",
       "command": "npm run test",
       "exitCode": 0,
-      "result": "unit 23/23 and component 40/40 passed"
+      "result": "unit 24/24 and component 40/40 passed"
     },
     {
       "id": "v-2",
