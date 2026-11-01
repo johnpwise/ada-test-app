@@ -1,0 +1,36 @@
+diff --git a/src/views/home/HomeView.component.test.tsx b/src/views/home/HomeView.component.test.tsx
+index 1c4d819..bc70b4a 100644
+--- a/src/views/home/HomeView.component.test.tsx
++++ b/src/views/home/HomeView.component.test.tsx
+@@ -11,7 +11,7 @@ describe("HomeView", () => {
+     cleanup();
+   });
+
+-  it("should render the ADA plugin test text inside the red bordered square", () => {
++  it("should render the New ADA test text inside the red bordered square", () => {
+     // Arrange
+
+     // Act
+@@ -19,7 +19,8 @@ describe("HomeView", () => {
+
+     // Assert
+     const square = screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare);
+-    expect(square).toHaveTextContent("ADA plugin test");
++    expect(square).toHaveTextContent("New ADA test");
++    expect(square).not.toHaveTextContent("ADA plugin test");
+   });
+
+   it("should center the text horizontally and vertically within the red bordered square", () => {
+diff --git a/src/views/home/HomeView.tsx b/src/views/home/HomeView.tsx
+index 2fae82b..575883b 100644
+--- a/src/views/home/HomeView.tsx
++++ b/src/views/home/HomeView.tsx
+@@ -23,7 +23,7 @@ export default function HomeView() {
+         className="mx-auto flex size-[200px] items-center justify-center rounded-[10px] border-2 border-green-500 text-[8px]"
+         data-id={HOME_VIEW_TEST_IDS.redBorderedSquare}
+       >
+-        ADA plugin test
++        New ADA test
+       </div>
+     </section>
+   );

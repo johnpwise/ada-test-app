@@ -1,0 +1,28 @@
+{
+  "status": "ready-for-closeout",
+  "updatedAt": "2026-11-01T20:40:00.000Z",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView renders \"New ADA test\" in the bordered square instead of \"ADA plugin test\".",
+      "doneWhen": "t-1 passes and the full suite stays green.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-1"],
+      "verificationIds": ["v-1"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm run test, npm run lint and npm run build pass.",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 24/24 and component 40/40 passed; npm run lint clean; npm run build succeeded; independent reviewer ADA-VERDICT approve-with-notes"
+    }
+  ]
+}

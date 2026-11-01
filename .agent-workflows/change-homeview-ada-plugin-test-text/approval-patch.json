@@ -1,0 +1,40 @@
+{
+  "status": "implementation-ready",
+  "updatedAt": "2026-11-01T20:30:00.000Z",
+  "provenance": [
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approved the plan. gate record 9223d12423b85f3d048df64dd2aab1723f539e2aa77b80e2219880e4cc1e196e; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-01T20:28:38.038Z",
+      "capturedAt": "2026-11-01T20:30:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-1",
+      "decisions": [
+        {
+          "id": "ap-1-d2",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record 9223d124...).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-01T20:28:38.038Z"
+        }
+      ]
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "The square's text content is \"ADA plugin test\" and does not contain \"New ADA test\".",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Expected element to have text content \"New ADA test\", received \"ADA plugin test\" (1 failed, 5 passed)"
+    }
+  ]
+}

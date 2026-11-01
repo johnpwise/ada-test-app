@@ -11,7 +11,7 @@ describe("HomeView", () => {
     cleanup();
   });
 
-  it("should render the ADA plugin test text inside the red bordered square", () => {
+  it("should render the New ADA test text inside the red bordered square", () => {
     // Arrange
 
     // Act
@@ -19,7 +19,8 @@ describe("HomeView", () => {
 
     // Assert
     const square = screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare);
-    expect(square).toHaveTextContent("ADA plugin test");
+    expect(square).toHaveTextContent("New ADA test");
+    expect(square).not.toHaveTextContent("ADA plugin test");
   });
 
   it("should center the text horizontally and vertically within the red bordered square", () => {
