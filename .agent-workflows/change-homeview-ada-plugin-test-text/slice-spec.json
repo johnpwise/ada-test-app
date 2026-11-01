@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "change-homeview-ada-plugin-test-text",
+  "workflowId": "change-homeview-ada-plugin-test-text",
+  "kind": "feature",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-01T18:00:00.000Z",
+  "updatedAt": "2026-11-01T18:00:00.000Z",
+  "objective": {
+    "statement": "On HomeView.tsx, change the text that reads \"ADA plugin test\" to \"New ADA test\".",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One string literal in one component and the one existing test assertion that checks it; no logic, contract, dependency or store change.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders the text \"New ADA test\" inside the bordered square where it previously rendered \"ADA plugin test\".",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The text \"ADA plugin test\" no longer appears in HomeView.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The square's styling, data-id, aria-label and all other HomeView content stay unchanged.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "The text literal in src/views/home/HomeView.tsx and the existing assertion for it in src/views/home/HomeView.component.test.tsx (including its test title).",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Styling, layout, test ids, the aria-label \"Red bordered square\", other HomeView content, other views, new dependencies, e2e tests.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "The aria-label \"Red bordered square\" and the redBorderedSquare test id are not user-visible text named by the card, so they are left unchanged.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "evidence",
+      "statement": "The only occurrences of \"ADA plugin test\" in source are HomeView.tsx line 26 and the assertion and title in HomeView.component.test.tsx. App.component.test.tsx and e2e/app.spec.ts do not reference the text.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "o-3",
+      "category": "constraint",
+      "statement": "Follow repository conventions: colocated *.component.test.tsx, AAA test layout, data-id test ids via the testIds file.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "New Feature request: Change text - On the HomeView.tsx, change the text that reads \"ADA plugin test\" to \"New ADA test\"",
+      "capturedAt": "2026-11-01T18:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "delivery-engineer planning",
+      "capturedAt": "2026-11-01T18:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "AGENTS.md, src/views/home/HomeView.tsx, src/views/home/HomeView.component.test.tsx, src/App.component.test.tsx, e2e/app.spec.ts",
+      "capturedAt": "2026-11-01T18:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-1",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p-user",
+      "decisions": [
+        {
+          "id": "ap-1-d1",
+          "status": "pending",
+          "rationale": "Plan approval is required for this run; the plan is saved and implementation has not started.",
+          "provenanceRef": "p-user",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-01T18:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React component markup",
+      "rationale": "Static text in HomeView; no state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand",
+      "rationale": "Not used: no state change.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary",
+      "rationale": "No remote data in this slice.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated pure logic is added or changed.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The rendered text of HomeView is component behaviour; the existing assertion is updated first to expect the new text.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module or API flow; npm run test is run as regression.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "A text literal change with no new route or flow; existing e2e tests do not reference the text.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView renders \"New ADA test\" in the bordered square instead of \"ADA plugin test\".",
+      "doneWhen": "t-1 passes and the full suite stays green.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "Update the existing HomeView test (title and assertion) to expect \"New ADA test\" in the bordered square and not \"ADA plugin test\".",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "The square's text content is \"ADA plugin test\" and does not contain \"New ADA test\".",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm run test, npm run lint and npm run build pass.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
