@@ -8,14 +8,14 @@
 - **Active owner:** delivery-engineer
 - **Status:** `awaiting-approval`
 - **Source of truth:** .agent-workflows/wrong-border-colour/slice-spec.json
-- **Canonical slice spec:** `.agent-workflows/wrong-border-colour/slice-spec.json` (wrong-border-colour, revision 3, hash `36cfc925f709a50ec42e953fccd8591a855739db80df140e712b00b17cb28eb1`)
-- **Current event:** `event-000004`
-- **Ledger head hash:** `0be9f2640ca427f970f787ab81ef198df20ef943188504d8e401136535a70faf`
-- **Last updated (UTC):** 2026-11-01T22:00:01.000Z
+- **Canonical slice spec:** `.agent-workflows/wrong-border-colour/slice-spec.json` (wrong-border-colour, revision 4, hash `a74a035bc5abd8876b0d8821b8a20a878431f35cc8d16178373150778db89b07`)
+- **Current event:** `event-000005`
+- **Ledger head hash:** `64c9f4d18fb2a898f663675a1b3275ecfb1e4a4209903c6ec0ae44d42030ddb0`
+- **Last updated (UTC):** 2026-11-01T23:00:01.000Z
 
 ## Current Position
 
-- **Summary:** Plan revised after owner rejection (p-feedback-2): also add a short comment explaining the dashed border. Planned gate valid at revision 3; plan approval pending. No test or production file written.
+- **Summary:** Plan revised after owner rejection (p-feedback-3): keep the comment but shorten it to one line. Planned gate valid at revision 4; plan approval pending. No test or production file written.
 - **Next action:** Owner approves the revised plan; then record approval, pass implementation-ready, and start RED.
 - **Pending dispatch:** none
 
@@ -29,6 +29,7 @@
 
 | Recorded (UTC) | Event | Type | Actor | Status | Summary |
 | --- | --- | --- | --- | --- | --- |
+| 2026-11-01T23:00:01.000Z | `event-000005` | `step-recorded` | delivery-engineer | `awaiting-approval` | Plan revised after owner rejection (p-feedback-3): keep the comment but shorten it to one line. Planned gate valid at revision 4; plan approval pending. No test or production file written. |
 | 2026-11-01T22:00:01.000Z | `event-000004` | `step-recorded` | delivery-engineer | `awaiting-approval` | Plan revised after owner rejection (p-feedback-2): also add a short comment explaining the dashed border. Planned gate valid at revision 3; plan approval pending. No test or production file written. |
 | 2026-11-01T21:00:01.000Z | `event-000003` | `step-recorded` | delivery-engineer | `awaiting-approval` | Plan revised after owner rejection (p-feedback): dashed border only, keep green. Planned gate valid at revision 2; plan approval pending. No test or production file written. |
 | 2026-11-01T20:00:02.000Z | `event-000002` | `step-recorded` | delivery-engineer | `awaiting-approval` | Planned gate valid; plan approval pending. No test or production file written. |
