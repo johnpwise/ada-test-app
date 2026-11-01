@@ -3,10 +3,10 @@
   "sliceId": "add-a-clock-widget-to-home-view",
   "workflowId": "add-a-clock-widget-to-home-view",
   "kind": "feature",
-  "revision": 1,
-  "status": "planned",
+  "revision": 3,
+  "status": "ready-for-closeout",
   "createdAt": "2026-11-01T00:00:00.000Z",
-  "updatedAt": "2026-11-01T00:00:00.000Z",
+  "updatedAt": "2026-11-01T17:55:00.000Z",
   "objective": {
     "statement": "On HomeView, display a digital clock widget (digits only, no clock face, e.g. 14:54.00) that the user can switch between 12 hour and 24 hour view.",
     "provenanceRef": "p-user"
@@ -112,6 +112,13 @@
       "source": "AGENTS.md, src/views/home/HomeView.tsx, src/components/last-updated-footer/LastUpdatedFooter.tsx, src/components/mode-toggle/ModeToggle.tsx, package.json",
       "capturedAt": "2026-11-01T00:00:00.000Z",
       "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "gate record bb015de329bec1118688b22bcce0c02ac0ed11e7115c95701dd94f9f0579dc9b; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-01T17:44:19.764Z",
+      "capturedAt": "2026-11-01T17:44:19.764Z",
+      "capturedBy": "delivery-engineer"
     }
   ],
   "approvals": [
@@ -128,6 +135,14 @@
           "provenanceRef": "p-user",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-01T00:00:00.000Z"
+        },
+        {
+          "id": "ap-1-d2",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record bb015de3...9dc9b).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-01T17:44:19.764Z"
         }
       ]
     }
@@ -188,7 +203,7 @@
       "verificationIds": [
         "v-1"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     },
     {
@@ -205,7 +220,7 @@
       "verificationIds": [
         "v-1"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     }
   ],
@@ -240,22 +255,31 @@
       "id": "r-1",
       "testId": "t-1",
       "expectedFailure": "Module src/lib/formatClock does not exist, so the suite fails to load.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/formatClock.unit.test.ts",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./formatClock; suite failed to load, 0 tests"
     },
     {
       "id": "r-2",
       "testId": "t-2",
       "expectedFailure": "Module Clock does not exist, so the suite fails to load.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/clock src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./Clock; suite failed to load, 0 tests"
     },
     {
       "id": "r-3",
       "testId": "t-3",
       "expectedFailure": "HomeView has no element with the clock widget data-id.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/clock src/views/home",
+      "exitCode": 1,
+      "observedFailure": "1 of 6 HomeView tests failed: Unable to find an element by: [data-id=\"clock\"]"
     }
   ],
   "verification": [
@@ -263,8 +287,11 @@
       "id": "v-1",
       "layer": "component",
       "requirement": "npm run test, npm run lint and npm run build pass.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test && npm run lint && npm run build",
+      "exitCode": 0,
+      "result": "unit 22/22, component 37/37 passed; eslint clean; tsc and vite build succeeded"
     }
   ],
   "e2eStatus": {
