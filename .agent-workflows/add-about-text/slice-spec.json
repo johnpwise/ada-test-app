@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-about-text",
+  "workflowId": "add-about-text",
+  "kind": "feature",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-01T20:00:00.000Z",
+  "updatedAt": "2026-11-01T20:00:00.000Z",
+  "objective": {
+    "statement": "Add a paragraph of text to AboutView.tsx that describes the clock widget shown on HomeView.tsx.",
+    "provenanceRef": "p-card"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One static paragraph in an existing presentational view; no new state, dependency, contract or component.",
+    "provenanceRef": "p-plan"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "AboutView renders a paragraph of text in addition to the existing About heading.",
+      "provenanceRef": "p-card"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The paragraph describes the clock widget on the Home view: it shows the current time, updates every second, and has a toggle between the 24 hour and 12 hour view (default 24 hour).",
+      "provenanceRef": "p-assume-content"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The existing About heading and its test continue to pass unchanged.",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-in-1",
+        "statement": "src/views/about/AboutView.tsx: add one <p> below the heading, styled with the existing text-sm text-muted-foreground idiom, with a data-id from AboutView.testIds.ts.",
+        "provenanceRef": "p-card"
+      },
+      {
+        "id": "s-in-2",
+        "statement": "src/views/about/AboutView.testIds.ts and AboutView.component.test.tsx: new test id and a test for the paragraph.",
+        "provenanceRef": "p-plan"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-out-1",
+        "statement": "Any change to HomeView.tsx or the Clock component, new dependencies, routing, a new About component, and copy for any widget other than the clock.",
+        "provenanceRef": "p-card"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "The card does not give the wording. The paragraph is static copy describing the clock as it exists today (live time updated every second, 24 hour default, a 12 hour view toggle button). The component test asserts the paragraph exists and mentions the clock, not the full sentence, so copy edits do not break it.",
+      "provenanceRef": "p-assume-content"
+    },
+    {
+      "id": "o-2",
+      "category": "context",
+      "statement": "AboutView is currently a section with a single h1 and a data-id heading test id. The Clock widget (src/components/clock/Clock.tsx) renders a ticking time and a 12 hour view toggle button, and is mounted in HomeView.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-card",
+      "sourceType": "user",
+      "source": "Card: New Feature - Add About text. Add a paragraph of text to the AboutView.tsx about clock widget on the HomeView.tsx.",
+      "capturedAt": "2026-11-01T20:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-assume-content",
+      "sourceType": "inferred",
+      "source": "Card does not give the wording; conservative choice is a short factual description of the clock's current behaviour.",
+      "capturedAt": "2026-11-01T20:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-plan",
+      "sourceType": "repository",
+      "source": "AGENTS.md capability owners; src/views/about/AboutView.tsx and its test and testIds; src/views/home/HomeView.tsx; src/components/clock/Clock.tsx",
+      "capturedAt": "2026-11-01T20:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/about/AboutView.tsx, src/views/home/HomeView.tsx, src/components/clock/Clock.tsx",
+      "capturedAt": "2026-11-01T20:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-plan-approval",
+      "sourceType": "user",
+      "source": "Card text: the owner must approve the plan before any work starts; stop at a valid planned gate.",
+      "capturedAt": "2026-11-01T20:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-plan-approval",
+      "decisions": [
+        {
+          "id": "d-plan-1",
+          "status": "pending",
+          "rationale": "Awaiting owner approval of the plan.",
+          "provenanceRef": "p-plan-approval",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-01T20:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React component (no new state)",
+      "rationale": "The paragraph is static render output.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand (src/store/appStore.ts), unused",
+      "rationale": "No client state involved.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary (unused)",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic; the change is static markup.",
+      "provenanceRef": "p-plan"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered behaviour: AboutView shows a paragraph about the clock widget next to the heading.",
+      "provenanceRef": "p-plan"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the full npm test suite is still run as regression verification.",
+      "provenanceRef": "p-plan"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text in an already component-tested view; no new routed flow.",
+      "provenanceRef": "p-plan"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "AboutView renders a paragraph describing the clock widget below the About heading.",
+      "doneWhen": "The component test for the paragraph passes, the existing heading test still passes, the full suite is green, and tsc and eslint are clean.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1",
+        "v-2"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "AboutView renders a paragraph (by its new test id) whose text mentions the clock, alongside the About heading.",
+      "command": "npm run test:component -- src/views/about",
+      "preImplementation": true,
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Unable to find an element by the clock paragraph test id; AboutView renders only the heading.",
+      "status": "planned",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "The AboutView component tests, new and existing, pass.",
+      "status": "planned",
+      "provenanceRef": "p-plan",
+      "command": "npm run test:component -- src/views/about"
+    },
+    {
+      "id": "v-2",
+      "layer": "integration",
+      "requirement": "Full suite, tsc build and eslint pass with no regression.",
+      "status": "planned",
+      "provenanceRef": "p-plan",
+      "command": "npm run build"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-plan"
+  }
+}
