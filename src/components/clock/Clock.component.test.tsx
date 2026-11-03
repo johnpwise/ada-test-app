@@ -87,6 +87,79 @@ describe("Clock", () => {
     expect(vi.getTimerCount()).toBe(0);
   });
 
+  it("should offer a labelled city dropdown that defaults to local time", () => {
+    // Arrange
+
+    // Act
+    render(<Clock />);
+
+    // Assert
+    const select = screen.getByLabelText("City");
+    expect(select).toBe(screen.getByTestId(CLOCK_TEST_IDS.citySelect));
+    expect(select).toHaveValue("local");
+    expect(screen.getByRole("option", { name: "Local time" })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "Tokyo" })).toBeInTheDocument();
+  });
+
+  it("should show the time in the chosen city", () => {
+    // Arrange
+    vi.setSystemTime(new Date("2026-11-03T05:30:00Z"));
+    render(<Clock />);
+
+    // Act
+    fireEvent.change(screen.getByTestId(CLOCK_TEST_IDS.citySelect), {
+      target: { value: "Asia/Tokyo" },
+    });
+
+    // Assert
+    expect(screen.getByTestId(CLOCK_TEST_IDS.time)).toHaveTextContent("14:30.00");
+  });
+
+  it("should apply the 12 hour view to the chosen city", () => {
+    // Arrange
+    vi.setSystemTime(new Date("2026-11-03T05:30:00Z"));
+    render(<Clock />);
+    fireEvent.change(screen.getByTestId(CLOCK_TEST_IDS.citySelect), {
+      target: { value: "Asia/Tokyo" },
+    });
+
+    // Act
+    fireEvent.click(screen.getByTestId(CLOCK_TEST_IDS.toggle));
+
+    // Assert
+    expect(screen.getByTestId(CLOCK_TEST_IDS.time)).toHaveTextContent("02:30.00 PM");
+  });
+
+  it("should return to local time when Local time is selected again", () => {
+    // Arrange
+    render(<Clock />);
+    const select = screen.getByTestId(CLOCK_TEST_IDS.citySelect);
+    fireEvent.change(select, { target: { value: "Asia/Tokyo" } });
+
+    // Act
+    fireEvent.change(select, { target: { value: "local" } });
+
+    // Assert
+    expect(screen.getByTestId(CLOCK_TEST_IDS.time)).toHaveTextContent("14:54.00");
+  });
+
+  it("should keep ticking after a city is chosen", () => {
+    // Arrange
+    vi.setSystemTime(new Date("2026-11-03T05:30:00Z"));
+    render(<Clock />);
+    fireEvent.change(screen.getByTestId(CLOCK_TEST_IDS.citySelect), {
+      target: { value: "Asia/Tokyo" },
+    });
+
+    // Act
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
+
+    // Assert
+    expect(screen.getByTestId(CLOCK_TEST_IDS.time)).toHaveTextContent("14:30.01");
+  });
+
   it("should not render a clock face", () => {
     // Arrange
 
