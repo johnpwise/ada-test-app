@@ -68,4 +68,50 @@ describe("formatClock", () => {
     // Assert
     expect(result).toBe("12:00.00 PM");
   });
+
+  describe("with a time zone", () => {
+    const instant = new Date("2026-11-03T05:30:00Z");
+
+    it("should format 24 hour time in the given time zone", () => {
+      // Arrange
+
+      // Act
+      const result = formatClock(instant, "24h", "Asia/Tokyo");
+
+      // Assert
+      expect(result).toBe("14:30.00");
+    });
+
+    it("should format 12 hour time in the given time zone", () => {
+      // Arrange
+
+      // Act
+      const result = formatClock(instant, "12h", "Asia/Tokyo");
+
+      // Assert
+      expect(result).toBe("02:30.00 PM");
+    });
+
+    it("should show midnight in the given time zone as 00 in 24 hour view and 12 AM in 12 hour view", () => {
+      // Arrange
+
+      // Act
+      const result24 = formatClock(instant, "24h", "America/New_York");
+      const result12 = formatClock(instant, "12h", "America/New_York");
+
+      // Assert
+      expect(result24).toBe("00:30.00");
+      expect(result12).toBe("12:30.00 AM");
+    });
+
+    it("should support half hour offsets", () => {
+      // Arrange
+
+      // Act
+      const result = formatClock(instant, "24h", "Asia/Kolkata");
+
+      // Assert
+      expect(result).toBe("11:00.00");
+    });
+  });
 });

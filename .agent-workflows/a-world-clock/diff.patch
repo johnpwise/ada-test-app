@@ -1,0 +1,41 @@
+diff --git a/src/components/clock/Clock.tsx b/src/components/clock/Clock.tsx
+--- a/src/components/clock/Clock.tsx
++++ b/src/components/clock/Clock.tsx
+@@ -1,13 +1,20 @@
++import { useEffect, useState, type ChangeEvent } from "react";
++import { WORLD_CITIES } from "../../lib/worldCities";
++  const [timeZoneChoice, setTimeZoneChoice] = useState(LOCAL_TIME_VALUE);
++        <label htmlFor="clock-city">City</label>
++        <select id="clock-city" value={timeZoneChoice} onChange={handleCityChange}>
+diff --git a/src/components/clock/Clock.testIds.ts b/src/components/clock/Clock.testIds.ts
+--- a/src/components/clock/Clock.testIds.ts
++++ b/src/components/clock/Clock.testIds.ts
+@@ -2,4 +2,5 @@
++  citySelect: "clock-city-select",
+diff --git a/src/components/clock/Clock.component.test.tsx b/src/components/clock/Clock.component.test.tsx
+--- a/src/components/clock/Clock.component.test.tsx
++++ b/src/components/clock/Clock.component.test.tsx
+@@ -87,6 +87,79 @@
++  it("should show the time in the chosen city", () => {
+diff --git a/src/lib/formatClock.ts b/src/lib/formatClock.ts
+--- a/src/lib/formatClock.ts
++++ b/src/lib/formatClock.ts
+@@ -2,15 +2,35 @@
++export function formatClock(date: Date, hourCycle: HourCycle, timeZone?: string): string {
+diff --git a/src/lib/formatClock.unit.test.ts b/src/lib/formatClock.unit.test.ts
+--- a/src/lib/formatClock.unit.test.ts
++++ b/src/lib/formatClock.unit.test.ts
+@@ -68,4 +68,50 @@
++  describe("with a time zone", () => {
+diff --git a/src/lib/worldCities.ts b/src/lib/worldCities.ts
+new file mode 100644
+--- /dev/null
++++ b/src/lib/worldCities.ts
+@@ -0,0 +1,22 @@
++export const WORLD_CITIES: readonly WorldCity[] = [
+diff --git a/src/lib/worldCities.unit.test.ts b/src/lib/worldCities.unit.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/lib/worldCities.unit.test.ts
+@@ -0,0 +1,26 @@
++describe("WORLD_CITIES", () => {

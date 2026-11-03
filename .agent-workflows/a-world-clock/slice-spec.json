@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "a-world-clock",
+  "workflowId": "a-world-clock",
+  "kind": "feature",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-11-03T00:00:00.000Z",
+  "updatedAt": "2026-11-03T00:00:00.000Z",
+  "objective": {
+    "statement": "The clock widget on HomeView can show the time of a major city around the world, chosen by the user from a dropdown.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "Time zone aware formatting in the pure helper, a new select in the Clock component and a fixed city list; no dependency, store or contract change.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The Clock widget contains a dropdown (select) with a visible label that lets the user choose a major city.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "Choosing a city makes the clock show the current time in that city's IANA time zone, using the existing HH:MM.SS pattern and the selected 12/24 hour view.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The default selection is the browser's local time, so the existing behaviour and tests are unchanged until the user picks a city.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-4",
+      "statement": "The dropdown offers a fixed list of major cities across the world's regions, each mapped to an IANA time zone, so daylight saving is handled by the platform.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-5",
+      "statement": "The clock still ticks every second and clears its timer on unmount after a city is chosen.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "An optional time zone argument on formatClock, a world city list in src/lib, and a city dropdown in the Clock component with local state, plus colocated tests.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-2",
+        "statement": "Multiple simultaneous clocks, free-text city search, persisting the choice, store changes, new dependencies, date display, e2e tests, changes to other HomeView behaviour.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "The city list is a fixed set of about 20 major cities (for example London, New York, Tokyo, Sydney); the owner did not name cities.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "The selection resets to local time on reload; it stays component-local state and is not written to Zustand or localStorage, matching the existing 12/24 choice.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-3",
+      "category": "assumption",
+      "statement": "The first option is 'Local time' so the user can return to the browser time zone; the card does not forbid it and existing tests rely on local time.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-4",
+      "category": "constraint",
+      "statement": "Follow ThemePicker's select pattern, data-id test ids in Clock.testIds.ts, AAA test layout, no any, and keep the existing Clock and formatClock tests unchanged.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "o-5",
+      "category": "risk",
+      "statement": "Intl.DateTimeFormat time zone support must work in the Node test runtime; unit tests use fixed UTC instants and zones without ambiguous daylight saving edges.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "New Feature request: A World Clock - make the clock widget on HomeView.tsx changeable to a major city timezone around the world, using a dropdown for the city choice",
+      "capturedAt": "2026-11-03T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "delivery-engineer planning",
+      "capturedAt": "2026-11-03T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "AGENTS.md, src/components/clock/Clock.tsx, src/components/theme-picker/ThemePicker.tsx, src/lib/formatClock.ts",
+      "capturedAt": "2026-11-03T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React local state/hooks",
+      "rationale": "The selected city is component-local useState next to the existing hour cycle state.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand",
+      "rationale": "Not used: nothing else needs the city and it is not persisted (o-2).",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary",
+      "rationale": "No remote data in this slice.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "Time zone conversion in formatClock and the city list shape are isolated pure logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The dropdown, the zone switch and the retained tick are component behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module or API flow; npm run test is run as regression.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Small self-contained widget change with no new route; component tests cover the behaviour.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "formatClock accepts an optional IANA time zone and returns the time in that zone in 24h and 12h; WORLD_CITIES lists major cities with time zones.",
+      "doneWhen": "t-1 passes.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "Clock shows a labelled city dropdown defaulting to local time; choosing a city shows that city's time.",
+      "doneWhen": "t-2 passes and the full suite stays green.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-2"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "unit",
+      "description": "formatClock with a time zone: Tokyo 24h and 12h, New York, and a half-hour zone (Kolkata); WORLD_CITIES entries have a label and a valid IANA zone.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/formatClock.unit.test.ts src/lib/worldCities.unit.test.ts",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-2",
+      "layer": "component",
+      "description": "Clock renders a labelled city select defaulting to local time, shows the chosen city's time, honours the 12 hour toggle, and keeps ticking.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/clock",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "worldCities module does not exist and formatClock ignores the time zone argument.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/formatClock.unit.test.ts src/lib/worldCities.unit.test.ts",
+      "exitCode": 1,
+      "observedFailure": "worldCities import failed to resolve (suite did not load); 4 of 10 formatClock tests failed because the time zone was ignored"
+    },
+    {
+      "id": "r-2",
+      "testId": "t-2",
+      "expectedFailure": "Clock has no city select, so lookups by the new data-id fail.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/clock",
+      "exitCode": 1,
+      "observedFailure": "5 of 12 Clock tests failed: no label City and no element with data-id clock-city-select"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "npm run test, npm run lint and npm run build pass.",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test; npm run lint; npm run build",
+      "exitCode": 0,
+      "result": "unit 30/30, component 45/45 passed; eslint clean; tsc and vite build succeeded"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
