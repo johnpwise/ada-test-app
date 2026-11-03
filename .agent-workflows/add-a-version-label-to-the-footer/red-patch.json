@@ -1,0 +1,36 @@
+{
+  "status": "implementation-ready",
+  "updatedAt": "2026-11-01T19:07:00.000Z",
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Failed to resolve import ./appVersion (module does not exist yet).",
+      "status": "captured",
+      "provenanceRef": "p-plan",
+      "command": "npm run test:unit -- src/lib/appVersion",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import \"./appVersion\" from src/lib/appVersion.unit.test.ts"
+    },
+    {
+      "id": "red-2",
+      "testId": "t-2",
+      "expectedFailure": "Unable to find an element by the version label test id inside the footer.",
+      "status": "captured",
+      "provenanceRef": "p-plan",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "exitCode": 1,
+      "observedFailure": "Suite failed: Failed to resolve import \"../../lib/appVersion\" (module missing; the suite imports APP_VERSION)"
+    },
+    {
+      "id": "red-3",
+      "testId": "t-3",
+      "expectedFailure": "Rendering with a version prop is not supported yet, so the blank-version case still shows the real version label and the absence assertion fails.",
+      "status": "captured",
+      "provenanceRef": "p-feedback",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "exitCode": 1,
+      "observedFailure": "Same suite failed to resolve import \"../../lib/appVersion\" before any test ran"
+    }
+  ]
+}

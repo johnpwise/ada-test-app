@@ -1,0 +1,39 @@
+diff --git a/src/components/last-updated-footer/LastUpdatedFooter.component.test.tsx b/src/components/last-updated-footer/LastUpdatedFooter.component.test.tsx
+--- a/src/components/last-updated-footer/LastUpdatedFooter.component.test.tsx
++++ b/src/components/last-updated-footer/LastUpdatedFooter.component.test.tsx
+@@ -1,6 +1,7 @@
++import { APP_VERSION } from "../../lib/appVersion";
+@@ -43,6 +44,37 @@
++  it("should show the app version label inside the footer", () => {
++  it.each(["", "   "])("should omit the version label for blank version %j", (version) => {
+diff --git a/src/components/last-updated-footer/LastUpdatedFooter.testIds.ts b/src/components/last-updated-footer/LastUpdatedFooter.testIds.ts
+--- a/src/components/last-updated-footer/LastUpdatedFooter.testIds.ts
++++ b/src/components/last-updated-footer/LastUpdatedFooter.testIds.ts
+@@ -1,4 +1,5 @@
++  version: "last-updated-footer-version",
+diff --git a/src/components/last-updated-footer/LastUpdatedFooter.tsx b/src/components/last-updated-footer/LastUpdatedFooter.tsx
+--- a/src/components/last-updated-footer/LastUpdatedFooter.tsx
++++ b/src/components/last-updated-footer/LastUpdatedFooter.tsx
+@@ -1,5 +1,6 @@
++import { APP_VERSION } from "../../lib/appVersion";
++  version?: string;
++export default function LastUpdatedFooter({ updatedAt, version = APP_VERSION }: LastUpdatedFooterProps) {
++  const versionLabel = version.trim();
++      <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-4 py-3 text-sm text-muted-foreground sm:px-6 lg:px-8">
++        <p data-id={LAST_UPDATED_FOOTER_TEST_IDS.text}>
++        {versionLabel ? (
++          <span data-id={LAST_UPDATED_FOOTER_TEST_IDS.version}>v{versionLabel}</span>
+diff --git a/src/lib/appVersion.ts b/src/lib/appVersion.ts
+new file mode 100644
+--- /dev/null
++++ b/src/lib/appVersion.ts
+@@ -0,0 +1,3 @@
++import { version } from "../../package.json";
++export const APP_VERSION: string = version;
+diff --git a/src/lib/appVersion.unit.test.ts b/src/lib/appVersion.unit.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/lib/appVersion.unit.test.ts
+@@ -0,0 +1,10 @@
++import { APP_VERSION } from "./appVersion";
++    expect(version).toMatch(/^\d+\.\d+\.\d+/);

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "add-a-version-label-to-the-footer",
+    "workflowId": "add-a-version-label-to-the-footer",
+    "revision": 4,
+    "hash": "02f6693dcaf3506f2728df1d9df54efbec2c4d65f9f79cfcf3d353f6f2756b3d"
+  },
+  "diff": {
+    "files": [
+      "src/components/last-updated-footer/LastUpdatedFooter.component.test.tsx",
+      "src/components/last-updated-footer/LastUpdatedFooter.testIds.ts",
+      "src/components/last-updated-footer/LastUpdatedFooter.tsx",
+      "src/lib/appVersion.ts",
+      "src/lib/appVersion.unit.test.ts"
+    ],
+    "hash": "7352cdc70fcc71a176006379df9c15344d640ef63700f3d779dcff68642e5cb2"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "SLICE_SPEC_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-slice-signal"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "api-contract-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "95f7a3e9e1f0fccc8b12a42e580f8899b9553d07c0b1ad910692bce1af67dc4f"
+}
