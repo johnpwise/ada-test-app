@@ -4,58 +4,21 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { CLOCK_TEST_IDS } from "../../components/clock/Clock.testIds";
 import { PAGE_VIEWS_PANEL_TEST_IDS } from "../../components/page-views-panel/PageViewsPanel.testIds";
 import HomeView from "./HomeView";
-import { HOME_VIEW_TEST_IDS } from "./HomeView.testIds";
 
 describe("HomeView", () => {
   afterEach(() => {
     cleanup();
   });
 
-  it("should render the ADA plugin test text inside the red bordered square", () => {
+  it("should not render the green bordered box or its text", () => {
     // Arrange
 
     // Act
     render(<HomeView />);
 
     // Assert
-    const square = screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare);
-    expect(square).toHaveTextContent("ADA plugin test");
-  });
-
-  it("should center the text horizontally and vertically within the red bordered square", () => {
-    // Arrange
-
-    // Act
-    render(<HomeView />);
-
-    // Assert
-    const square = screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare);
-    expect(square.className).toContain("flex");
-    expect(square.className).toContain("items-center");
-    expect(square.className).toContain("justify-center");
-  });
-
-  it("should size the text at 8px", () => {
-    // Arrange
-
-    // Act
-    render(<HomeView />);
-
-    // Assert
-    const square = screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare);
-    expect(square.className).toContain("text-[8px]");
-  });
-
-  it("should render a green border instead of a red one", () => {
-    // Arrange
-
-    // Act
-    render(<HomeView />);
-
-    // Assert
-    const square = screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare);
-    expect(square.className).toContain("border-green-500");
-    expect(square.className).not.toContain("border-red-500");
+    expect(screen.queryByLabelText("Red bordered square")).not.toBeInTheDocument();
+    expect(screen.queryByText("ADA plugin test")).not.toBeInTheDocument();
   });
 
   it("should render the page views by day panel", () => {

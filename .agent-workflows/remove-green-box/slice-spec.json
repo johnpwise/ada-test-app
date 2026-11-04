@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "remove-green-box",
+  "workflowId": "remove-green-box",
+  "kind": "feature",
+  "revision": 1,
+  "status": "implementation-ready",
+  "createdAt": "2026-11-04T00:00:00.000Z",
+  "updatedAt": "2026-11-04T00:00:00.000Z",
+  "objective": {
+    "statement": "Remove the green bordered div on HomeView.tsx and all the contents it contains.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "Deleting one static presentational element in a single view; no contracts, state or approval-boundary work.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView no longer renders the green bordered div or its 'ADA plugin test' text.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The rest of HomeView (header, Clock, ModeToggle, ThemePicker, PageViewsPanel) still renders unchanged.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "src/views/home/HomeView.tsx: delete the green bordered div and its contents.",
+        "provenanceRef": "p-user"
+      },
+      {
+        "id": "s-2",
+        "statement": "src/views/home/HomeView.component.test.tsx: replace the four tests that assert the removed div with one absence test; src/App.component.test.tsx: assert HomeView via its heading instead of the removed div's test id; src/views/home/HomeView.testIds.ts is now unused (deletion denied by the executor, see o-3).",
+        "provenanceRef": "p-inferred"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-3",
+        "statement": "Any other element or view, the clock/page-views tests, e2e specs and workflow records of earlier slices.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "The 'green bordered div' is the single div with border-green-500, aria-label 'Red bordered square' and text 'ADA plugin test' (the only bordered div in HomeView.tsx).",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "The four existing tests that assert the removed div's text, centring, size and border colour test intentionally removed behaviour, so they are deleted rather than kept; this is the sanctioned case for changing existing tests.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-3",
+      "category": "assumption",
+      "statement": "Correction to the plan: HomeView.testIds.ts was also imported by src/App.component.test.tsx, so those two assertions now use the 'Home View' heading role. The file is now unused; the executor denied rm, so it is left in place as follow-up debt for deletion.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    { "id": "p-user", "sourceType": "user", "source": "New Feature request: Remove Green Box", "capturedAt": "2026-11-04T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-inferred", "sourceType": "inferred", "source": "delivery-engineer planning", "capturedAt": "2026-11-04T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-repo", "sourceType": "repository", "source": "src/views/home/HomeView.tsx, HomeView.component.test.tsx, HomeView.testIds.ts, AGENTS.md", "capturedAt": "2026-11-04T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-plan-approval", "sourceType": "inferred", "source": "Executor notice ADA_PLAN_APPROVAL=required: the owner must approve the plan before implementation.", "capturedAt": "2026-11-04T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-approval-1", "sourceType": "approval", "source": "gate record 61185c52a7456e774d998f0d0f97cae202e1b1d81b9e928d9317be1578fec79c; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-04T18:21:03.903Z", "capturedAt": "2026-11-04T18:21:03.903Z", "capturedBy": "delivery-engineer" }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-plan-approval",
+      "decisions": [
+        {
+          "id": "d-plan-1",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record 61185c52a7456e774d998f0d0f97cae202e1b1d81b9e928d9317be1578fec79c).",
+          "provenanceRef": "p-approval-1",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-04T18:21:03.903Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    { "key": "local_ui_state_owner", "owner": "React local state/hooks", "rationale": "Static presentational markup; no state.", "provenanceRef": "p-repo" },
+    { "key": "shared_client_state_owner", "owner": "Zustand", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" },
+    { "key": "server_state_owner", "owner": "React Query + Axios boundary", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" }
+  ],
+  "testMatrix": {
+    "unit": { "requirement": "N/A", "rationale": "No isolated logic.", "provenanceRef": "p-inferred" },
+    "component": { "requirement": "required", "rationale": "Absence of the div is rendered component behaviour.", "provenanceRef": "p-inferred" },
+    "integration": { "requirement": "N/A", "rationale": "No cross-module flow change; npm run test runs as regression.", "provenanceRef": "p-inferred" },
+    "e2e": { "requirement": "N/A", "rationale": "No e2e spec references the removed element; static removal with no user flow.", "provenanceRef": "p-inferred" }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView renders without the green bordered div and its text.",
+      "doneWhen": "t-1 passes, the four obsolete div tests and the testIds file are removed, and the full suite, lint and build stay green.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-1"],
+      "verificationIds": ["v-1"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "HomeView does not render the green bordered div (no element with aria-label 'Red bordered square') nor the text 'ADA plugin test'.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "The div and the 'ADA plugin test' text are still present, so the absence assertions fail.",
+      "status": "captured",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "1 failed | 2 passed: expected document not to contain element, found div aria-label 'Red bordered square'",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    { "id": "v-1", "layer": "component", "requirement": "npm run test, npm run lint and npm run build pass.", "status": "passing", "command": "npm run test; npm run lint; npm run build", "exitCode": 0, "result": "unit 30/30, component 42/42, lint clean, tsc and vite build succeeded", "provenanceRef": "p-inferred" }
+  ],
+  "e2eStatus": { "status": "N/A", "provenanceRef": "p-inferred" }
+}
