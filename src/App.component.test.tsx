@@ -5,7 +5,6 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { routes } from "./router";
 import { ABOUT_VIEW_TEST_IDS } from "./views/about/AboutView.testIds";
 import { CONTACT_VIEW_TEST_IDS } from "./views/contact/ContactView.testIds";
-import { HOME_VIEW_TEST_IDS } from "./views/home/HomeView.testIds";
 import { APP_SHELL_TEST_IDS } from "./app/appShell.testIds";
 import { NAVBAR_TEST_IDS } from "./components/navbar/Navbar.testIds";
 import { LAST_UPDATED_FOOTER_TEST_IDS } from "./components/last-updated-footer/LastUpdatedFooter.testIds";
@@ -50,7 +49,7 @@ describe("App", () => {
     render(<RouterProvider router={router} />);
 
     // Assert
-    expect(screen.getByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Home View" })).toBeInTheDocument();
   });
 
   it("should render the AboutView at the about route", () => {
@@ -84,6 +83,6 @@ describe("App", () => {
     fireEvent.click(screen.getByTestId(NAVBAR_TEST_IDS.homeLink));
 
     // Assert
-    expect(await screen.findByTestId(HOME_VIEW_TEST_IDS.redBorderedSquare)).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Home View" })).toBeInTheDocument();
   });
 });

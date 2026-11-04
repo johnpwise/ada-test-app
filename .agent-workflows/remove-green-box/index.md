@@ -4,8 +4,8 @@
 
 - **Workflow ID:** remove-green-box
 - **Active Owner:** delivery-engineer
-- **Current Artifact ID:** artifact-001
-- **Status:** awaiting-approval
+- **Current Artifact ID:** artifact-002
+- **Status:** ready-for-closeout
 - **Canonical slice spec:** .agent-workflows/remove-green-box/slice-spec.json (revision 1)
 - **Last Updated (UTC):** 2026-11-04T00:00:00.000Z
 
@@ -13,4 +13,5 @@
 
 | Timestamp (UTC) | Type | From → To | Artifact ID | Path | Status Note |
 | --- | --- | --- | --- | --- | --- |
+| 2026-11-04T18:30:00.000Z | step-record | delivery-engineer → delivery-engineer | artifact-002 | .agent-workflows/remove-green-box/step-002.md | Plan approved; RED/GREEN done; closeout gate validated |
 | 2026-11-04T00:00:00.000Z | step-record | delivery-engineer → delivery-engineer | artifact-001 | .agent-workflows/remove-green-box/step-001.md | Intake, preflight, plan; awaiting plan approval |

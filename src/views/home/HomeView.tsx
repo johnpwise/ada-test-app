@@ -2,7 +2,6 @@ import Clock from "../../components/clock/Clock";
 import ModeToggle from "../../components/mode-toggle/ModeToggle";
 import PageViewsPanel from "../../components/page-views-panel/PageViewsPanel";
 import ThemePicker from "../../components/theme-picker/ThemePicker";
-import { HOME_VIEW_TEST_IDS } from "./HomeView.testIds";
 
 export default function HomeView() {
   return (
@@ -18,13 +17,6 @@ export default function HomeView() {
       <ModeToggle />
       <ThemePicker />
       <PageViewsPanel />
-      <div
-        aria-label="Red bordered square"
-        className="mx-auto flex size-[200px] items-center justify-center rounded-[10px] border-2 border-green-500 text-[8px]"
-        data-id={HOME_VIEW_TEST_IDS.redBorderedSquare}
-      >
-        ADA plugin test
-      </div>
     </section>
   );
 }
