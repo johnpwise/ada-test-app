@@ -48,6 +48,19 @@ describe("Clock", () => {
     expect(screen.getByTestId(CLOCK_TEST_IDS.time)).toHaveTextContent("14:54.00");
   });
 
+  it("should label the toggle with the view it switches to", () => {
+    // Arrange
+    render(<Clock />);
+    const toggle = screen.getByTestId(CLOCK_TEST_IDS.toggle);
+    expect(toggle).toHaveTextContent("12 hour view");
+
+    // Act
+    fireEvent.click(toggle);
+
+    // Assert
+    expect(toggle).toHaveTextContent("24 hour view");
+  });
+
   it("should expose the active view through aria-pressed on the toggle", () => {
     // Arrange
     render(<Clock />);
