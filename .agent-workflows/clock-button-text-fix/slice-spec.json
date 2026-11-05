@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "clock-button-text-fix",
+  "workflowId": "clock-button-text-fix",
+  "kind": "bug",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-11-05T00:00:00.000Z",
+  "updatedAt": "2026-11-05T01:00:00.000Z",
+  "objective": {
+    "statement": "The clock toggle button label must reflect the view it switches to: \"24 hour view\" while the clock is in 12 hour mode.",
+    "provenanceRef": "p-user-1"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One label expression in one component, with one component test.",
+    "provenanceRef": "p-inferred-1"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "When the clock is in 12 hour mode, the toggle button text reads \"24 hour view\".",
+      "provenanceRef": "p-user-1"
+    },
+    {
+      "id": "ac-2",
+      "statement": "When the clock is in 24 hour mode (the default), the toggle button text still reads \"12 hour view\".",
+      "provenanceRef": "p-inferred-1"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-in-1",
+        "statement": "Toggle button label in src/components/clock/Clock.tsx (rendered by HomeView).",
+        "provenanceRef": "p-repo-1"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-out-1",
+        "statement": "Time formatting, aria-pressed behaviour, styling and HomeView layout.",
+        "provenanceRef": "p-inferred-1"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "bug-reproduction",
+      "statement": "Clock.tsx renders the literal text \"12 hour view\" regardless of hourCycle.",
+      "provenanceRef": "p-repo-1"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "The card names HomeView.tsx, but the button lives in the Clock component that HomeView renders; the fix is made there. The request's doubled quote in \"\"24 hour view\" is read as a typo.",
+      "provenanceRef": "p-inferred-1"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user-1",
+      "sourceType": "user",
+      "source": "Bug Fix card: Clock Button Text Fix",
+      "capturedAt": "2026-11-05T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred-1",
+      "sourceType": "inferred",
+      "source": "Conservative inference from the card",
+      "capturedAt": "2026-11-05T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo-1",
+      "sourceType": "repository",
+      "source": "src/components/clock/Clock.tsx",
+      "capturedAt": "2026-11-05T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "ui-component",
+      "owner": "src/components/clock/Clock.tsx",
+      "rationale": "Owns the toggle button and its label.",
+      "provenanceRef": "p-repo-1"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No pure logic changes; formatClock is untouched.",
+      "provenanceRef": "p-inferred-1"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The label is rendered output of the Clock component.",
+      "provenanceRef": "p-inferred-1"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No API or cross-module contract changes.",
+      "provenanceRef": "p-inferred-1"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Covered by the component test; no new journey.",
+      "provenanceRef": "p-inferred-1"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "Toggle button label shows the view it switches to.",
+      "doneWhen": "Component tests for both labels pass and the existing suite stays green.",
+      "capabilityOwnerKeys": [
+        "ui-component"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred-1"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "Toggle button reads \"12 hour view\" by default and \"24 hour view\" after being pressed.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/clock/Clock.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred-1"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Button text is still \"12 hour view\" after toggling.",
+      "status": "captured",
+      "provenanceRef": "p-inferred-1",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/clock/Clock.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "Expected toggle to have text \"24 hour view\"; received \"12 hour view\"."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "Clock component tests and the full suite pass.",
+      "status": "passing",
+      "provenanceRef": "p-inferred-1",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 30 passed, component 43 passed; npm run lint exit 0"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred-1"
+  }
+}

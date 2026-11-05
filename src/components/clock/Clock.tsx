@@ -65,7 +65,7 @@ export default function Clock() {
         className="inline-flex items-center rounded-md border border-primary-line bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         onClick={() => setHourCycle(is12Hour ? "24h" : "12h")}
       >
-        12 hour view
+        {is12Hour ? "24 hour view" : "12 hour view"}
       </button>
     </section>
   );
