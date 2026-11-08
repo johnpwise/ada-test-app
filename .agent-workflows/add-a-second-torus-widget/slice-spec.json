@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-a-second-torus-widget",
+  "workflowId": "add-a-second-torus-widget",
+  "kind": "feature",
+  "revision": 3,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-11-08T13:00:00.000Z",
+  "updatedAt": "2026-11-08T13:20:00.000Z",
+  "objective": {
+    "statement": "Add a second torus widget to HomeView.tsx; the second torus must be red.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "TorusWidget hard-codes green with no props, so a red instance needs a small, backwards-compatible colour prop on the component as well as a second mount in HomeView, and one existing HomeView test asserts a single widget. Still two presentational files, no state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders two torus widgets: the existing green one and a second one whose torus is red (data-color \"red\"; fill and gradient stops use red hex values, no green).",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "TorusWidget rendered without props is unchanged: still green with the same geometry (150px outer diameter, 6px ring), size (no bigger than 200px by 200px) and label.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The red torus has the same geometry, gradient shape, widget size and label as the green one; only the colour differs.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "HomeView.tsx (mount a second TorusWidget after the first), TorusWidget.tsx (optional colour prop, default green, adding a red palette), and the matching component tests for both.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "Torus geometry, widget size, label text, other HomeView widgets and layout, theme tokens, dependencies, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "constraint",
+      "statement": "TorusWidget.tsx takes no props and hard-codes TORUS_GREEN #16a34a, TORUS_GREEN_LIGHT #4ade80, TORUS_GREEN_DARK #14532d and data-color=\"green\". HomeView mounts it once, as the last child of the section.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "The card names no exact red. Assumed the same Tailwind family as the green: base #dc2626, light #f87171, dark #7f1d1d, keeping the gradient shape.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-3",
+      "category": "assumption",
+      "statement": "Colour is chosen by a new optional prop on TorusWidget (color: \"green\" | \"red\", default \"green\") rather than a copied component, so the default render and existing tests are unchanged. No new dependency or contract for other consumers: the prop is optional.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-4",
+      "category": "assumption",
+      "statement": "The second widget is placed directly after the first, at the end of HomeView. The card gives no position; the end of the section is the smallest layout change.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-5",
+      "category": "assumption",
+      "statement": "Both widgets keep the label \"Torus Widget\" and aria-label \"Torus Widget\", and the same data-id test ids. The card does not ask for a different label; changing it would be a user-visible decision. Consequence: HomeView test 'should render the torus widget' uses getByTestId and would throw on two matches, so it is intentionally changed to assert two widgets. The torus-level test is scoped by colour rather than by id.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-6",
+      "category": "risk",
+      "statement": "Two sections share the accessible name \"Torus Widget\". The torus svg is aria-hidden, so the label text is the only cue; screen-reader users cannot tell the two apart. Accepted for now per ob-5; the owner may ask for distinct labels.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Add a second torus widget - Please add a second torus widget to the HomeView.tsx. This torus widget colour must be red.",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, src/components/torus-widget/TorusWidget.tsx and the component tests beside them",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-executor",
+      "sourceType": "inferred",
+      "source": "Executor instruction: plan approval required before any work starts",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Plan approval gate record f8b880b87756b10dacf5206a306024311fc81429ad7c51c2f7371c118f49700d, approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-08T12:24:52.887Z",
+      "capturedAt": "2026-11-08T13:05:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-executor",
+      "decisions": [
+        {
+          "id": "ap-plan-d0",
+          "status": "pending",
+          "rationale": "Plan saved; waiting for owner approval.",
+          "provenanceRef": "p-executor",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-08T13:00:00.000Z"
+        },
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the saved plan (gate record f8b880b8...9700d).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T12:24:52.887Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless presentational component; colour comes from a prop)",
+      "rationale": "No UI state; the colour is a render-time prop.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic outside rendering.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The rendered colour of the torus and the number of widgets on HomeView are the behaviours under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "HomeView composition is covered by its component test; no routing, store or API interaction.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static visual addition with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "TorusWidget accepts an optional colour and renders a red torus when asked, staying green by default.",
+      "doneWhen": "The red-torus component test passes and every existing TorusWidget test still passes unchanged.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-red-torus"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "HomeView renders two torus widgets, the second red.",
+      "doneWhen": "The HomeView two-widgets test passes and the other HomeView tests still pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-home-two"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-red-torus",
+      "layer": "component",
+      "description": "TorusWidget rendered with color=\"red\" has data-color \"red\", fill and every gradient stop a red hex (#dc2626, #f87171, #7f1d1d) and none of the green values.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home-two",
+      "layer": "component",
+      "description": "HomeView renders exactly two torus widgets, one with a green torus and one with a red torus. Replaces the single-widget assertion in 'should render the torus widget', which cannot hold with two widgets (ob-5).",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-red-torus",
+      "testId": "t-red-torus",
+      "expectedFailure": "Expected data-color \"red\" but received \"green\" (the prop is ignored or does not exist yet).",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "TorusWidget color=\"red\": expected data-color \"red\" but received \"green\"."
+    },
+    {
+      "id": "red-home-two",
+      "testId": "t-home-two",
+      "expectedFailure": "Expected two torus widgets but found one; no red torus on HomeView.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "HomeView: expected two torus widgets but got 1."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes; npm run lint and npm run build are clean",
+      "status": "passing",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 50 tests passed; npm run lint clean; npm run build clean"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
