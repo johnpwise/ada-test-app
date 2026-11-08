@@ -3,10 +3,10 @@
   "sliceId": "torus-widget-colour-wrong",
   "workflowId": "torus-widget-colour-wrong",
   "kind": "bug",
-  "revision": 1,
-  "status": "planned",
+  "revision": 3,
+  "status": "ready-for-closeout",
   "createdAt": "2026-11-08T12:00:00.000Z",
-  "updatedAt": "2026-11-08T12:00:00.000Z",
+  "updatedAt": "2026-11-08T12:20:00.000Z",
   "objective": {
     "statement": "The torus widget on HomeView.tsx renders blue; it must render green.",
     "provenanceRef": "p-user"
@@ -92,6 +92,13 @@
       "source": "Executor instruction: plan approval required before any work starts",
       "capturedAt": "2026-11-08T12:00:00.000Z",
       "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approved the plan. gate record 5f125e8e5ebb4f394ddf7e274b8db3520f65ccc891c0f28bafd56bce5b60c769; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-08T11:58:42.960Z",
+      "capturedAt": "2026-11-08T12:05:00.000Z",
+      "capturedBy": "delivery-engineer"
     }
   ],
   "approvals": [
@@ -108,6 +115,14 @@
           "provenanceRef": "p-executor",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-08T12:00:00.000Z"
+        },
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record 5f125e8e...).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T11:58:42.960Z"
         }
       ]
     }
@@ -168,7 +183,7 @@
       "verificationIds": [
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     }
   ],
@@ -187,8 +202,11 @@
       "id": "red-green",
       "testId": "t-green",
       "expectedFailure": "Expected data-color \"green\" but received \"blue\"; fill and stops are still the blue hex values.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "exitCode": 1,
+      "observedFailure": "should render a green torus: expected data-color=\"green\", received \"blue\" (1 failed, 4 passed)"
     }
   ],
   "verification": [
@@ -196,9 +214,11 @@
       "id": "v-component",
       "layer": "component",
       "requirement": "npm run test:component passes",
-      "status": "planned",
+      "status": "passing",
       "command": "npm run test:component",
-      "provenanceRef": "p-inferred"
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 49/49 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve"
     }
   ],
   "e2eStatus": {
