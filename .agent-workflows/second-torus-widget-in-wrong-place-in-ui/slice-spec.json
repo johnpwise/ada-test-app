@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "second-torus-widget-in-wrong-place-in-ui",
+  "workflowId": "second-torus-widget-in-wrong-place-in-ui",
+  "kind": "bug",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-08T13:00:00.000Z",
+  "updatedAt": "2026-11-08T13:00:00.000Z",
+  "objective": {
+    "statement": "On HomeView the red torus widget renders under the green torus widget; it must render to the right of the green torus widget, inline.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One layout wrapper in HomeView.tsx and one component test; no state, API, dependency or TorusWidget change.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "On HomeView the green torus widget and the red torus widget sit side by side in one horizontal row, with the red widget to the right of the green widget.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The two widgets keep their DOM order (green first, red second), their colours, their 200px by 200px size and their labels; the rest of HomeView is unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "A layout wrapper around the two TorusWidget elements in HomeView.tsx, a test id for it in HomeView.testIds.ts, and a layout assertion in HomeView.component.test.tsx.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "TorusWidget internals, torus geometry, colours, labels, the other HomeView sections, theme tokens, dependencies, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "bug-reproduction",
+      "statement": "HomeView renders <TorusWidget /> and <TorusWidget color=\"red\" /> as direct children of the section with class space-y-6, so each widget is its own block-level row and the red one stacks under the green one.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "Fix with a wrapper div using Tailwind flex row classes (flex items-start gap-4), added to HomeView only. No wrapping on narrow screens, because the card asks for inline placement. Gap of 1rem is a conservative choice matching the page's spacing scale.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-3",
+      "category": "assumption",
+      "statement": "jsdom does no layout, so the component test asserts the wrapper's flex row classes (flex present, flex-col absent) and that it contains the green then the red widget, via a new data-id test id. No e2e layout check is added.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: Bug Fix Second torus widget in wrong place in UI - The red torus widget on the HomeView.tsx is currently positioned under the green torus widget. I want it placed to the right of the green torus widget, inline please.",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, HomeView.component.test.tsx, HomeView.testIds.ts and src/components/torus-widget/TorusWidget.tsx",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-executor",
+      "sourceType": "inferred",
+      "source": "Executor instruction: plan approval required before any work starts",
+      "capturedAt": "2026-11-08T13:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-executor",
+      "decisions": [
+        {
+          "id": "ap-plan-d0",
+          "status": "pending",
+          "rationale": "Plan saved; waiting for owner approval.",
+          "provenanceRef": "p-executor",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-08T13:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless layout wrapper in HomeView)",
+      "rationale": "Layout change only.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The HomeView layout structure is the behaviour under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the component test renders the real HomeView and TorusWidget.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static layout change with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The green and red torus widgets render side by side in one flex row, green then red.",
+      "doneWhen": "The HomeView row-layout component test passes, and the other HomeView and TorusWidget tests still pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-row"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-row",
+      "layer": "component",
+      "description": "HomeView renders both torus widgets inside one wrapper (HOME_VIEW_TEST_IDS.torusRow) whose classes include flex and not flex-col, with the green widget first and the red widget second.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-row",
+      "testId": "t-row",
+      "expectedFailure": "Unable to find an element with the torus row data-id: the widgets are direct children of the section, with no flex row wrapper.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes, and npm run lint and npm run build are clean",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
