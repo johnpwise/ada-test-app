@@ -3,6 +3,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 
 import { CLOCK_TEST_IDS } from "../../components/clock/Clock.testIds";
 import { PAGE_VIEWS_PANEL_TEST_IDS } from "../../components/page-views-panel/PageViewsPanel.testIds";
+import { TORUS_WIDGET_TEST_IDS } from "../../components/torus-widget/TorusWidget.testIds";
 import HomeView from "./HomeView";
 
 describe("HomeView", () => {
@@ -39,5 +40,15 @@ describe("HomeView", () => {
 
     // Assert
     expect(screen.getByTestId(CLOCK_TEST_IDS.clock)).toBeInTheDocument();
+  });
+
+  it("should render the torus widget", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.widget)).toBeInTheDocument();
   });
 });
