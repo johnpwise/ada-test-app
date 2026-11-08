@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "make-the-torus-narrower",
+  "workflowId": "make-the-torus-narrower",
+  "kind": "feature",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-08T02:00:00.000Z",
+  "updatedAt": "2026-11-08T02:00:00.000Z",
+  "objective": {
+    "statement": "Make the torus in the torus widget (rendered on HomeView.tsx) 6 pixels in width.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One presentational component and its component test; no state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The torus ring (its band, from inner to outer edge) renders 6 pixels wide, measured at the rendered size.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The torus stays blue, keeps its gradient, and the widget stays no bigger than 200px by 200px; the label is unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "TorusWidget.tsx torus geometry and its component test; the widget is rendered by HomeView.tsx.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "Torus colour, widget size, label text, HomeView layout, dependencies, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "\"6 pixels in width\" is read as the ring thickness (the band width), keeping the 150px outer diameter, since a whole torus 6px across would be an unreadable dot. Open question q1 asks the owner to confirm.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "evidence",
+      "statement": "Today the svg is 150px with viewBox 100, so scale is 1.5; outer radius 46 and inner radius 20 give a ring about 39px wide. A 6px ring needs a 4-unit band, so inner radius 42.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Make the torus narrower",
+      "capturedAt": "2026-11-08T02:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T02:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/components/torus-widget/TorusWidget.tsx and its component test",
+      "capturedAt": "2026-11-08T02:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-executor",
+      "sourceType": "inferred",
+      "source": "Executor instruction: plan approval required before any work starts",
+      "capturedAt": "2026-11-08T02:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-executor",
+      "decisions": [
+        {
+          "id": "ap-plan-d1",
+          "status": "pending",
+          "rationale": "Plan saved at the planned gate; awaiting owner approval.",
+          "provenanceRef": "p-executor",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-08T02:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless presentational component)",
+      "rationale": "Geometry change only.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The rendered torus geometry is the behaviour under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "HomeView only mounts the widget; existing HomeView test still covers that.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static visual size change with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The torus ring renders 6px wide at its rendered size.",
+      "doneWhen": "TorusWidget component test for the 6px ring width passes, and the existing widget tests still pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-ring-width"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-ring-width",
+      "layer": "component",
+      "description": "TorusWidget exposes the torus ring width on the torus element as 6 (px) and the ring path inner radius yields a 6px band at the rendered scale.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-ring-width",
+      "testId": "t-ring-width",
+      "expectedFailure": "Expected ring width 6 but received about 39 with the current 46/20 radii.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
