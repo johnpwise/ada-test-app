@@ -31,7 +31,7 @@ export default function LastUpdatedFooter({
     >
       <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-4 py-3 text-sm text-muted-foreground sm:px-6 lg:px-8">
         <p data-id={LAST_UPDATED_FOOTER_TEST_IDS.text}>
-          Last updated {formatRelativeTime(updatedAt, now)}
+          Was last updated {formatRelativeTime(updatedAt, now)}
         </p>
         {versionLabel ? (
           <span data-id={LAST_UPDATED_FOOTER_TEST_IDS.version}>v{versionLabel}</span>
