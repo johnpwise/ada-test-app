@@ -9,14 +9,14 @@ describe("TorusWidget", () => {
     cleanup();
   });
 
-  it("should render the label 'Toras Widget'", () => {
+  it("should render the label 'Torus Widget'", () => {
     // Arrange
 
     // Act
     render(<TorusWidget />);
 
     // Assert
-    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.label)).toHaveTextContent("Toras Widget");
+    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.label)).toHaveTextContent("Torus Widget");
   });
 
   it("should render a blue torus", () => {

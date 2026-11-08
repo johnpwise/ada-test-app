@@ -12,7 +12,7 @@ export default function TorusWidget() {
 
   return (
     <section
-      aria-label="Toras Widget"
+      aria-label="Torus Widget"
       className="flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border border-border bg-surface p-2"
       data-id={TORUS_WIDGET_TEST_IDS.widget}
       style={{ width: WIDGET_SIZE_PX, height: WIDGET_SIZE_PX }}
@@ -43,7 +43,7 @@ export default function TorusWidget() {
         className="text-sm font-medium text-surface-foreground"
         data-id={TORUS_WIDGET_TEST_IDS.label}
       >
-        Toras Widget
+        Torus Widget
       </p>
     </section>
   );

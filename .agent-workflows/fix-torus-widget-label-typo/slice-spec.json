@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "fix-torus-widget-label-typo",
+  "workflowId": "fix-torus-widget-label-typo",
+  "kind": "bug",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-08T01:00:00.000Z",
+  "updatedAt": "2026-11-08T01:00:00.000Z",
+  "objective": {
+    "statement": "Correct the torus widget label typo so it reads \"Torus Widget\" instead of \"Toras Widget\".",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "Text-only correction in one presentational component and its test.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The torus widget label reads exactly \"Torus Widget\".",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "No occurrence of \"Toras\" remains in the widget component.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Visible label and aria-label text in TorusWidget (rendered by HomeView.tsx), plus its component test.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "Layout, colour, size, dependencies or any other behaviour change; historical records of the earlier torus-widget workflow stay unchanged.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "The aria-label carries the same typo and is corrected together with the visible text so both stay consistent.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: Bug Fix Alter torus widget text",
+      "capturedAt": "2026-11-08T01:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T01:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "AGENTS.md and the existing torus-widget component",
+      "capturedAt": "2026-11-08T01:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless presentational component)",
+      "rationale": "Text change only.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The rendered label text is the behaviour under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module flow.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text correction with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The widget label reads \"Torus Widget\".",
+      "doneWhen": "TorusWidget component test asserting \"Torus Widget\" passes.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-label"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-label",
+      "layer": "component",
+      "description": "TorusWidget renders the label \"Torus Widget\".",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-label",
+      "testId": "t-label",
+      "expectedFailure": "Expected element to have text content \"Torus Widget\" but received \"Toras Widget\".",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "exitCode": 1,
+      "observedFailure": "Expected text content \"Torus Widget\", received \"Toras Widget\"."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:component",
+      "exitCode": 0,
+      "result": "11 files, 47 tests passed; lint and build also passed"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
