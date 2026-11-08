@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "two-torus-widgets-share-the-same-accessible-name",
+  "workflowId": "two-torus-widgets-share-the-same-accessible-name",
+  "kind": "bug",
+  "revision": 1,
+  "status": "planned",
+  "createdAt": "2026-11-08T14:00:00.000Z",
+  "updatedAt": "2026-11-08T14:00:00.000Z",
+  "objective": {
+    "statement": "Give the red torus widget its own label, \"Red Torus Widget\", for both its visible text and its aria-label, so the two home page widgets have distinct accessible names.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One presentational component, behaviour and wording are explicit, the fault is localised to two string literals, and no approval boundary, contract or cross-feature change is involved. The fast path skips planning ceremony only; the failing test and review lenses still apply.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The red TorusWidget has aria-label \"Red Torus Widget\" and visible label text \"Red Torus Widget\".",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The green TorusWidget (including the default no-props render) keeps aria-label \"Torus Widget\" and visible label text \"Torus Widget\".",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "HomeView exposes two torus widget regions with different accessible names: \"Torus Widget\" and \"Red Torus Widget\".",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-4",
+      "statement": "Colours, sizes (150px torus, 6px ring, widget no bigger than 200px by 200px) and the HomeView layout are unchanged.",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "TorusWidget.tsx (per-colour label used for both the aria-label and the visible text) and the matching component tests in TorusWidget.component.test.tsx and HomeView.component.test.tsx.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "The green widget label, colours, sizes, HomeView layout, test ids, other components, dependencies, and historical workflow records.",
+        "provenanceRef": "p-user"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "reproduction",
+      "statement": "TorusWidget.tsx hard-codes aria-label=\"Torus Widget\" (line 22) and the visible text \"Torus Widget\" (line 53) for every colour. HomeView mounts <TorusWidget /> and <TorusWidget color=\"red\" />, so both sections have the accessible name \"Torus Widget\".",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-2",
+      "category": "constraint",
+      "statement": "TorusWidget already takes an optional color prop (green default, red). The label should follow that prop, so no new prop, dependency or external contract is needed.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-3",
+      "category": "evidence",
+      "statement": "No existing test asserts the red widget's label. Existing tests asserting \"Torus Widget\" render the default green widget and stay valid, so no existing test needs to change.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-4",
+      "category": "assumption",
+      "statement": "Implement the label as a per-colour constant next to TORUS_PALETTES, used for both aria-label and the visible text so they cannot drift apart. The e2e spec does not reference the torus widget.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: Bug Fix Two torus widgets share the same accessible name",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/components/torus-widget/TorusWidget.tsx, src/views/home/HomeView.tsx and the component tests beside them",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approval of the plan, gate record ea131f506cfca6b33a024a7e827f9e63fe914336f0acc6864d5f58bbb4e4040b, approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1",
+      "capturedAt": "2026-11-08T19:27:42.945Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-executor",
+      "sourceType": "inferred",
+      "source": "Executor instruction: plan approval required before any work starts",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-executor",
+      "decisions": [
+        {
+          "id": "ap-plan-d0",
+          "status": "pending",
+          "rationale": "Plan saved; waiting for owner approval.",
+          "provenanceRef": "p-executor",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-08T14:00:00.000Z"
+        },
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record ea131f506cfca6b33a024a7e827f9e63fe914336f0acc6864d5f58bbb4e4040b).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T19:27:42.945Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless presentational component; the label derives from the color prop)",
+      "rationale": "No UI state; the label is a render-time value.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic outside rendering.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The rendered aria-label and visible text of each widget, and the accessible names seen on HomeView, are the behaviours under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "HomeView composition is covered by its component test; no routing, store or API interaction.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static label change with no user flow; the e2e spec does not reference the torus widget.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The red TorusWidget is labelled \"Red Torus Widget\" in both its aria-label and its visible text, while the green widget keeps \"Torus Widget\".",
+      "doneWhen": "The red-label component tests and the HomeView distinct-names test pass, and every existing test still passes unchanged.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-red-label",
+        "t-home-names"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-red-label",
+      "layer": "component",
+      "description": "TorusWidget color=\"red\" has aria-label \"Red Torus Widget\" and visible label text \"Red Torus Widget\"; the default render keeps aria-label \"Torus Widget\".",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home-names",
+      "layer": "component",
+      "description": "HomeView exposes two regions named \"Torus Widget\" and \"Red Torus Widget\" (exact match), so the accessible names are distinct.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-red-label",
+      "testId": "t-red-label",
+      "expectedFailure": "Expected aria-label and text \"Red Torus Widget\" but received \"Torus Widget\".",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "red-home-names",
+      "testId": "t-home-names",
+      "expectedFailure": "Unable to find a region named \"Red Torus Widget\"; both regions are named \"Torus Widget\".",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes; npm run lint and npm run build are clean",
+      "status": "planned",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}

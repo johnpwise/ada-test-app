@@ -1,0 +1,23 @@
+diff --git a/src/views/home/HomeView.component.test.tsx b/src/views/home/HomeView.component.test.tsx
+--- a/src/views/home/HomeView.component.test.tsx
++++ b/src/views/home/HomeView.component.test.tsx
+@@ -1,10 +1,11 @@
+-import { cleanup, render, screen } from "@testing-library/react";
++import { cleanup, render, screen, within } from "@testing-library/react";
++import { HOME_VIEW_TEST_IDS } from "./HomeView.testIds";
++  it("should render the green and red torus widgets side by side in one row", () => {
++    const row = screen.getByTestId(HOME_VIEW_TEST_IDS.torusRow);
++    expect(row).toHaveClass("flex");
++    expect(row).not.toHaveClass("flex-col");
++    expect(colours).toEqual(["green", "red"]);
++  });
+diff --git a/src/views/home/HomeView.testIds.ts b/src/views/home/HomeView.testIds.ts
++  torusRow: "home-view-torus-row",
+diff --git a/src/views/home/HomeView.tsx b/src/views/home/HomeView.tsx
++import { HOME_VIEW_TEST_IDS } from "./HomeView.testIds";
+-      <TorusWidget />
+-      <TorusWidget color="red" />
++      <div className="flex items-start gap-4" data-id={HOME_VIEW_TEST_IDS.torusRow}>
++        <TorusWidget />
++        <TorusWidget color="red" />
++      </div>

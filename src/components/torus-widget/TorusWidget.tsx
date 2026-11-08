@@ -9,6 +9,11 @@ const TORUS_PALETTES = {
   red: { base: "#dc2626", light: "#f87171", dark: "#7f1d1d" },
 } as const;
 
+const TORUS_LABELS = {
+  green: "Torus Widget",
+  red: "Red Torus Widget",
+} as const satisfies Record<keyof typeof TORUS_PALETTES, string>;
+
 type TorusWidgetProps = {
   color?: keyof typeof TORUS_PALETTES;
 };
@@ -16,10 +21,11 @@ type TorusWidgetProps = {
 export default function TorusWidget({ color = "green" }: TorusWidgetProps) {
   const gradientId = useId();
   const palette = TORUS_PALETTES[color];
+  const label = TORUS_LABELS[color];
 
   return (
     <section
-      aria-label="Torus Widget"
+      aria-label={label}
       className="flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border border-border bg-surface p-2"
       data-id={TORUS_WIDGET_TEST_IDS.widget}
       style={{ width: WIDGET_SIZE_PX, height: WIDGET_SIZE_PX }}
@@ -50,7 +56,7 @@ export default function TorusWidget({ color = "green" }: TorusWidgetProps) {
         className="text-sm font-medium text-surface-foreground"
         data-id={TORUS_WIDGET_TEST_IDS.label}
       >
-        Torus Widget
+        {label}
       </p>
     </section>
   );

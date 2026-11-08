@@ -19,6 +19,27 @@ describe("TorusWidget", () => {
     expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.label)).toHaveTextContent("Torus Widget");
   });
 
+  it("should label the default widget 'Torus Widget' for assistive technology", () => {
+    // Arrange
+
+    // Act
+    render(<TorusWidget />);
+
+    // Assert
+    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveAttribute("aria-label", "Torus Widget");
+  });
+
+  it("should label the red widget 'Red Torus Widget' in its text and aria-label", () => {
+    // Arrange
+
+    // Act
+    render(<TorusWidget color="red" />);
+
+    // Assert
+    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.label)).toHaveTextContent(/^Red Torus Widget$/);
+    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveAttribute("aria-label", "Red Torus Widget");
+  });
+
   it("should render a green torus", () => {
     // Arrange
     const blueHexValues = ["#2563eb", "#60a5fa", "#1e3a8a"];
