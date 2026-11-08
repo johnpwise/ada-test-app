@@ -34,7 +34,7 @@ export default function TorusWidget() {
           </radialGradient>
         </defs>
         <path
-          d="M50 4a46 46 0 1 0 0.001 0ZM50 30a20 20 0 1 1 -0.001 0Z"
+          d="M50 4a46 46 0 1 0 0.001 0ZM50 8a42 42 0 1 1 -0.001 0Z"
           fill={`url(#${gradientId})`}
           fillRule="evenodd"
         />
