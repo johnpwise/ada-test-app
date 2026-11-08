@@ -4,9 +4,9 @@
   "workflowId": "second-torus-widget-in-wrong-place-in-ui",
   "kind": "bug",
   "revision": 1,
-  "status": "planned",
+  "status": "ready-for-closeout",
   "createdAt": "2026-11-08T13:00:00.000Z",
-  "updatedAt": "2026-11-08T13:00:00.000Z",
+  "updatedAt": "2026-11-08T13:20:00.000Z",
   "objective": {
     "statement": "On HomeView the red torus widget renders under the green torus widget; it must render to the right of the green torus widget, inline.",
     "provenanceRef": "p-user"
@@ -92,6 +92,13 @@
       "source": "Executor instruction: plan approval required before any work starts",
       "capturedAt": "2026-11-08T13:00:00.000Z",
       "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approval of the plan. gate record: 77edb2d8731eb276b62be49bb0dff849c2f426ead419ccdd6526940bdb26ff89; approved by: 1RiWisgzmCfFPBeN49g4MPmbUzi1; approved at: 2026-11-08T12:53:41.587Z",
+      "capturedAt": "2026-11-08T13:05:00.000Z",
+      "capturedBy": "delivery-engineer"
     }
   ],
   "approvals": [
@@ -108,6 +115,14 @@
           "provenanceRef": "p-executor",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-08T13:00:00.000Z"
+        },
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record 77edb2d8731eb276b62be49bb0dff849c2f426ead419ccdd6526940bdb26ff89).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T12:53:41.587Z"
         }
       ]
     }
@@ -168,7 +183,7 @@
       "verificationIds": [
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     }
   ],
@@ -187,8 +202,11 @@
       "id": "red-row",
       "testId": "t-row",
       "expectedFailure": "Unable to find an element with the torus row data-id: the widgets are direct children of the section, with no flex row wrapper.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "should render the green and red torus widgets side by side in one row: Unable to find an element by [data-id=\"home-view-torus-row\"] (1 failed, 4 passed)"
     }
   ],
   "verification": [
@@ -196,8 +214,11 @@
       "id": "v-component",
       "layer": "component",
       "requirement": "npm run test:component passes, and npm run lint and npm run build are clean",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "passing",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 51/51 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes (no blocking findings)"
     }
   ],
   "e2eStatus": {

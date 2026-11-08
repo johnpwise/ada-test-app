@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "second-torus-widget-in-wrong-place-in-ui",
+    "workflowId": "second-torus-widget-in-wrong-place-in-ui",
+    "revision": 1,
+    "hash": "d998d945e8d662f375ce7cb90d4e8719723e6e3e2ccdd8c7758e681d1623a921"
+  },
+  "diff": {
+    "files": [
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.testIds.ts",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "f8f4a39a966f004ee2ff0f5058cb829fd66d2e9aaf87b573821dadf43eb319ce"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/react-composition.md"
+  ],
+  "hash": "66537d29d3f200fdd0ebf327e4b4e1c694fa2b384a27210a84367b7ed14d0bab"
+}
