@@ -4,7 +4,7 @@
   "workflowId": "make-the-torus-narrower",
   "kind": "feature",
   "revision": 2,
-  "status": "planned",
+  "status": "ready-for-closeout",
   "createdAt": "2026-11-08T02:00:00.000Z",
   "updatedAt": "2026-11-08T03:00:00.000Z",
   "objective": {
@@ -93,6 +93,13 @@
       "source": "Executor instruction: plan approval required before any work starts",
       "capturedAt": "2026-11-08T02:00:00.000Z",
       "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner 1RiWisgzmCfFPBeN49g4MPmbUzi1 approved the plan at 2026-11-08T11:25:17.148Z (gate record 8145efe9e6ea3cbe25402da15462585212190785daafe5157697ebe20efc5683)",
+      "capturedAt": "2026-11-08T11:25:17.148Z",
+      "capturedBy": "delivery-engineer"
     }
   ],
   "approvals": [
@@ -104,11 +111,11 @@
       "decisions": [
         {
           "id": "ap-plan-d1",
-          "status": "pending",
-          "rationale": "Plan saved at the planned gate; awaiting owner approval.",
-          "provenanceRef": "p-executor",
-          "decidedBy": "delivery-engineer",
-          "decidedAt": "2026-11-08T02:00:00.000Z"
+          "status": "approved",
+          "rationale": "Owner approved the plan; implementation may proceed test-first.",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T11:25:17.148Z"
         }
       ]
     }
@@ -169,7 +176,7 @@
       "verificationIds": [
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     }
   ],
@@ -188,8 +195,11 @@
       "id": "red-ring-width",
       "testId": "t-ring-width",
       "expectedFailure": "Expected ring width 6 but received about 39 with the current 46/20 radii.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "exitCode": 1,
+      "observedFailure": "AssertionError: expected 39 to be close to 6 (ring width at rendered scale with 46/20 radii)"
     }
   ],
   "verification": [
@@ -197,7 +207,10 @@
       "id": "v-component",
       "layer": "component",
       "requirement": "npm run test:component passes",
-      "status": "planned",
+      "status": "passing",
+      "command": "npm run test:component",
+      "exitCode": 0,
+      "result": "11 files, 49/49 component tests passed; eslint clean",
       "provenanceRef": "p-inferred"
     }
   ],
