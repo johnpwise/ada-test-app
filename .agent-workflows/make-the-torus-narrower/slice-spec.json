@@ -3,10 +3,10 @@
   "sliceId": "make-the-torus-narrower",
   "workflowId": "make-the-torus-narrower",
   "kind": "feature",
-  "revision": 1,
+  "revision": 2,
   "status": "planned",
   "createdAt": "2026-11-08T02:00:00.000Z",
-  "updatedAt": "2026-11-08T02:00:00.000Z",
+  "updatedAt": "2026-11-08T03:00:00.000Z",
   "objective": {
     "statement": "Make the torus in the torus widget (rendered on HomeView.tsx) 6 pixels in width.",
     "provenanceRef": "p-user"
@@ -19,8 +19,8 @@
   "acceptanceCriteria": [
     {
       "id": "ac-1",
-      "statement": "The torus ring (its band, from inner to outer edge) renders 6 pixels wide, measured at the rendered size.",
-      "provenanceRef": "p-user"
+      "statement": "The torus ring (its band, from inner to outer edge) renders 6 pixels wide, measured at the rendered size, with the 150px outer diameter kept.",
+      "provenanceRef": "p-answer-q1"
     },
     {
       "id": "ac-2",
@@ -48,8 +48,8 @@
     {
       "id": "ob-1",
       "category": "assumption",
-      "statement": "\"6 pixels in width\" is read as the ring thickness (the band width), keeping the 150px outer diameter, since a whole torus 6px across would be an unreadable dot. Open question q1 asks the owner to confirm.",
-      "provenanceRef": "p-inferred"
+      "statement": "Owner answer to q1: \"6 pixels in width\" means the ring thickness is 6px, keeping the 150px outer diameter.",
+      "provenanceRef": "p-answer-q1"
     },
     {
       "id": "ob-2",
@@ -64,6 +64,13 @@
       "sourceType": "user",
       "source": "Card text: New Feature Make the torus narrower",
       "capturedAt": "2026-11-08T02:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-answer-q1",
+      "sourceType": "user",
+      "source": "Owner answer q1: Ring thickness is 6px; keep the 150px outer diameter",
+      "capturedAt": "2026-11-08T03:00:00.000Z",
       "capturedBy": "delivery-engineer"
     },
     {
