@@ -42,13 +42,17 @@ describe("HomeView", () => {
     expect(screen.getByTestId(CLOCK_TEST_IDS.clock)).toBeInTheDocument();
   });
 
-  it("should render the torus widget", () => {
+  it("should render two torus widgets, one green and one red", () => {
     // Arrange
 
     // Act
     render(<HomeView />);
 
     // Assert
-    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.widget)).toBeInTheDocument();
+    expect(screen.getAllByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveLength(2);
+    const colours = screen
+      .getAllByTestId(TORUS_WIDGET_TEST_IDS.torus)
+      .map((torus) => torus.getAttribute("data-color"));
+    expect(colours).toEqual(["green", "red"]);
   });
 });

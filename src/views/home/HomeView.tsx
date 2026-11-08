@@ -19,6 +19,7 @@ export default function HomeView() {
       <ThemePicker />
       <PageViewsPanel />
       <TorusWidget />
+      <TorusWidget color="red" />
     </section>
   );
 }

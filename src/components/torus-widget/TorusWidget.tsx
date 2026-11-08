@@ -3,12 +3,19 @@ import { useId } from "react";
 import { TORUS_WIDGET_TEST_IDS } from "./TorusWidget.testIds";
 
 const WIDGET_SIZE_PX = 200;
-const TORUS_GREEN = "#16a34a";
-const TORUS_GREEN_LIGHT = "#4ade80";
-const TORUS_GREEN_DARK = "#14532d";
 
-export default function TorusWidget() {
+const TORUS_PALETTES = {
+  green: { base: "#16a34a", light: "#4ade80", dark: "#14532d" },
+  red: { base: "#dc2626", light: "#f87171", dark: "#7f1d1d" },
+} as const;
+
+type TorusWidgetProps = {
+  color?: keyof typeof TORUS_PALETTES;
+};
+
+export default function TorusWidget({ color = "green" }: TorusWidgetProps) {
   const gradientId = useId();
+  const palette = TORUS_PALETTES[color];
 
   return (
     <section
@@ -19,18 +26,18 @@ export default function TorusWidget() {
     >
       <svg
         aria-hidden="true"
-        data-color="green"
+        data-color={color}
         data-id={TORUS_WIDGET_TEST_IDS.torus}
         viewBox="0 0 100 100"
         width={150}
         height={150}
-        fill={TORUS_GREEN}
+        fill={palette.base}
       >
         <defs>
           <radialGradient id={gradientId} cx="50%" cy="40%" r="60%">
-            <stop offset="0%" stopColor={TORUS_GREEN_LIGHT} />
-            <stop offset="60%" stopColor={TORUS_GREEN} />
-            <stop offset="100%" stopColor={TORUS_GREEN_DARK} />
+            <stop offset="0%" stopColor={palette.light} />
+            <stop offset="60%" stopColor={palette.base} />
+            <stop offset="100%" stopColor={palette.dark} />
           </radialGradient>
         </defs>
         <path

@@ -3,10 +3,10 @@
   "sliceId": "add-a-second-torus-widget",
   "workflowId": "add-a-second-torus-widget",
   "kind": "feature",
-  "revision": 1,
-  "status": "planned",
+  "revision": 3,
+  "status": "ready-for-closeout",
   "createdAt": "2026-11-08T13:00:00.000Z",
-  "updatedAt": "2026-11-08T13:00:00.000Z",
+  "updatedAt": "2026-11-08T13:20:00.000Z",
   "objective": {
     "statement": "Add a second torus widget to HomeView.tsx; the second torus must be red.",
     "provenanceRef": "p-user"
@@ -115,6 +115,13 @@
       "source": "Executor instruction: plan approval required before any work starts",
       "capturedAt": "2026-11-08T13:00:00.000Z",
       "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Plan approval gate record f8b880b87756b10dacf5206a306024311fc81429ad7c51c2f7371c118f49700d, approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-08T12:24:52.887Z",
+      "capturedAt": "2026-11-08T13:05:00.000Z",
+      "capturedBy": "delivery-engineer"
     }
   ],
   "approvals": [
@@ -131,6 +138,14 @@
           "provenanceRef": "p-executor",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-08T13:00:00.000Z"
+        },
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the saved plan (gate record f8b880b8...9700d).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T12:24:52.887Z"
         }
       ]
     }
@@ -191,7 +206,7 @@
       "verificationIds": [
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     },
     {
@@ -207,7 +222,7 @@
       "verificationIds": [
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     }
   ],
@@ -234,15 +249,21 @@
       "id": "red-red-torus",
       "testId": "t-red-torus",
       "expectedFailure": "Expected data-color \"red\" but received \"green\" (the prop is ignored or does not exist yet).",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "TorusWidget color=\"red\": expected data-color \"red\" but received \"green\"."
     },
     {
       "id": "red-home-two",
       "testId": "t-home-two",
       "expectedFailure": "Expected two torus widgets but found one; no red torus on HomeView.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "HomeView: expected two torus widgets but got 1."
     }
   ],
   "verification": [
@@ -250,9 +271,11 @@
       "id": "v-component",
       "layer": "component",
       "requirement": "npm run test:component passes; npm run lint and npm run build are clean",
-      "status": "planned",
+      "status": "passing",
       "command": "npm run test:component",
-      "provenanceRef": "p-inferred"
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 50 tests passed; npm run lint clean; npm run build clean"
     }
   ],
   "e2eStatus": {
