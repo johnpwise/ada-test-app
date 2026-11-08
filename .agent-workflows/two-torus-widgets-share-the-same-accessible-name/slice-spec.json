@@ -103,6 +103,13 @@
       "capturedBy": "delivery-engineer"
     },
     {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approval of the plan, gate record ea131f506cfca6b33a024a7e827f9e63fe914336f0acc6864d5f58bbb4e4040b, approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1",
+      "capturedAt": "2026-11-08T19:27:42.945Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
       "id": "p-executor",
       "sourceType": "inferred",
       "source": "Executor instruction: plan approval required before any work starts",
@@ -124,6 +131,14 @@
           "provenanceRef": "p-executor",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-08T14:00:00.000Z"
+        },
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record ea131f506cfca6b33a024a7e827f9e63fe914336f0acc6864d5f58bbb4e4040b).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T19:27:42.945Z"
         }
       ]
     }

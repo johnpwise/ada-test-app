@@ -57,6 +57,17 @@ describe("HomeView", () => {
     expect(colours).toEqual(["green", "red"]);
   });
 
+  it("should give the two torus widgets different accessible names", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    expect(screen.getByRole("region", { name: "Torus Widget" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Red Torus Widget" })).toBeInTheDocument();
+  });
+
   it("should render the green and red torus widgets side by side in one row", () => {
     // Arrange
 
