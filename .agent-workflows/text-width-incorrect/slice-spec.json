@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "text-width-incorrect",
+  "workflowId": "text-width-incorrect",
+  "kind": "bug",
+  "revision": 1,
+  "status": "intake",
+  "createdAt": "2026-11-08T14:00:00.000Z",
+  "updatedAt": "2026-11-08T14:00:00.000Z",
+  "objective": {
+    "statement": "On the About page the intro paragraph and the 'Pages are rendered on the server…' paragraph must span the full container width, lining up with the right edge of the 'What it does' cards, at desktop and mobile widths, with light and dark themes unchanged apart from width.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "Both About-page paragraphs use the full container width, lining up with the right edge of the cards, at desktop and mobile widths.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "Light and dark themes look unchanged apart from the width.",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "The About page only (the card names src/app/about/page.tsx).",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "Other pages, the layout, the footer, and any shared component.",
+        "provenanceRef": "p-user"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "evidence",
+      "statement": "src/app/about/page.tsx does not exist. This is a Vite + React Router SPA; the About page is src/views/about/AboutView.tsx.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-2",
+      "category": "evidence",
+      "statement": "AboutView.tsx renders only an h1 'About' inside a section. It has no intro paragraph, no 'Built with' section, no 'Pages are rendered on the server…' paragraph and no 'What it does' cards. A repository-wide search for those strings finds nothing. The bug cannot be reproduced on this base (develop @ 9da7fb6).",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-3",
+      "category": "evidence",
+      "statement": "The app shell (src/App.tsx) wraps every page in a container with w-full max-w-3xl; any width cap on the paragraphs would have to come from the About page's own markup, which is absent.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-4",
+      "category": "open-question",
+      "statement": "q1: Which codebase/branch holds the About page described in the card, with paragraphs, 'Built with' and cards? q2: May the fix go in src/views/about/AboutView.tsx instead of the non-existent src/app/about/page.tsx? Assumption if unanswered: stop; add nothing.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-5",
+      "category": "assumption",
+      "statement": "No fix is planned until the content exists, because inventing the paragraphs and cards would be hidden scope and a user-visible behaviour the card does not define.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: Bug Fix Text width incorrect - The text on the About page does not span the width of its container (src/app/about/page.tsx).",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/about/AboutView.tsx, AboutView.component.test.tsx, src/App.tsx and a repository-wide search",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-executor",
+      "sourceType": "inferred",
+      "source": "Executor instruction: plan approval required before any work starts",
+      "capturedAt": "2026-11-08T14:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-executor",
+      "decisions": [
+        {
+          "id": "ap-plan-d0",
+          "status": "pending",
+          "rationale": "Plan not yet complete: waiting for owner answers to q1 and q2.",
+          "provenanceRef": "p-executor",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-08T14:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [],
+  "testMatrix": {},
+  "increments": [],
+  "tests": [],
+  "expectedRedEvidence": [],
+  "verification": [],
+  "e2eStatus": {
+    "status": "planned",
+    "provenanceRef": "p-inferred"
+  }
+}
