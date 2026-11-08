@@ -38,7 +38,7 @@ describe("App", () => {
     const shell = screen.getByTestId(APP_SHELL_TEST_IDS.shell);
     const footer = screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.footer);
     expect(shell.compareDocumentPosition(footer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(footer).toHaveTextContent("Last updated just now");
+    expect(footer).toHaveTextContent("Was last updated just now");
   });
 
   it("should render the HomeView at the root route", () => {

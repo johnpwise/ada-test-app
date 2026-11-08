@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "footer-shows-the-wrong-last-updated-label",
+  "workflowId": "footer-shows-the-wrong-last-updated-label",
+  "kind": "bug",
+  "revision": 2,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-11-08T00:00:00.000Z",
+  "updatedAt": "2026-11-08T00:30:00.000Z",
+  "objective": {
+    "statement": "Change the footer's last-updated label from \"Last updated <time>\" to \"Was last updated <time>\".",
+    "provenanceRef": "p-card"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One literal string in one presentational component plus test assertion updates; no logic, state, dependency or contract change.",
+    "provenanceRef": "p-plan"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The footer renders \"Was last updated <time>\" instead of \"Last updated <time>\".",
+      "provenanceRef": "p-card"
+    },
+    {
+      "id": "ac-2",
+      "statement": "Existing footer test assertions expect the new text, and a regression test asserts the footer renders \"Was last updated <time>\".",
+      "provenanceRef": "p-card"
+    },
+    {
+      "id": "ac-3",
+      "statement": "Timestamp logic, relative-time formatting, the version label, styling and layout are unchanged.",
+      "provenanceRef": "p-card"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-in-1",
+        "statement": "src/components/last-updated-footer/LastUpdatedFooter.tsx: label text only.",
+        "provenanceRef": "p-card"
+      },
+      {
+        "id": "s-in-2",
+        "statement": "Test assertions expecting the old text (footer component test and the App test that asserts the footer text), plus one regression test.",
+        "provenanceRef": "p-assume-tests"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-out-1",
+        "statement": "Timestamp logic, formatRelativeTime, the version label, styling and layout.",
+        "provenanceRef": "p-card"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "bug-reproduction",
+      "statement": "LastUpdatedFooter.tsx line 34 renders \"Last updated {formatRelativeTime(updatedAt, now)}\".",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "The card says \"the existing footer test assertion\" but the old text is asserted in several places (five in the footer component test, one in src/App.component.test.tsx). All of them are updated to the new text, otherwise they would fail; no other behaviour is touched.",
+      "provenanceRef": "p-assume-tests"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-card",
+      "sourceType": "user",
+      "source": "Card: Bug Fix - Footer shows the wrong \"last updated\" label.",
+      "capturedAt": "2026-11-08T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-plan",
+      "sourceType": "repository",
+      "source": "AGENTS.md; src/components/last-updated-footer; src/App.component.test.tsx",
+      "capturedAt": "2026-11-08T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/components/last-updated-footer/LastUpdatedFooter.tsx",
+      "capturedAt": "2026-11-08T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-assume-tests",
+      "sourceType": "inferred",
+      "source": "Card names one test assertion but old text is asserted in six places; conservative choice is to update every assertion of the old text.",
+      "capturedAt": "2026-11-08T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React component (no new state)",
+      "rationale": "Static label text; the footer clock state is untouched.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "Zustand (src/store/appStore.ts), unused",
+      "rationale": "No client state involved.",
+      "provenanceRef": "p-plan"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "React Query + Axios boundary (unused)",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No pure logic changes.",
+      "provenanceRef": "p-plan"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered footer text is the behaviour under fix.",
+      "provenanceRef": "p-plan"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "App test asserts the footer text; it is updated and the full suite is run as regression.",
+      "provenanceRef": "p-plan"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text in an already component-tested footer.",
+      "provenanceRef": "p-plan"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The footer renders \"Was last updated <time>\".",
+      "doneWhen": "Updated and regression footer tests pass, the full suite is green, and tsc and eslint are clean.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-1"
+      ],
+      "verificationIds": [
+        "v-1"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "component",
+      "description": "LastUpdatedFooter renders \"Was last updated <time>\" (regression), and existing assertions expect the new text.",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "preImplementation": true,
+      "provenanceRef": "p-card"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Expected element to have text content \"Was last updated just now\" but received \"Last updated just now\".",
+      "status": "captured",
+      "provenanceRef": "p-card",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "exitCode": 1,
+      "observedFailure": "7 of 8 footer tests failed: expected \"Was last updated just now\", received \"Last updated just now\""
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "Full test suite, build and lint pass.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 30/30 and component 51/51 passed; npm run build and npm run lint clean"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-plan"
+  }
+}

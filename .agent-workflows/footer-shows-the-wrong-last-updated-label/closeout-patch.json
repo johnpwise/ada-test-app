@@ -1,0 +1,40 @@
+{
+  "status": "ready-for-closeout",
+  "updatedAt": "2026-11-08T00:30:00.000Z",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The footer renders \"Was last updated <time>\".",
+      "doneWhen": "Updated and regression footer tests pass, the full suite is green, and tsc and eslint are clean.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-1"],
+      "verificationIds": ["v-1"],
+      "status": "complete",
+      "provenanceRef": "p-plan"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-1",
+      "testId": "t-1",
+      "expectedFailure": "Expected element to have text content \"Was last updated just now\" but received \"Last updated just now\".",
+      "status": "captured",
+      "provenanceRef": "p-card",
+      "command": "npm run test:component -- src/components/last-updated-footer",
+      "exitCode": 1,
+      "observedFailure": "7 of 8 footer tests failed: expected \"Was last updated just now\", received \"Last updated just now\""
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-1",
+      "layer": "component",
+      "requirement": "Full test suite, build and lint pass.",
+      "status": "passing",
+      "provenanceRef": "p-plan",
+      "command": "npm run test",
+      "exitCode": 0,
+      "result": "unit 30/30 and component 51/51 passed; npm run build and npm run lint clean"
+    }
+  ]
+}
