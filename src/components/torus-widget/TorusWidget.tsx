@@ -3,9 +3,9 @@ import { useId } from "react";
 import { TORUS_WIDGET_TEST_IDS } from "./TorusWidget.testIds";
 
 const WIDGET_SIZE_PX = 200;
-const TORUS_BLUE = "#2563eb";
-const TORUS_BLUE_LIGHT = "#60a5fa";
-const TORUS_BLUE_DARK = "#1e3a8a";
+const TORUS_GREEN = "#16a34a";
+const TORUS_GREEN_LIGHT = "#4ade80";
+const TORUS_GREEN_DARK = "#14532d";
 
 export default function TorusWidget() {
   const gradientId = useId();
@@ -19,18 +19,18 @@ export default function TorusWidget() {
     >
       <svg
         aria-hidden="true"
-        data-color="blue"
+        data-color="green"
         data-id={TORUS_WIDGET_TEST_IDS.torus}
         viewBox="0 0 100 100"
         width={150}
         height={150}
-        fill={TORUS_BLUE}
+        fill={TORUS_GREEN}
       >
         <defs>
           <radialGradient id={gradientId} cx="50%" cy="40%" r="60%">
-            <stop offset="0%" stopColor={TORUS_BLUE_LIGHT} />
-            <stop offset="60%" stopColor={TORUS_BLUE} />
-            <stop offset="100%" stopColor={TORUS_BLUE_DARK} />
+            <stop offset="0%" stopColor={TORUS_GREEN_LIGHT} />
+            <stop offset="60%" stopColor={TORUS_GREEN} />
+            <stop offset="100%" stopColor={TORUS_GREEN_DARK} />
           </radialGradient>
         </defs>
         <path

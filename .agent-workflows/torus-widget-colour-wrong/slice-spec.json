@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "torus-widget-colour-wrong",
+  "workflowId": "torus-widget-colour-wrong",
+  "kind": "bug",
+  "revision": 3,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-11-08T12:00:00.000Z",
+  "updatedAt": "2026-11-08T12:20:00.000Z",
+  "objective": {
+    "statement": "The torus widget on HomeView.tsx renders blue; it must render green.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One presentational component and its component test; colour constants only, no state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "The torus rendered by TorusWidget (shown on HomeView) is green: its fill, gradient stops and data-color attribute are green, with no blue left.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "Torus geometry (150px outer diameter, 6px ring), gradient, widget size (no bigger than 200px by 200px) and label are unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Colour constants and data-color attribute in TorusWidget.tsx, and the colour assertion in TorusWidget.component.test.tsx; the widget is rendered by HomeView.tsx.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "Torus geometry, widget size, label text, HomeView layout, theme tokens, dependencies, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "bug-reproduction",
+      "statement": "Render TorusWidget (or HomeView): the svg has data-color=\"blue\" and uses TORUS_BLUE #2563eb, TORUS_BLUE_LIGHT #60a5fa and TORUS_BLUE_DARK #1e3a8a for fill and gradient stops. The existing test 'should render a blue torus' asserts this old behaviour.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "The card names no exact green. Assumed the same Tailwind family as the current blue: base #16a34a, light #4ade80, dark #14532d, keeping the gradient shape.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-3",
+      "category": "assumption",
+      "statement": "The existing blue assertion is replaced by a green one, because it encodes the defect rather than a wanted behaviour.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: Bug Fix Torus widget colour wrong - The torus widget on the HomeView.tsx is blue. It must be green.",
+      "capturedAt": "2026-11-08T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/components/torus-widget/TorusWidget.tsx and its component test",
+      "capturedAt": "2026-11-08T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-executor",
+      "sourceType": "inferred",
+      "source": "Executor instruction: plan approval required before any work starts",
+      "capturedAt": "2026-11-08T12:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approved the plan. gate record 5f125e8e5ebb4f394ddf7e274b8db3520f65ccc891c0f28bafd56bce5b60c769; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-08T11:58:42.960Z",
+      "capturedAt": "2026-11-08T12:05:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve this plan before any test or production file is written.",
+      "provenanceRef": "p-executor",
+      "decisions": [
+        {
+          "id": "ap-plan-d0",
+          "status": "pending",
+          "rationale": "Plan saved; waiting for owner approval.",
+          "provenanceRef": "p-executor",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-08T12:00:00.000Z"
+        },
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record 5f125e8e...).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T11:58:42.960Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless presentational component)",
+      "rationale": "Colour change only.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "The rendered torus colour is the behaviour under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "HomeView only mounts the widget; the existing HomeView test still covers that.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static visual colour change with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The torus renders green instead of blue.",
+      "doneWhen": "The TorusWidget green-colour component test passes, and the other widget tests still pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-green"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-green",
+      "layer": "component",
+      "description": "TorusWidget renders a green torus: data-color is \"green\" and the fill and every gradient stop use a green hex, none of the old blue values. Replaces 'should render a blue torus'.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-green",
+      "testId": "t-green",
+      "expectedFailure": "Expected data-color \"green\" but received \"blue\"; fill and stops are still the blue hex values.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "exitCode": 1,
+      "observedFailure": "should render a green torus: expected data-color=\"green\", received \"blue\" (1 failed, 4 passed)"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes",
+      "status": "passing",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 49/49 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
