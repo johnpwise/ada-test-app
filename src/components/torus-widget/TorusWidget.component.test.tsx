@@ -19,14 +19,21 @@ describe("TorusWidget", () => {
     expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.label)).toHaveTextContent("Torus Widget");
   });
 
-  it("should render a blue torus", () => {
+  it("should render a green torus", () => {
     // Arrange
+    const blueHexValues = ["#2563eb", "#60a5fa", "#1e3a8a"];
+    const greenHexValues = ["#16a34a", "#4ade80", "#14532d"];
 
     // Act
     render(<TorusWidget />);
 
     // Assert
-    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.torus)).toHaveAttribute("data-color", "blue");
+    const torus = screen.getByTestId(TORUS_WIDGET_TEST_IDS.torus);
+    expect(torus).toHaveAttribute("data-color", "green");
+    expect(torus).toHaveAttribute("fill", greenHexValues[0]);
+    const stopColors = [...torus.querySelectorAll("stop")].map((stop) => stop.getAttribute("stop-color"));
+    expect(stopColors).toEqual([greenHexValues[1], greenHexValues[0], greenHexValues[2]]);
+    expect(torus.outerHTML.toLowerCase()).not.toMatch(new RegExp(blueHexValues.join("|")));
   });
 
   it("should render the torus ring 6px wide at its rendered size", () => {

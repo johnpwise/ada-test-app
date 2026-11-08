@@ -1,0 +1,28 @@
+{
+  "status": "ready-for-closeout",
+  "updatedAt": "2026-11-08T12:20:00.000Z",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "The torus renders green instead of blue.",
+      "doneWhen": "The TorusWidget green-colour component test passes, and the other widget tests still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-green"],
+      "verificationIds": ["v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:component",
+      "exitCode": 0,
+      "result": "11 files, 49/49 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve"
+    }
+  ]
+}

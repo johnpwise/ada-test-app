@@ -1,0 +1,40 @@
+{
+  "status": "implementation-ready",
+  "updatedAt": "2026-11-08T12:05:00.000Z",
+  "provenance": [
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approved the plan. gate record 5f125e8e5ebb4f394ddf7e274b8db3520f65ccc891c0f28bafd56bce5b60c769; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-08T11:58:42.960Z",
+      "capturedAt": "2026-11-08T12:05:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-green",
+      "testId": "t-green",
+      "expectedFailure": "Expected data-color \"green\" but received \"blue\"; fill and stops are still the blue hex values.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "exitCode": 1,
+      "observedFailure": "should render a green torus: expected data-color=\"green\", received \"blue\" (1 failed, 4 passed)"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "ap-plan",
+      "decisions": [
+        {
+          "id": "ap-plan-d1",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record 5f125e8e...).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-08T11:58:42.960Z"
+        }
+      ]
+    }
+  ]
+}
