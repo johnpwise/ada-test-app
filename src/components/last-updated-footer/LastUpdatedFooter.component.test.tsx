@@ -27,8 +27,21 @@ describe("LastUpdatedFooter", () => {
 
     // Assert
     expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text)).toHaveTextContent(
-      "Last updated just now",
+      "Was last updated just now",
     );
+  });
+
+  it("should render the was last updated label with the relative time", () => {
+    // Arrange
+    const updatedAt = Date.now() - 2 * MINUTE;
+
+    // Act
+    render(<LastUpdatedFooter updatedAt={updatedAt} />);
+
+    // Assert
+    const text = screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text);
+    expect(text).toHaveTextContent(/^Was last updated 2 min ago$/);
+    expect(text).not.toHaveTextContent(/^Last updated/);
   });
 
   it("should render inside a footer landmark", () => {
@@ -56,7 +69,7 @@ describe("LastUpdatedFooter", () => {
     expect(label).toHaveTextContent(`v${APP_VERSION}`);
     expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.footer)).toContainElement(label);
     expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text)).toHaveTextContent(
-      "Last updated just now",
+      "Was last updated just now",
     );
   });
 
@@ -71,7 +84,7 @@ describe("LastUpdatedFooter", () => {
     expect(screen.queryByTestId(LAST_UPDATED_FOOTER_TEST_IDS.version)).not.toBeInTheDocument();
     expect(screen.getByRole("contentinfo")).not.toHaveTextContent(/\bv\s*$/);
     expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text)).toHaveTextContent(
-      "Last updated just now",
+      "Was last updated just now",
     );
   });
 
@@ -84,7 +97,7 @@ describe("LastUpdatedFooter", () => {
 
     // Assert
     expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text)).toHaveTextContent(
-      "Last updated 5 min ago",
+      "Was last updated 5 min ago",
     );
   });
 
@@ -99,7 +112,7 @@ describe("LastUpdatedFooter", () => {
 
     // Assert
     expect(screen.getByTestId(LAST_UPDATED_FOOTER_TEST_IDS.text)).toHaveTextContent(
-      "Last updated 3 min ago",
+      "Was last updated 3 min ago",
     );
   });
 });
