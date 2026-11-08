@@ -1,0 +1,28 @@
+{
+  "status": "verifying",
+  "updatedAt": "2026-11-08T00:10:00.000Z",
+  "increments": [
+    { "id": "inc-1", "status": "complete" }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-torus",
+      "status": "captured",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./TorusWidget from TorusWidget.component.test.tsx."
+    },
+    {
+      "id": "red-home",
+      "status": "captured",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Unable to find an element by data-id torus-widget in HomeView."
+    }
+  ],
+  "verification": [
+    { "id": "v-component", "status": "passing", "exitCode": 0, "result": "11 files, 47 tests passed" },
+    { "id": "v-lint", "status": "passing", "exitCode": 0, "result": "eslint clean" },
+    { "id": "v-build", "status": "passing", "exitCode": 0, "result": "tsc -b and vite build succeeded" }
+  ]
+}

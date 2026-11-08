@@ -2,6 +2,7 @@ import Clock from "../../components/clock/Clock";
 import ModeToggle from "../../components/mode-toggle/ModeToggle";
 import PageViewsPanel from "../../components/page-views-panel/PageViewsPanel";
 import ThemePicker from "../../components/theme-picker/ThemePicker";
+import TorusWidget from "../../components/torus-widget/TorusWidget";
 
 export default function HomeView() {
   return (
@@ -17,6 +18,7 @@ export default function HomeView() {
       <ModeToggle />
       <ThemePicker />
       <PageViewsPanel />
+      <TorusWidget />
     </section>
   );
 }

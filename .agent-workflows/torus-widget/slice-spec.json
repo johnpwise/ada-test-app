@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "torus-widget",
+  "workflowId": "torus-widget",
+  "kind": "feature",
+  "revision": 2,
+  "status": "verifying",
+  "createdAt": "2026-11-08T00:00:00.000Z",
+  "updatedAt": "2026-11-08T00:10:00.000Z",
+  "objective": {
+    "statement": "Add a blue torus widget, no larger than 200px by 200px, labelled \"Toras Widget\" (spelling intentionally kept), to HomeView.tsx.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One small presentational component rendered from one view; no state, API or contract changes.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders a torus widget.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The torus is blue.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The widget is no bigger than 200px by 200px.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-4",
+      "statement": "The widget has a label that reads exactly \"Toras Widget\" (the misspelling is deliberate and must be kept).",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "New TorusWidget component under src/components/torus-widget rendered from HomeView.tsx.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "Correcting the label spelling; that is the next controlled test.",
+        "provenanceRef": "p-user"
+      },
+      {
+        "id": "so-2",
+        "statement": "New dependencies, state, routing or API changes.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "A torus is drawn as an inline SVG (outer circle with a transparent inner hole via an even-odd ring) so no dependency is needed; blue is #2563eb.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "constraint",
+      "statement": "The size cap is applied with inline style width/height 200px so it is verifiable in jsdom.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Torus Widget",
+      "capturedAt": "2026-11-08T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-08T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "AGENTS.md and existing component conventions (Clock)",
+      "capturedAt": "2026-11-08T00:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless presentational component)",
+      "rationale": "The widget holds no state.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendering behaviour of the widget and its placement in HomeView.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module flow; covered by the HomeView component test.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static presentational addition with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView shows a blue, size-capped torus labelled \"Toras Widget\".",
+      "doneWhen": "Component tests for TorusWidget and HomeView pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-torus",
+        "t-home"
+      ],
+      "verificationIds": [
+        "v-component",
+        "v-lint",
+        "v-build"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-torus",
+      "layer": "component",
+      "description": "TorusWidget renders a blue torus, max 200x200, labelled \"Toras Widget\".",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home",
+      "layer": "component",
+      "description": "HomeView renders the torus widget.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-torus",
+      "testId": "t-torus",
+      "expectedFailure": "Cannot resolve ./TorusWidget (module does not exist).",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./TorusWidget from TorusWidget.component.test.tsx."
+    },
+    {
+      "id": "red-home",
+      "testId": "t-home",
+      "expectedFailure": "Unable to find element with the torus widget test id.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Unable to find an element by data-id torus-widget in HomeView."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:component",
+      "exitCode": 0,
+      "result": "11 files, 47 tests passed"
+    },
+    {
+      "id": "v-lint",
+      "layer": "unit",
+      "requirement": "npm run lint passes",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "eslint clean"
+    },
+    {
+      "id": "v-build",
+      "layer": "integration",
+      "requirement": "npm run build passes",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "tsc -b and vite build succeeded"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
