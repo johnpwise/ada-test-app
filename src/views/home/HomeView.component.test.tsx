@@ -54,21 +54,21 @@ describe("HomeView", () => {
     expect(screen.getByTestId(CLOCK_TEST_IDS.clock)).toBeInTheDocument();
   });
 
-  it("should render a single green torus widget", () => {
+  it("should render a green torus widget followed by a blue torus widget", () => {
     // Arrange
 
     // Act
     render(<HomeView />);
 
     // Assert
-    expect(screen.getAllByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveLength(1);
+    expect(screen.getAllByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveLength(2);
     const colours = screen
       .getAllByTestId(TORUS_WIDGET_TEST_IDS.torus)
       .map((torus) => torus.getAttribute("data-color"));
-    expect(colours).toEqual(["green"]);
+    expect(colours).toEqual(["green", "blue"]);
   });
 
-  it("should not render the red torus widget", () => {
+  it("should give the green and blue torus widgets distinct accessible names and not render a red one", () => {
     // Arrange
 
     // Act
@@ -76,10 +76,11 @@ describe("HomeView", () => {
 
     // Assert
     expect(screen.getByRole("region", { name: "Torus Widget" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Blue Torus Widget" })).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: "Red Torus Widget" })).not.toBeInTheDocument();
   });
 
-  it("should keep only the green torus widget in the torus row", () => {
+  it("should keep both torus widgets in the torus row", () => {
     // Arrange
 
     // Act
@@ -90,6 +91,6 @@ describe("HomeView", () => {
     const colours = within(row)
       .getAllByTestId(TORUS_WIDGET_TEST_IDS.torus)
       .map((torus) => torus.getAttribute("data-color"));
-    expect(colours).toEqual(["green"]);
+    expect(colours).toEqual(["green", "blue"]);
   });
 });

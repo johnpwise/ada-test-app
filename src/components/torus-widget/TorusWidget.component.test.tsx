@@ -74,6 +74,34 @@ describe("TorusWidget", () => {
     expect(torus.outerHTML.toLowerCase()).not.toMatch(new RegExp(greenHexValues.join("|")));
   });
 
+  it("should label the blue widget 'Blue Torus Widget' in its text and aria-label", () => {
+    // Arrange
+
+    // Act
+    render(<TorusWidget color="blue" />);
+
+    // Assert
+    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.label)).toHaveTextContent(/^Blue Torus Widget$/);
+    expect(screen.getByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveAttribute("aria-label", "Blue Torus Widget");
+  });
+
+  it("should render a blue torus when color is blue", () => {
+    // Arrange
+    const greenHexValues = ["#16a34a", "#4ade80", "#14532d"];
+    const blueHexValues = ["#2563eb", "#60a5fa", "#1e3a8a"];
+
+    // Act
+    render(<TorusWidget color="blue" />);
+
+    // Assert
+    const torus = screen.getByTestId(TORUS_WIDGET_TEST_IDS.torus);
+    expect(torus).toHaveAttribute("data-color", "blue");
+    expect(torus).toHaveAttribute("fill", blueHexValues[0]);
+    const stopColors = [...torus.querySelectorAll("stop")].map((stop) => stop.getAttribute("stop-color"));
+    expect(stopColors).toEqual([blueHexValues[1], blueHexValues[0], blueHexValues[2]]);
+    expect(torus.outerHTML.toLowerCase()).not.toMatch(new RegExp(greenHexValues.join("|")));
+  });
+
   it("should render the torus ring 6px wide at its rendered size", () => {
     // Arrange
     const expectedRingWidthPx = 6;
