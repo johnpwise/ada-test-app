@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "remove-red-torus-widget",
+  "workflowId": "remove-red-torus-widget",
+  "kind": "bug",
+  "revision": 4,
+  "status": "ready-for-closeout",
+  "objective": {
+    "statement": "Remove the red torus widget from HomeView.tsx.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView no longer renders the red torus widget (no 'Red Torus Widget' region, no torus with data-color red).",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "HomeView still renders exactly one torus widget, the green 'Torus Widget'; the rest of HomeView is unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Remove the red TorusWidget element from HomeView.tsx and update HomeView.component.test.tsx to match.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "TorusWidget component internals (including its red colour option and its tests), the green widget, other HomeView sections, dependencies, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "Keep the TorusWidget 'red' colour option and its component tests: the card asks only to remove the widget from HomeView.tsx. Removing an unused prop variant is a separate cleanup.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "Keep the torusRow flex wrapper and its test id around the remaining green widget, so the layout and the HomeView.testIds export are unchanged.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: Bug Fix Remove red torus widget - Please remove the red torus widget from the HomeView.tsx.",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-09T19:02:01.626Z"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-09T19:02:01.626Z"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, HomeView.component.test.tsx, src/components/torus-widget/TorusWidget.tsx",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-09T19:02:01.626Z"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless markup in HomeView)",
+      "rationale": "Removal of a rendered element only.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "What HomeView renders is the behaviour under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the component test renders the real HomeView and TorusWidget.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static markup removal with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView renders only the green torus widget; the red torus widget is gone.",
+      "doneWhen": "The updated HomeView component tests pass and the other component tests, lint and build still pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-single"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-single",
+      "layer": "component",
+      "description": "HomeView renders exactly one torus widget with data-color green, has no 'Red Torus Widget' region, and the torus row contains only the green torus.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-single",
+      "testId": "t-single",
+      "expectedFailure": "Expected one torus widget but HomeView still renders two, the second being red.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "should render a single green torus widget: expected 1 widget but got 2; should not render the red torus widget: found Red Torus Widget region; should keep only the green torus widget in the torus row: ['green','red'] vs ['green'] (3 failed, 4 passed)"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes, and npm run lint and npm run build are clean",
+      "status": "passing",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 56/56 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes (no blocking findings)"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  },
+  "createdAt": "2026-11-09T19:02:01.626Z",
+  "updatedAt": "2026-11-09T19:04:02.664Z",
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "Delete one JSX element in HomeView.tsx and update its component tests; no state, API, dependency or TorusWidget change.",
+    "provenanceRef": "p-inferred"
+  }
+}

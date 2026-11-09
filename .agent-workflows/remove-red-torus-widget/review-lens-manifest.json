@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "remove-red-torus-widget",
+    "workflowId": "remove-red-torus-widget",
+    "revision": 3,
+    "hash": "5012fe9dbd4d0c095350e12b1b23d641255370fc84a284cde71359fb72ee24fd"
+  },
+  "diff": {
+    "files": [
+      ".agent-workflows/remove-red-torus-widget/index.md",
+      ".agent-workflows/remove-red-torus-widget/intake.json",
+      ".agent-workflows/remove-red-torus-widget/plan-patch.json",
+      ".agent-workflows/remove-red-torus-widget/red-patch.json",
+      ".agent-workflows/remove-red-torus-widget/slice-spec.json",
+      ".agent-workflows/remove-red-torus-widget/step-001.md",
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "0863332fd6a2549be3c3bd2fe573ac317fcf74b8773009513d6b8d11bb1e6182"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "SLICE_SPEC_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-slice-signal"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "shared-state-change"
+      ]
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "api-contract-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md",
+    "references/state-ownership.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "9159a6c038e6f8000add1638baa06fe8e741612cc37976f0c3b4e6c78df0de4a"
+}
