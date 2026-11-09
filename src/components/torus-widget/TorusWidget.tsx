@@ -7,11 +7,13 @@ const WIDGET_SIZE_PX = 200;
 const TORUS_PALETTES = {
   green: { base: "#16a34a", light: "#4ade80", dark: "#14532d" },
   red: { base: "#dc2626", light: "#f87171", dark: "#7f1d1d" },
+  blue: { base: "#2563eb", light: "#60a5fa", dark: "#1e3a8a" },
 } as const;
 
 const TORUS_LABELS = {
   green: "Torus Widget",
   red: "Red Torus Widget",
+  blue: "Blue Torus Widget",
 } as const satisfies Record<keyof typeof TORUS_PALETTES, string>;
 
 type TorusWidgetProps = {

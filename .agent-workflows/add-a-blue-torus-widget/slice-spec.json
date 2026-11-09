@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "add-a-blue-torus-widget",
+  "workflowId": "add-a-blue-torus-widget",
+  "kind": "feature",
+  "revision": 1,
+  "status": "ready-for-closeout",
+  "objective": {
+    "statement": "Add a second torus widget, coloured blue, to HomeView.tsx.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders two torus widgets: the existing green one and a new blue one (data-color blue, blue palette).",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The blue widget has the distinct accessible name and visible label 'Blue Torus Widget'; the green widget stays 'Torus Widget'.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The rest of HomeView and the green widget are unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Add a blue palette and label to TorusWidget, render a blue TorusWidget in the HomeView torus row, and add tests.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "Dependencies, widget size or shape changes, other HomeView sections, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "TorusWidget has no blue option, so one is added following the red/green pattern, using the Tailwind blue hexes the existing tests already treat as blue (#2563eb, #60a5fa, #1e3a8a).",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "Label is 'Blue Torus Widget' (pattern of 'Red Torus Widget'), so the two widgets keep distinct accessible names. Placed after the green widget in the existing torus row.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Add a blue torus widget - Please add a second torus widget to the HomeView.tsx. Colour this one blue.",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-09T19:10:00.000Z"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-09T19:10:00.000Z"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, HomeView.component.test.tsx, src/components/torus-widget/TorusWidget.tsx",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-09T19:10:00.000Z"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless markup)",
+      "rationale": "Static presentational widget.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered output of TorusWidget and HomeView is the behaviour under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the HomeView component test renders the real TorusWidget.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static markup addition with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "TorusWidget supports a blue colour, and HomeView renders a blue torus widget after the green one.",
+      "doneWhen": "The new TorusWidget and HomeView component tests pass and the other component tests, lint and build still pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-blue-widget",
+        "t-home"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-blue-widget",
+      "layer": "component",
+      "description": "TorusWidget color=blue renders data-color blue, the blue palette hexes, and label/aria-label 'Blue Torus Widget'.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home",
+      "layer": "component",
+      "description": "HomeView renders two torus widgets, green then blue, with distinct accessible names, both in the torus row.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-blue-widget",
+      "testId": "t-blue-widget",
+      "expectedFailure": "TorusWidget has no blue palette, so data-color, fills and labels do not match blue.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "TorusWidget color=blue: TypeError reading 'base' of undefined palette (2 failed)"
+    },
+    {
+      "id": "red-home",
+      "testId": "t-home",
+      "expectedFailure": "HomeView renders only one torus widget and no 'Blue Torus Widget' region.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/torus-widget src/views/home",
+      "exitCode": 1,
+      "observedFailure": "HomeView: expected 2 widgets got 1; no region 'Blue Torus Widget'; colours ['green'] vs ['green','blue'] (3 failed)"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes, and npm run lint and npm run build are clean",
+      "status": "passing",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 58/58 tests passed; npm run lint and npm run build clean"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  },
+  "createdAt": "2026-11-09T19:10:00.000Z",
+  "updatedAt": "2026-11-09T19:10:00.000Z",
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One new palette entry and one JSX element; no state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  }
+}
