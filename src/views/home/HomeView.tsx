@@ -21,7 +21,6 @@ export default function HomeView() {
       <PageViewsPanel />
       <div className="flex items-start gap-4" data-id={HOME_VIEW_TEST_IDS.torusRow}>
         <TorusWidget />
-        <TorusWidget color="red" />
       </div>
     </section>
   );

@@ -1,0 +1,27 @@
+{
+  "status": "ready-for-closeout",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "HomeView renders only the green torus widget; the red torus widget is gone.",
+      "doneWhen": "The updated HomeView component tests pass and the other component tests, lint and build still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-single"],
+      "verificationIds": ["v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes, and npm run lint and npm run build are clean",
+      "status": "passing",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "11 files, 56/56 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes (no blocking findings)"
+    }
+  ]
+}
