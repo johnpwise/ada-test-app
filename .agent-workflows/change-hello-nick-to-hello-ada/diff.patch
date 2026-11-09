@@ -1,0 +1,35 @@
+diff --git a/src/views/home/HomeView.component.test.tsx b/src/views/home/HomeView.component.test.tsx
+index b83b420..fe94d73 100644
+--- a/src/views/home/HomeView.component.test.tsx
++++ b/src/views/home/HomeView.component.test.tsx
+@@ -23,6 +23,17 @@ describe("HomeView", () => {
+     expect(screen.queryByText("ADA plugin test")).not.toBeInTheDocument();
+   });
+
++  it("should greet with Hello ADA and not render Hello Nick", () => {
++    // Arrange
++
++    // Act
++    render(<HomeView />);
++
++    // Assert
++    expect(screen.getByText("Hello ADA")).toBeInTheDocument();
++    expect(screen.queryByText("Hello Nick")).not.toBeInTheDocument();
++  });
++
+   it("should render the page views by day panel", () => {
+     // Arrange
+
+diff --git a/src/views/home/HomeView.tsx b/src/views/home/HomeView.tsx
+index 0abcc5b..e42a2b5 100644
+--- a/src/views/home/HomeView.tsx
++++ b/src/views/home/HomeView.tsx
+@@ -10,7 +10,7 @@ export default function HomeView() {
+     <section className="space-y-6">
+       <header className="space-y-1">
+         <h1 className="text-2xl font-semibold">Home View</h1>
+-        <h3>Hello Nick</h3>
++        <h3>Hello ADA</h3>
+         <p className="text-sm text-muted-foreground">
+           Configure your theme and color mode preferences.
+         </p>
