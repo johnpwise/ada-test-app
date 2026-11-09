@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "change-hello-nick-to-hello-ada",
+    "workflowId": "change-hello-nick-to-hello-ada",
+    "revision": 2,
+    "hash": "ca2c00f27eb6249e8d71101434dd3eaa9cbdea47fe0ab04fbe1a654cdf8175dd"
+  },
+  "diff": {
+    "files": [
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "ae060cd378a21a605bebae4900f2dab59d32b8fb02c5097ba194fa75e6f8ec6c"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/react-composition.md"
+  ],
+  "hash": "d51c909ec4e5627f5c0120d76faf79c9f3b7e1398c767c5c128f621097342347"
+}

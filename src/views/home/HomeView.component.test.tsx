@@ -23,6 +23,17 @@ describe("HomeView", () => {
     expect(screen.queryByText("ADA plugin test")).not.toBeInTheDocument();
   });
 
+  it("should greet with Hello ADA and not render Hello Nick", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    expect(screen.getByText("Hello ADA")).toBeInTheDocument();
+    expect(screen.queryByText("Hello Nick")).not.toBeInTheDocument();
+  });
+
   it("should render the page views by day panel", () => {
     // Arrange
 

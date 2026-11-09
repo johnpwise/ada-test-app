@@ -1,0 +1,40 @@
+{
+  "status": "implementation-ready",
+  "updatedAt": "2026-11-09T17:52:00.000Z",
+  "provenance": [
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Owner approved the plan. gate record e1eaa388c0cec2e1e9583ca50340c2c7b0d54993188753b5dd3bfafc30de3841; approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-09T17:50:16.820Z",
+      "capturedAt": "2026-11-09T17:52:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red1",
+      "testId": "t1",
+      "expectedFailure": "Unable to find an element with the text: Hello ADA (the page still renders Hello Nick).",
+      "status": "captured",
+      "provenanceRef": "p2",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "should greet with Hello ADA and not render Hello Nick: Unable to find an element with the text: Hello ADA (1 failed, 6 passed); DOM showed Hello Nick"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "plan-approval",
+      "decisions": [
+        {
+          "id": "d2",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record e1eaa388...).",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-09T17:50:16.820Z"
+        }
+      ]
+    }
+  ]
+}
