@@ -10,7 +10,7 @@ export default function HomeView() {
     <section className="space-y-6">
       <header className="space-y-1">
         <h1 className="text-2xl font-semibold">Home View</h1>
-        <h3>Hello Nick</h3>
+        <h3>Hello ADA</h3>
         <p className="text-sm text-muted-foreground">
           Configure your theme and color mode preferences.
         </p>
@@ -21,7 +21,6 @@ export default function HomeView() {
       <PageViewsPanel />
       <div className="flex items-start gap-4" data-id={HOME_VIEW_TEST_IDS.torusRow}>
         <TorusWidget />
-        <TorusWidget color="red" />
       </div>
     </section>
   );

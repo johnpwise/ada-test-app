@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "remove-red-torus-widget",
+  "workflowId": "remove-red-torus-widget",
+  "kind": "bug",
+  "revision": 1,
+  "status": "intake",
+  "objective": {
+    "statement": "Remove the red torus widget from HomeView.tsx.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView no longer renders the red torus widget (no 'Red Torus Widget' region, no torus with data-color red).",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "HomeView still renders exactly one torus widget, the green 'Torus Widget'; the rest of HomeView is unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Remove the red TorusWidget element from HomeView.tsx and update HomeView.component.test.tsx to match.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "TorusWidget component internals (including its red colour option and its tests), the green widget, other HomeView sections, dependencies, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "Keep the TorusWidget 'red' colour option and its component tests: the card asks only to remove the widget from HomeView.tsx. Removing an unused prop variant is a separate cleanup.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "Keep the torusRow flex wrapper and its test id around the remaining green widget, so the layout and the HomeView.testIds export are unchanged.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: Bug Fix Remove red torus widget - Please remove the red torus widget from the HomeView.tsx.",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, HomeView.component.test.tsx, src/components/torus-widget/TorusWidget.tsx",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [],
+  "testMatrix": {},
+  "increments": [],
+  "tests": [],
+  "expectedRedEvidence": [],
+  "verification": [],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}

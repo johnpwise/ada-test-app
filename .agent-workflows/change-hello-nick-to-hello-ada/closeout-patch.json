@@ -1,0 +1,28 @@
+{
+  "status": "ready-for-closeout",
+  "updatedAt": "2026-11-09T17:58:00.000Z",
+  "increments": [
+    {
+      "id": "inc1",
+      "behavior": "HomeView greets with \"Hello ADA\" instead of \"Hello Nick\".",
+      "doneWhen": "The new component test passes and the existing HomeView tests still pass.",
+      "capabilityOwnerKeys": ["rendering_owner"],
+      "testIds": ["t1"],
+      "verificationIds": ["v1", "v2"],
+      "status": "complete",
+      "provenanceRef": "p2"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v1",
+      "layer": "component",
+      "requirement": "Full unit and component suite passes (npm test).",
+      "status": "passing",
+      "provenanceRef": "p3",
+      "command": "npm test",
+      "exitCode": 0,
+      "result": "7 unit files 31/31 and 11 component files 56/56 passed; npm run lint clean; independent reviewer ADA-VERDICT approve-with-notes"
+    }
+  ]
+}

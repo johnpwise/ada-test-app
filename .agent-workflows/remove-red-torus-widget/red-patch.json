@@ -1,0 +1,15 @@
+{
+  "status": "implementation-ready",
+  "expectedRedEvidence": [
+    {
+      "id": "red-single",
+      "testId": "t-single",
+      "expectedFailure": "Expected one torus widget but HomeView still renders two, the second being red.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "should render a single green torus widget: expected 1 widget but got 2; should not render the red torus widget: found Red Torus Widget region; should keep only the green torus widget in the torus row: ['green','red'] vs ['green'] (3 failed, 4 passed)"
+    }
+  ]
+}

@@ -23,6 +23,17 @@ describe("HomeView", () => {
     expect(screen.queryByText("ADA plugin test")).not.toBeInTheDocument();
   });
 
+  it("should greet with Hello ADA and not render Hello Nick", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    expect(screen.getByText("Hello ADA")).toBeInTheDocument();
+    expect(screen.queryByText("Hello Nick")).not.toBeInTheDocument();
+  });
+
   it("should render the page views by day panel", () => {
     // Arrange
 
@@ -43,21 +54,21 @@ describe("HomeView", () => {
     expect(screen.getByTestId(CLOCK_TEST_IDS.clock)).toBeInTheDocument();
   });
 
-  it("should render two torus widgets, one green and one red", () => {
+  it("should render a single green torus widget", () => {
     // Arrange
 
     // Act
     render(<HomeView />);
 
     // Assert
-    expect(screen.getAllByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveLength(2);
+    expect(screen.getAllByTestId(TORUS_WIDGET_TEST_IDS.widget)).toHaveLength(1);
     const colours = screen
       .getAllByTestId(TORUS_WIDGET_TEST_IDS.torus)
       .map((torus) => torus.getAttribute("data-color"));
-    expect(colours).toEqual(["green", "red"]);
+    expect(colours).toEqual(["green"]);
   });
 
-  it("should give the two torus widgets different accessible names", () => {
+  it("should not render the red torus widget", () => {
     // Arrange
 
     // Act
@@ -65,10 +76,10 @@ describe("HomeView", () => {
 
     // Assert
     expect(screen.getByRole("region", { name: "Torus Widget" })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: "Red Torus Widget" })).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Red Torus Widget" })).not.toBeInTheDocument();
   });
 
-  it("should render the green and red torus widgets side by side in one row", () => {
+  it("should keep only the green torus widget in the torus row", () => {
     // Arrange
 
     // Act
@@ -76,11 +87,9 @@ describe("HomeView", () => {
 
     // Assert
     const row = screen.getByTestId(HOME_VIEW_TEST_IDS.torusRow);
-    expect(row).toHaveClass("flex");
-    expect(row).not.toHaveClass("flex-col");
     const colours = within(row)
       .getAllByTestId(TORUS_WIDGET_TEST_IDS.torus)
       .map((torus) => torus.getAttribute("data-color"));
-    expect(colours).toEqual(["green", "red"]);
+    expect(colours).toEqual(["green"]);
   });
 });
