@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "pie-chart-widget",
+  "workflowId": "pie-chart-widget",
+  "kind": "feature",
+  "revision": 1,
+  "status": "intake",
+  "objective": {
+    "statement": "Add a pie chart widget to HomeView.tsx, the same overall size as the torus widget, drawn from fake data.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders a pie chart widget that shows a pie built from fake, hard-coded data.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The pie chart widget has the same overall size as the torus widget (200px by 200px outer box).",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The widget has an accessible name and visible label 'Pie Chart Widget', distinct from the torus widget names, and the pie slices and their values are available to assistive technology as text, not by colour alone.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-4",
+      "statement": "The existing torus widgets and the rest of HomeView are unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Add a PieChartWidget component with test ids and component tests, and render it in HomeView.tsx with a HomeView component test.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "New dependencies (no chart library), real or remote data, interactivity, TorusWidget changes, other HomeView sections, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "The torus widget is a 200px by 200px section (WIDGET_SIZE_PX in TorusWidget.tsx) with a 150px graphic above a text label. The pie widget copies that box and layout so the overall size matches.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "The pie is hand-built inline SVG with a hard-coded fake dataset in the component (four slices, for example Alpha 40, Beta 30, Gamma 20, Delta 10), so no dependency is needed. Slice paths are computed from the values.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-3",
+      "category": "assumption",
+      "statement": "Placement: rendered inside the existing torus row, after the two torus widgets, so the widgets sit side by side. The card says only 'on the HomeView.tsx'.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-4",
+      "category": "assumption",
+      "statement": "Slice colours use a fixed categorical palette of distinct hexes. A visually hidden list under the chart gives each slice name and percentage, so the data is not colour-only. Visible label stays 'Pie Chart Widget'.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Pie Chart Widget - On the HomeView.tsx, make a pie chart widget. Make it the same overall size as the torus widget. Use some fake data for the pie chart. Plan approval required.",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, HomeView.component.test.tsx, src/components/torus-widget/TorusWidget.tsx, TorusWidget.component.test.tsx, scripts/validate-component-layout.mjs",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p-user",
+      "decisions": [
+        {
+          "id": "d-plan-1",
+          "status": "pending",
+          "rationale": "Plan is saved and valid at the planned gate; waiting for the owner.",
+          "provenanceRef": "p-user",
+          "decidedBy": "delivery-engineer"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [],
+  "testMatrix": {},
+  "increments": [],
+  "tests": [],
+  "expectedRedEvidence": [],
+  "verification": [],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
