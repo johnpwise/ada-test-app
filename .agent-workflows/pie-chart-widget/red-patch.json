@@ -1,0 +1,26 @@
+{
+  "status": "implementation-ready",
+  "updatedAt": "2026-11-18T22:03:00.000Z",
+  "expectedRedEvidence": [
+    {
+      "id": "red-pie-widget",
+      "testId": "t-pie-widget",
+      "expectedFailure": "PieChartWidget module does not exist, so the test file fails to import it.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/pie-chart-widget",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import \"./PieChartWidget\"; the suite failed with no tests run (1 failed suite)"
+    },
+    {
+      "id": "red-home-pie",
+      "testId": "t-home-pie",
+      "expectedFailure": "HomeView renders no pie chart widget, so no 'Pie Chart Widget' region is found.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "should render one pie chart widget in the torus row: unable to find a region named \"Pie Chart Widget\" (1 failed, 7 passed)"
+    }
+  ]
+}

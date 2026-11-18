@@ -1,0 +1,38 @@
+{
+  "status": "ready-for-closeout",
+  "updatedAt": "2026-11-18T22:10:00.000Z",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "PieChartWidget renders a 200px by 200px labelled section with a pie of four fake-data slices and a text list of slice names and percentages.",
+      "doneWhen": "The PieChartWidget component tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-pie-widget"],
+      "verificationIds": ["v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "HomeView renders the pie chart widget in the torus row after the two torus widgets, leaving the torus widgets unchanged.",
+      "doneWhen": "The HomeView component test passes, and the full component suite, lint and build still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-home-pie"],
+      "verificationIds": ["v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:component",
+      "exitCode": 0,
+      "result": "12 files, 65/65 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes"
+    }
+  ]
+}
