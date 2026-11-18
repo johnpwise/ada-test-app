@@ -1,0 +1,116 @@
+{
+  "status": "planned",
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "A new component with computed SVG geometry and a data-derived accessible text list, plus a HomeView change. No state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  },
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "none (stateless markup)",
+      "rationale": "Static presentational widget; the fake dataset is a module constant.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No shared state involved.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "Data is fake and local; no remote data involved.",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "Slice geometry stays inside the component and is covered through rendered output; no separate logic module.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered output of PieChartWidget and HomeView is the behaviour under change.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the HomeView component test renders the real PieChartWidget.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static markup addition with no user flow.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "PieChartWidget renders a 200px by 200px labelled section with a pie of four fake-data slices and a text list of slice names and percentages.",
+      "doneWhen": "The PieChartWidget component tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-pie-widget"],
+      "verificationIds": ["v-component"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "HomeView renders the pie chart widget in the torus row after the two torus widgets, leaving the torus widgets unchanged.",
+      "doneWhen": "The HomeView component test passes, and the full component suite, lint and build still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-home-pie"],
+      "verificationIds": ["v-component"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-pie-widget",
+      "layer": "component",
+      "description": "PieChartWidget (src/components/pie-chart-widget/PieChartWidget.component.test.tsx): region named 'Pie Chart Widget' with visible label; outer box style 200px by 200px, matching the torus widget; one path per fake slice, with fills from the fixed palette and arc sizes proportional to the values (percentages sum to 100); text list names every slice with its percentage.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/pie-chart-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home-pie",
+      "layer": "component",
+      "description": "HomeView renders one 'Pie Chart Widget' region inside the torus row, after the green and blue torus widgets, and the torus widgets and their accessible names are unchanged.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-pie-widget",
+      "testId": "t-pie-widget",
+      "expectedFailure": "PieChartWidget module does not exist, so the test file fails to import it.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "red-home-pie",
+      "testId": "t-home-pie",
+      "expectedFailure": "HomeView renders no pie chart widget, so no 'Pie Chart Widget' region is found.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
+      "status": "planned",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred"
+    }
+  ]
+}

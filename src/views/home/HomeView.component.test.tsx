@@ -93,4 +93,19 @@ describe("HomeView", () => {
       .map((torus) => torus.getAttribute("data-color"));
     expect(colours).toEqual(["green", "blue"]);
   });
+
+  it("should render one pie chart widget in the torus row after the torus widgets", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    const row = screen.getByTestId(HOME_VIEW_TEST_IDS.torusRow);
+    expect(screen.getAllByRole("region", { name: "Pie Chart Widget" })).toHaveLength(1);
+    const names = within(row)
+      .getAllByRole("region")
+      .map((widget) => widget.getAttribute("aria-label"));
+    expect(names).toEqual(["Torus Widget", "Blue Torus Widget", "Pie Chart Widget"]);
+  });
 });

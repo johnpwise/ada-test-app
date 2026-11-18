@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "pie-chart-widget",
+    "workflowId": "pie-chart-widget",
+    "revision": 4,
+    "hash": "62ec8f26a24580e46b969945cbc0c4c68d2eecb3e2d24529bbb9153c3c0f6240"
+  },
+  "diff": {
+    "files": [
+      ".agent-workflows/pie-chart-widget/approval-patch.json",
+      ".agent-workflows/pie-chart-widget/red-patch.json",
+      ".agent-workflows/pie-chart-widget/slice-spec.json",
+      "src/components/pie-chart-widget/PieChartWidget.component.test.tsx",
+      "src/components/pie-chart-widget/PieChartWidget.testIds.ts",
+      "src/components/pie-chart-widget/PieChartWidget.tsx",
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "f38dd1c22c52b7cf016c7587e8d67294565e7558e47107abd15b0b103785bd9a"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-change"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "api-contract-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "4b199756666da9e8bb9dd6fbc991ec4594b35e902505703bb3b6715cd72b439c"
+}
