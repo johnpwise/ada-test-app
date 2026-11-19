@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "change-home-view-subtitle-text",
+  "workflowId": "change-home-view-subtitle-text",
+  "kind": "bug",
+  "revision": 1,
+  "status": "intake",
+  "objective": {
+    "statement": "On HomeView.tsx, change the text \"Configure your theme and color mode preferences.\" to read \"Sandbox application to showcase ADA\".",
+    "provenanceRef": "p1"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac1",
+      "statement": "HomeView renders the text \"Sandbox application to showcase ADA\".",
+      "provenanceRef": "p1"
+    },
+    {
+      "id": "ac2",
+      "statement": "HomeView no longer renders the text \"Configure your theme and color mode preferences.\".",
+      "provenanceRef": "p1"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s1",
+        "statement": "The subtitle paragraph text in src/views/home/HomeView.tsx and a regression test in src/views/home/HomeView.component.test.tsx.",
+        "provenanceRef": "p3"
+      }
+    ],
+    "out": [
+      {
+        "id": "o1",
+        "statement": "Any other HomeView content, styling, markup, or other views.",
+        "provenanceRef": "p2"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "obs1",
+      "category": "bug-reproduction",
+      "statement": "src/views/home/HomeView.tsx line 16 renders the old text inside a <p> in the header; it appears nowhere else under src.",
+      "provenanceRef": "p3"
+    },
+    {
+      "id": "obs2",
+      "category": "assumption",
+      "statement": "The requested text has no trailing period, exactly as written on the card, and is used verbatim. The <p> element and its classes stay unchanged; only the text changes.",
+      "provenanceRef": "p2"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p1",
+      "sourceType": "user",
+      "source": "Card text: change the text \"Configure your theme and color mode preferences.\" on HomeView.tsx to \"Sandbox application to showcase ADA\"",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p2",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p3",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, src/views/home/HomeView.component.test.tsx, AGENTS.md, package.json scripts",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "plan-approval",
+      "boundary": "Plan approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p1",
+      "decisions": [
+        {
+          "id": "d1",
+          "status": "pending",
+          "rationale": "ADA_PLAN_APPROVAL=required; run stops at plan_ready until the owner approves.",
+          "provenanceRef": "p1",
+          "decidedBy": "delivery-engineer"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [],
+  "testMatrix": {},
+  "increments": [],
+  "tests": [],
+  "expectedRedEvidence": [],
+  "verification": [],
+  "e2eStatus": { "status": "planned", "provenanceRef": "p2" }
+}

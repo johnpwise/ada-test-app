@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "change-home-view-subtitle-text",
+  "workflowId": "change-home-view-subtitle-text",
+  "kind": "bug",
+  "revision": 2,
+  "status": "planned",
+  "objective": {
+    "statement": "On HomeView.tsx, change the text \"Configure your theme and color mode preferences.\" to read \"Sandbox application to showcase ADA\".",
+    "provenanceRef": "p1"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac1",
+      "statement": "HomeView renders the text \"Sandbox application to showcase ADA\".",
+      "provenanceRef": "p1"
+    },
+    {
+      "id": "ac2",
+      "statement": "HomeView no longer renders the text \"Configure your theme and color mode preferences.\".",
+      "provenanceRef": "p1"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s1",
+        "statement": "The subtitle paragraph text in src/views/home/HomeView.tsx and a regression test in src/views/home/HomeView.component.test.tsx.",
+        "provenanceRef": "p3"
+      }
+    ],
+    "out": [
+      {
+        "id": "o1",
+        "statement": "Any other HomeView content, styling, markup, or other views.",
+        "provenanceRef": "p2"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "obs1",
+      "category": "bug-reproduction",
+      "statement": "src/views/home/HomeView.tsx line 16 renders the old text inside a <p> in the header; it appears nowhere else under src.",
+      "provenanceRef": "p3"
+    },
+    {
+      "id": "obs2",
+      "category": "assumption",
+      "statement": "The requested text has no trailing period, exactly as written on the card, and is used verbatim. The <p> element and its classes stay unchanged; only the text changes.",
+      "provenanceRef": "p2"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p1",
+      "sourceType": "user",
+      "source": "Card text: change the text \"Configure your theme and color mode preferences.\" on HomeView.tsx to \"Sandbox application to showcase ADA\"",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-19T22:30:38.079Z"
+    },
+    {
+      "id": "p2",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-19T22:30:38.079Z"
+    },
+    {
+      "id": "p3",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, src/views/home/HomeView.component.test.tsx, AGENTS.md, package.json scripts",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-19T22:30:38.079Z"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "plan-approval",
+      "boundary": "Plan approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p1",
+      "decisions": [
+        {
+          "id": "d1",
+          "status": "pending",
+          "rationale": "ADA_PLAN_APPROVAL=required; run stops at plan_ready until the owner approves.",
+          "provenanceRef": "p1",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-19T22:30:38.079Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "N/A - static text, no state",
+      "rationale": "The change is a literal string; no state is involved.",
+      "provenanceRef": "p2"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "N/A - no remote data",
+      "rationale": "No API or server data is touched.",
+      "provenanceRef": "p2"
+    },
+    {
+      "key": "rendering_owner",
+      "owner": "src/views/home/HomeView.tsx",
+      "rationale": "HomeView owns the subtitle paragraph markup.",
+      "provenanceRef": "p3"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic or branching.",
+      "provenanceRef": "p2"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered text is observable behaviour of HomeView, tested in HomeView.component.test.tsx.",
+      "provenanceRef": "p3"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module or API interaction changes.",
+      "provenanceRef": "p2"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text change fully covered by the component test.",
+      "provenanceRef": "p2"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc1",
+      "behavior": "HomeView shows \"Sandbox application to showcase ADA\" instead of \"Configure your theme and color mode preferences.\".",
+      "doneWhen": "The new component test passes and the existing HomeView tests still pass.",
+      "capabilityOwnerKeys": [
+        "rendering_owner"
+      ],
+      "testIds": [
+        "t1"
+      ],
+      "verificationIds": [
+        "v1",
+        "v2"
+      ],
+      "status": "planned",
+      "provenanceRef": "p2"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t1",
+      "layer": "component",
+      "description": "should show the sandbox subtitle and not the old theme preferences text",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p1"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red1",
+      "testId": "t1",
+      "expectedFailure": "Unable to find an element with the text: Sandbox application to showcase ADA (the page still renders the old text).",
+      "status": "planned",
+      "provenanceRef": "p2"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v1",
+      "layer": "component",
+      "requirement": "Full unit and component suite passes (npm test) and npm run lint is clean.",
+      "status": "planned",
+      "provenanceRef": "p3"
+    },
+    {
+      "id": "v2",
+      "layer": "e2e",
+      "requirement": "Not applicable; covered by the component test.",
+      "status": "N/A",
+      "provenanceRef": "p2"
+    }
+  ],
+  "e2eStatus": {
+    "status": "planned",
+    "provenanceRef": "p2"
+  },
+  "createdAt": "2026-11-19T22:30:38.079Z",
+  "updatedAt": "2026-11-19T22:30:46.078Z",
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One literal string in one component, explicit behaviour, localized scope, no approval-boundary or contract change.",
+    "provenanceRef": "p2"
+  }
+}
