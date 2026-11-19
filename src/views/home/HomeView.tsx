@@ -13,7 +13,7 @@ export default function HomeView() {
         <h1 className="text-2xl font-semibold">Home View</h1>
         <h3>Hello ADA</h3>
         <p className="text-sm text-muted-foreground">
-          Configure your theme and color mode preferences.
+          Sandbox application to showcase ADA
         </p>
       </header>
       <Clock />
