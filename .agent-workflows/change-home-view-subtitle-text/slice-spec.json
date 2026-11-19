@@ -4,7 +4,7 @@
   "workflowId": "change-home-view-subtitle-text",
   "kind": "bug",
   "revision": 2,
-  "status": "planned",
+  "status": "implementation-ready",
   "objective": {
     "statement": "On HomeView.tsx, change the text \"Configure your theme and color mode preferences.\" to read \"Sandbox application to showcase ADA\".",
     "provenanceRef": "p1"
@@ -72,6 +72,13 @@
       "source": "src/views/home/HomeView.tsx, src/views/home/HomeView.component.test.tsx, AGENTS.md, package.json scripts",
       "capturedBy": "delivery-engineer",
       "capturedAt": "2026-11-19T22:30:38.079Z"
+    },
+    {
+      "id": "p4",
+      "sourceType": "approval",
+      "source": "Plan approval gate record 4719adfda4339f6306766bc9f8f2cfa57968e75bdc90bd368b9c991467b6142a, approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-19T22:32:10.022Z",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-19T22:32:10.022Z"
     }
   ],
   "approvals": [
@@ -88,6 +95,14 @@
           "provenanceRef": "p1",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-19T22:30:38.079Z"
+        },
+        {
+          "id": "d2",
+          "status": "approved",
+          "rationale": "Owner approved the plan (gate record 4719adfda4339f6306766bc9f8f2cfa57968e75bdc90bd368b9c991467b6142a).",
+          "provenanceRef": "p4",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-19T22:32:10.022Z"
         }
       ]
     }

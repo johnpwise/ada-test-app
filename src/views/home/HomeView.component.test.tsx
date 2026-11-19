@@ -23,6 +23,19 @@ describe("HomeView", () => {
     expect(screen.queryByText("ADA plugin test")).not.toBeInTheDocument();
   });
 
+  it("should show the sandbox subtitle and not the old theme preferences text", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    expect(screen.getByText("Sandbox application to showcase ADA")).toBeInTheDocument();
+    expect(
+      screen.queryByText("Configure your theme and color mode preferences."),
+    ).not.toBeInTheDocument();
+  });
+
   it("should greet with Hello ADA and not render Hello Nick", () => {
     // Arrange
 

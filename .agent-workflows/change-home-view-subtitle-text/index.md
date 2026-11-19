@@ -5,7 +5,7 @@
 - **Workflow ID:** change-home-view-subtitle-text
 - **Active Owner:** delivery-engineer
 - **Current Artifact ID:** artifact-001
-- **Status:** awaiting-approval
+- **Status:** ready-for-closeout (plan approved 2026-11-19T22:32:10Z; RED then GREEN recorded; npm test 30 unit + 66 component passed, lint clean; independent review: approve; manifest review-lens-manifest.json; commit/push: executor-owned)
 - **Canonical slice spec:** .agent-workflows/change-home-view-subtitle-text/slice-spec.json (slice ID change-home-view-subtitle-text, revision 2; the executor computes the digest)
 - **Last Updated (UTC):** 2026-11-19T00:00:00Z
 

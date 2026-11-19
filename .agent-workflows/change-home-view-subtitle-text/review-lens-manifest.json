@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "change-home-view-subtitle-text",
+    "workflowId": "change-home-view-subtitle-text",
+    "revision": 2,
+    "hash": "5f30e7e73cf5ce0e862165ddd13e9393286c83bd6c9d0870885f9f619e301aff"
+  },
+  "diff": {
+    "files": [
+      ".agent-workflows/change-home-view-subtitle-text/slice-spec.json",
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "1f6bab4ff55c0791978c9b7a126ee36d0d02789fe8ab470b84613355f3b81d35"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "skip",
+      "reasonCodes": [
+        "NO_TRIGGER_IN_DIFF_OR_SLICE_SPEC"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "api-contract-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/react-composition.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "2c2d9ed237370b559a0b86f4d89d6e6773d2f13cc426b81fc4831d801235c9c3"
+}
