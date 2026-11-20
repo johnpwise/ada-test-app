@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "change-hello-ada-to-your-imagination-realised",
+  "workflowId": "change-hello-ada-to-your-imagination-realised",
+  "kind": "feature",
+  "revision": 1,
+  "status": "ready-for-closeout",
+  "createdAt": "2026-11-20T09:00:00.000Z",
+  "updatedAt": "2026-11-20T09:00:00.000Z",
+  "objective": {
+    "statement": "On HomeView.tsx, change the greeting text \"Hello ADA\" to read \"Your imagination, realised\".",
+    "provenanceRef": "p1"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One literal string in one component, explicit behaviour, localized scope, no approval-boundary or contract change.",
+    "provenanceRef": "p2"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac1",
+      "statement": "HomeView renders the text \"Your imagination, realised\".",
+      "provenanceRef": "p1"
+    },
+    {
+      "id": "ac2",
+      "statement": "HomeView no longer renders the text \"Hello ADA\".",
+      "provenanceRef": "p1"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s1",
+        "statement": "The greeting heading text in src/views/home/HomeView.tsx and the matching assertion in src/views/home/HomeView.component.test.tsx.",
+        "provenanceRef": "p3"
+      }
+    ],
+    "out": [
+      {
+        "id": "o1",
+        "statement": "Any other HomeView content, styling, markup level, or other views.",
+        "provenanceRef": "p2"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "obs1",
+      "category": "assumption",
+      "statement": "The heading element (h3) and its position stay unchanged; only the text changes. The existing greeting test is updated rather than a new one added.",
+      "provenanceRef": "p2"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p1",
+      "sourceType": "user",
+      "source": "Card text: change the text on HomeView.tsx that reads \"Hello ADA\" to \"Your imagination, realised\"",
+      "capturedAt": "2026-11-20T09:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p2",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedAt": "2026-11-20T09:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p3",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, src/views/home/HomeView.component.test.tsx, package.json scripts",
+      "capturedAt": "2026-11-20T09:00:00.000Z",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "N/A - static text, no state",
+      "rationale": "The change is a literal string; no state is involved.",
+      "provenanceRef": "p2"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "N/A - no remote data",
+      "rationale": "No API or server data is touched.",
+      "provenanceRef": "p2"
+    },
+    {
+      "key": "rendering_owner",
+      "owner": "src/views/home/HomeView.tsx",
+      "rationale": "HomeView owns the greeting heading markup.",
+      "provenanceRef": "p3"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "N/A",
+      "rationale": "No isolated logic or branching.",
+      "provenanceRef": "p2"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Rendered text is observable behaviour of HomeView, tested in HomeView.component.test.tsx.",
+      "provenanceRef": "p3"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module or API interaction changes.",
+      "provenanceRef": "p2"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Static text change fully covered by the component test.",
+      "provenanceRef": "p2"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc1",
+      "behavior": "HomeView greets with \"Your imagination, realised\" instead of \"Hello ADA\".",
+      "doneWhen": "The updated component test passes and the existing HomeView tests still pass.",
+      "capabilityOwnerKeys": [
+        "rendering_owner"
+      ],
+      "testIds": [
+        "t1"
+      ],
+      "verificationIds": [
+        "v1",
+        "v2"
+      ],
+      "status": "complete",
+      "provenanceRef": "p2"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t1",
+      "layer": "component",
+      "description": "should greet with Your imagination, realised and not render Hello ADA",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "preImplementation": true,
+      "provenanceRef": "p1"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red1",
+      "testId": "t1",
+      "expectedFailure": "Unable to find an element with the text: Your imagination, realised (the page still renders Hello ADA).",
+      "status": "captured",
+      "provenanceRef": "p2",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home/HomeView.component.test.tsx",
+      "exitCode": 1,
+      "observedFailure": "should greet with Your imagination, realised and not render Hello ADA: Unable to find an element with the text: Your imagination, realised (1 failed, 8 passed); DOM showed Hello ADA"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v1",
+      "layer": "component",
+      "requirement": "Full unit and component suite passes (npm test).",
+      "status": "passing",
+      "provenanceRef": "p3",
+      "command": "npm test",
+      "exitCode": 0,
+      "result": "6 unit files 30/30 and 12 component files 66/66 passed; npm run lint clean; independent reviewer ADA-VERDICT approve"
+    },
+    {
+      "id": "v2",
+      "layer": "e2e",
+      "requirement": "Not applicable; covered by the component test.",
+      "status": "N/A",
+      "provenanceRef": "p2"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p2"
+  }
+}
