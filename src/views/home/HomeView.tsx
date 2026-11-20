@@ -11,7 +11,7 @@ export default function HomeView() {
     <section className="space-y-6">
       <header className="space-y-1">
         <h1 className="text-2xl font-semibold">Home View</h1>
-        <h3>Hello ADA</h3>
+        <h3>Your imagination, realised</h3>
         <p className="text-sm text-muted-foreground">
           Sandbox application to showcase ADA
         </p>
