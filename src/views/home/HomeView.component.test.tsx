@@ -36,15 +36,15 @@ describe("HomeView", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("should greet with Hello ADA and not render Hello Nick", () => {
+  it("should greet with Your imagination, realised and not render Hello ADA", () => {
     // Arrange
 
     // Act
     render(<HomeView />);
 
     // Assert
-    expect(screen.getByText("Hello ADA")).toBeInTheDocument();
-    expect(screen.queryByText("Hello Nick")).not.toBeInTheDocument();
+    expect(screen.getByText("Your imagination, realised")).toBeInTheDocument();
+    expect(screen.queryByText("Hello ADA")).not.toBeInTheDocument();
   });
 
   it("should render the page views by day panel", () => {
