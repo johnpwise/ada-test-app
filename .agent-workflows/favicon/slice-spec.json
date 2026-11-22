@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "favicon",
+  "workflowId": "favicon",
+  "kind": "feature",
+  "revision": 1,
+  "status": "implementation-ready",
+  "createdAt": "2026-11-22T00:00:00.000Z",
+  "updatedAt": "2026-11-22T00:00:00.000Z",
+  "objective": {
+    "statement": "The application has a suitable favicon.",
+    "provenanceRef": "p-user"
+  },
+  "complexity": {
+    "classification": "trivial",
+    "rationale": "One static asset plus one link tag in index.html; no state, contracts or approval-boundary work.",
+    "provenanceRef": "p-inferred"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "index.html declares an icon link whose href points to a favicon file that exists in public/.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The favicon is a project-specific SVG, no longer the default Vite logo (vite.svg is not referenced).",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "s-1",
+        "statement": "public/favicon.svg (new) and the icon link in index.html.",
+        "provenanceRef": "p-user"
+      },
+      {
+        "id": "s-2",
+        "statement": "src/lib/favicon.unit.test.ts verifying the link and the asset.",
+        "provenanceRef": "p-inferred"
+      }
+    ],
+    "out": [
+      {
+        "id": "s-3",
+        "statement": "PNG/ICO/apple-touch icons, web manifest, deleting public/vite.svg (rm is not available to the executor), and earlier slices' workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "o-1",
+      "category": "assumption",
+      "statement": "No design was supplied, so the favicon is a simple SVG torus-style ring on a dark rounded square, matching the app's torus widgets; a single SVG is supported by all current browsers.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "o-2",
+      "category": "assumption",
+      "statement": "public/vite.svg is left in place, unreferenced, as follow-up debt for deletion.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "provenance": [
+    { "id": "p-user", "sourceType": "user", "source": "New Feature request: FAVICON", "capturedAt": "2026-11-22T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-inferred", "sourceType": "inferred", "source": "delivery-engineer planning", "capturedAt": "2026-11-22T00:00:00.000Z", "capturedBy": "delivery-engineer" },
+    { "id": "p-repo", "sourceType": "repository", "source": "index.html, public/, vitest.unit.config.ts, AGENTS.md", "capturedAt": "2026-11-22T00:00:00.000Z", "capturedBy": "delivery-engineer" }
+  ],
+  "approvals": [],
+  "capabilityOwners": [
+    { "key": "local_ui_state_owner", "owner": "React local state/hooks", "rationale": "Static asset; no state.", "provenanceRef": "p-repo" },
+    { "key": "shared_client_state_owner", "owner": "Zustand", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" },
+    { "key": "server_state_owner", "owner": "React Query + Axios boundary", "rationale": "Not used by this slice.", "provenanceRef": "p-repo" }
+  ],
+  "testMatrix": {
+    "unit": { "requirement": "required", "rationale": "Reads index.html and public/ as raw text to verify the icon link and asset.", "provenanceRef": "p-inferred" },
+    "component": { "requirement": "N/A", "rationale": "No React component changes.", "provenanceRef": "p-inferred" },
+    "integration": { "requirement": "N/A", "rationale": "No cross-module flow; npm run test runs as regression.", "provenanceRef": "p-inferred" },
+    "e2e": { "requirement": "N/A", "rationale": "Static head metadata with no user flow.", "provenanceRef": "p-inferred" }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "index.html links a project-specific SVG favicon that exists in public/.",
+      "doneWhen": "t-1 passes and the full suite, lint and build stay green.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-1"],
+      "verificationIds": ["v-1"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-1",
+      "layer": "unit",
+      "description": "index.html has an icon link to /favicon.svg, public/favicon.svg is an SVG document, and vite.svg is not referenced.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/favicon.unit.test.ts",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "r-1",
+      "testId": "t-1",
+      "expectedFailure": "index.html still links /vite.svg and public/favicon.svg does not exist.",
+      "status": "captured",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/favicon.unit.test.ts",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ../../public/favicon.svg?raw: the asset does not exist yet, so the suite fails with 0 tests run.",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    { "id": "v-1", "layer": "unit", "requirement": "npm run test, npm run lint and npm run build pass.", "status": "passing", "command": "npm run test; npm run lint; npm run build", "exitCode": 0, "result": "unit 33/33, component 66/66, lint clean, tsc and vite build succeeded", "provenanceRef": "p-inferred" }
+  ],
+  "e2eStatus": { "status": "N/A", "provenanceRef": "p-inferred" }
+}
