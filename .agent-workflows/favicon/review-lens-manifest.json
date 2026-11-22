@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "favicon",
+    "workflowId": "favicon",
+    "revision": 1,
+    "hash": "640328e5950d49f9014cd75e5b9c0ea80978c5018255f86f281961d985f54642"
+  },
+  "diff": {
+    "files": [
+      ".agent-workflows/favicon/index.md",
+      ".agent-workflows/favicon/slice-spec.json",
+      ".agent-workflows/favicon/step-001.md",
+      "index.html",
+      "public/favicon.svg",
+      "src/lib/favicon.unit.test.ts"
+    ],
+    "hash": "f4b414d6d97f62454caff2082d386345085aacc8efd05fb063461b7d74e70eb0"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "CLASSIFICATION_UNCERTAIN"
+      ],
+      "evidence": [
+        "opaque-production-change"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "CLASSIFICATION_UNCERTAIN"
+      ],
+      "evidence": [
+        "opaque-production-change"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "CLASSIFICATION_UNCERTAIN"
+      ],
+      "evidence": [
+        "opaque-production-change"
+      ]
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "CLASSIFICATION_UNCERTAIN"
+      ],
+      "evidence": [
+        "opaque-production-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md",
+    "references/state-ownership.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "fcfc4fa6551516cd9bae0af099d93eea7b08063692e6656d4a8b62b08f8bfa48"
+}
