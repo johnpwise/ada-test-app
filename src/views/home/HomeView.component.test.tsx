@@ -138,4 +138,19 @@ describe("HomeView", () => {
     ).toBeTruthy();
     expect(screen.getByText("No date selected")).toBeInTheDocument();
   });
+
+  it("should render one colour picker widget after the calendar widget", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    const calendar = screen.getByRole("region", { name: "Calendar" });
+    const picker = screen.getByRole("region", { name: "Colour picker" });
+    expect(screen.getAllByRole("region", { name: "Colour picker" })).toHaveLength(1);
+    expect(
+      calendar.compareDocumentPosition(picker) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
 });

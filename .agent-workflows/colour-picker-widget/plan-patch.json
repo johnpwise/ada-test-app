@@ -1,0 +1,149 @@
+{
+  "status": "planned",
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "A new interactive component with colour-space conversion, pointer and keyboard interaction, text-input validation, and a HomeView change. No shared state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  },
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React useState in ColourPickerWidget",
+      "rationale": "HSV colour and the hex draft text are component-local UI concerns.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No other component needs the colour; the card asks only for the widget.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "HSV/RGB/hex conversion and hex parsing are branching numeric logic worth isolating.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Area interaction, hue/saturation/brightness sliders, hex typing and validation, and the displayed values are the user-observable behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the HomeView component test renders the real ColourPickerWidget.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Self-contained widget with no navigation, network or persistence; component tests exercise the full interaction.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "A pure helper converts between HSV, RGB and hex: hsvToRgb, rgbToHsv, rgbToHex, hsvToHex and parseHex (3 or 6 digits, optional #, case-insensitive, null when invalid).",
+      "doneWhen": "The colour unit tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-colour-lib"],
+      "verificationIds": ["v-unit"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "ColourPickerWidget renders the area, hue slider, saturation and brightness sliders, swatch, hex field and RGB readout, starting at #3B82F6; every control updates all the displays; valid hex typing sets the colour and invalid hex marks the field invalid without changing it.",
+      "doneWhen": "The ColourPickerWidget component tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-colour-widget"],
+      "verificationIds": ["v-component"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-3",
+      "behavior": "HomeView renders the colour picker widget after the calendar widget, leaving the other sections unchanged.",
+      "doneWhen": "The HomeView component test passes, and the full unit and component suites, lint and build still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-home-colour"],
+      "verificationIds": ["v-unit", "v-component"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-colour-lib",
+      "layer": "unit",
+      "description": "src/lib/colour.unit.test.ts: hsvToRgb for primaries, white, black and a mid value; rgbToHsv round-trips those and returns hue 0 for greys; rgbToHex gives upper-case 6-digit hex with zero padding; hsvToHex(217, 76, 96) is '#3B82F6' within rounding; parseHex accepts '#3b82f6', '3B82F6', '#fff' (expands to FFFFFF) and rejects '', '#12', '#12345', 'GGGGGG' and 7+ digits by returning null.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/colour",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-colour-widget",
+      "layer": "component",
+      "description": "ColourPickerWidget (src/components/colour-picker-widget/ColourPickerWidget.component.test.tsx): region named 'Colour picker'; hex field labelled 'Hex colour' starts '#3B82F6' and the RGB readout shows 'rgb(59, 130, 246)'; the swatch exposes the current colour; changing the 'Hue' range to 0 gives a red-hued hex; changing 'Saturation' to 0 and 'Brightness' to 100 gives '#FFFFFF'; pointer down in the area with mocked bounds (top-left, bottom-right, centre) sets the matching saturation and brightness and moves the marker, and a drag (move while pressed) tracks while move after release does not; typing 'ff0000' or '#f00' sets '#FF0000' and updates the sliders, while 'zzz' sets aria-invalid on the field and keeps the colour; after an invalid entry, a valid one clears the invalid state.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/colour-picker-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home-colour",
+      "layer": "component",
+      "description": "HomeView renders one 'Colour picker' region after the 'Calendar' region, and the existing sections and accessible names are unchanged.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-colour-lib",
+      "testId": "t-colour-lib",
+      "expectedFailure": "src/lib/colour does not exist, so the test file fails to import it.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "red-colour-widget",
+      "testId": "t-colour-widget",
+      "expectedFailure": "ColourPickerWidget module does not exist, so the test file fails to import it.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "red-home-colour",
+      "testId": "t-home-colour",
+      "expectedFailure": "HomeView renders no colour picker widget, so no 'Colour picker' region is found.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-unit",
+      "layer": "unit",
+      "requirement": "npm run test:unit passes",
+      "status": "planned",
+      "command": "npm run test:unit",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
+      "status": "planned",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred"
+    }
+  ]
+}
