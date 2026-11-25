@@ -1,0 +1,35 @@
+{
+  "status": "implementation-ready",
+  "expectedRedEvidence": [
+    {
+      "id": "red-calendar-lib",
+      "testId": "t-calendar-lib",
+      "expectedFailure": "src/lib/calendarMonth does not exist, so the test file fails to import it.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/calendarMonth",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./calendarMonth from src/lib/calendarMonth.unit.test.ts; 0 tests ran."
+    },
+    {
+      "id": "red-calendar-widget",
+      "testId": "t-calendar-widget",
+      "expectedFailure": "CalendarWidget module does not exist, so the test file fails to import it.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/calendar-widget",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./CalendarWidget from CalendarWidget.component.test.tsx; 0 tests ran."
+    },
+    {
+      "id": "red-home-calendar",
+      "testId": "t-home-calendar",
+      "expectedFailure": "HomeView renders no calendar widget, so no 'Calendar' region is found.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Unable to find an accessible element with the role region and name Calendar; 1 failed, 9 passed."
+    }
+  ]
+}
