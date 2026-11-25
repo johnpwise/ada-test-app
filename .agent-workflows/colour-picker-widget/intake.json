@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "colour-picker-widget",
+  "workflowId": "colour-picker-widget",
+  "kind": "feature",
+  "revision": 1,
+  "status": "intake",
+  "objective": {
+    "statement": "Add a colour picker widget to HomeView.tsx, similar to an online colour picker: a saturation/brightness area, a hue slider, a live preview swatch and a hex value the user can read and type.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders one colour picker widget with a saturation/brightness area, a hue slider, a preview swatch of the current colour and a hex text field.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "Clicking or dragging in the saturation/brightness area changes the saturation and brightness of the current colour; moving the hue slider changes its hue; the swatch, the hex field and an RGB readout update at once.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "Typing a valid hex colour (3 or 6 digits, with or without a leading #) in the hex field sets the current colour and updates the area, hue slider, swatch and RGB readout; an invalid value marks the field invalid and leaves the current colour unchanged.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-4",
+      "statement": "The widget starts on a fixed colour (#3B82F6), shown as upper-case 6-digit hex.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-5",
+      "statement": "The widget is operable by keyboard and assistive technology: hue, saturation and brightness are native range inputs with accessible names, the hex field is labelled, and the pointer-only area is a convenience duplicated by the saturation and brightness sliders.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-6",
+      "statement": "The existing HomeView sections and their tests are unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Add a ColourPickerWidget component with test ids and component tests, a pure colour-conversion helper in src/lib with unit tests, and render the widget in HomeView.tsx with a HomeView component test.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "New dependencies (no colour-picker library), alpha/opacity, HSL/CMYK input modes, eyedropper, saved swatches or history, copy to clipboard, persisting or sharing the colour (store, URL or storage), applying the colour to the app theme, changes to other HomeView sections, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "'Similar to an online colour picker' is read as the common HSV design: a 2D saturation (x) by brightness (y) area over the current hue, a horizontal hue slider, a preview swatch, a hex field and an RGB readout. It is hand-built with native elements, no dependency.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "State is HSV (h 0-360, s and v 0-100) held in the component, and hex and RGB are derived. A separate hex draft string is kept only while the user types, so partial input is not overwritten. Greys keep their last hue when saturation reaches 0, so dragging does not jump the hue.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-3",
+      "category": "assumption",
+      "statement": "The 2D area uses pointer events (down, move while pressed, up) clamped to its bounds and is not itself a keyboard control; the Saturation and Brightness range inputs are the accessible equivalent. Pointer capture is used only when the browser provides it, so jsdom component tests drive the area with mocked bounds.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-4",
+      "category": "assumption",
+      "statement": "Placement: a separate section after the CalendarWidget at the end of HomeView, matching how the calendar was added. The card says only 'on the Home view.tsx'.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-5",
+      "category": "assumption",
+      "statement": "The picked colour is not applied anywhere else; it only drives the widget's own display. Persistence or theming from it would be a separate card.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-6",
+      "category": "assumption",
+      "statement": "State is local to ColourPickerWidget. Styling follows CalendarWidget: Tailwind classes, the surface and border tokens, and data-id test ids from a ColourPickerWidget.testIds.ts file. Gradients and the swatch colour use inline styles because the values are dynamic.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Colour picker widget - On the Home view.tsx please create a colour picker widget, similar to how you have in an online colour picker. Plan approval required.",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, src/components/calendar-widget/CalendarWidget.tsx, src/components/theme-picker/ThemePicker.tsx, AGENTS.md, .agent-workflows/calendar-widget/",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p-user",
+      "decisions": [
+        {
+          "id": "d-plan-1",
+          "status": "pending",
+          "rationale": "Plan is saved and valid at the planned gate; waiting for the owner.",
+          "provenanceRef": "p-user",
+          "decidedBy": "delivery-engineer"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [],
+  "testMatrix": {},
+  "increments": [],
+  "tests": [],
+  "expectedRedEvidence": [],
+  "verification": [],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
