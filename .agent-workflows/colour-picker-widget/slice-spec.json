@@ -3,8 +3,8 @@
   "sliceId": "colour-picker-widget",
   "workflowId": "colour-picker-widget",
   "kind": "feature",
-  "revision": 2,
-  "status": "planned",
+  "revision": 5,
+  "status": "ready-for-closeout",
   "objective": {
     "statement": "Add a colour picker widget to HomeView.tsx, similar to an online colour picker: a saturation/brightness area, a hue slider, a live preview swatch and a hex value the user can read and type.",
     "provenanceRef": "p-user"
@@ -116,6 +116,13 @@
       "source": "src/views/home/HomeView.tsx, src/components/calendar-widget/CalendarWidget.tsx, src/components/theme-picker/ThemePicker.tsx, AGENTS.md, .agent-workflows/calendar-widget/",
       "capturedBy": "delivery-engineer",
       "capturedAt": "2026-11-25T19:49:30.642Z"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Plan approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-25T19:52:25.382Z; gate record 09fb0bcbfb696022d396ce4d23b6f44561620cc253b1bf5c26a5d48d206458cc",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-25T19:53:07.792Z"
     }
   ],
   "approvals": [
@@ -132,6 +139,14 @@
           "provenanceRef": "p-user",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-25T19:49:30.642Z"
+        },
+        {
+          "id": "d-plan-2",
+          "status": "approved",
+          "rationale": "Owner approved the saved plan; gate record 09fb0bcbfb696022d396ce4d23b6f44561620cc253b1bf5c26a5d48d206458cc.",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-25T19:53:07.792Z"
         }
       ]
     }
@@ -192,7 +207,7 @@
       "verificationIds": [
         "v-unit"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     },
     {
@@ -208,7 +223,7 @@
       "verificationIds": [
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     },
     {
@@ -225,7 +240,7 @@
         "v-unit",
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     }
   ],
@@ -260,22 +275,31 @@
       "id": "red-colour-lib",
       "testId": "t-colour-lib",
       "expectedFailure": "src/lib/colour does not exist, so the test file fails to import it.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/colour",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./colour from src/lib/colour.unit.test.ts; 0 tests ran."
     },
     {
       "id": "red-colour-widget",
       "testId": "t-colour-widget",
       "expectedFailure": "ColourPickerWidget module does not exist, so the test file fails to import it.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/colour-picker-widget",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./ColourPickerWidget from ColourPickerWidget.component.test.tsx; 0 tests ran."
     },
     {
       "id": "red-home-colour",
       "testId": "t-home-colour",
       "expectedFailure": "HomeView renders no colour picker widget, so no 'Colour picker' region is found.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Unable to find an accessible element with the role region and name Colour picker; 1 failed, 10 passed."
     }
   ],
   "verification": [
@@ -283,17 +307,21 @@
       "id": "v-unit",
       "layer": "unit",
       "requirement": "npm run test:unit passes",
-      "status": "planned",
+      "status": "passing",
       "command": "npm run test:unit",
-      "provenanceRef": "p-inferred"
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "9 files, 66/66 tests passed"
     },
     {
       "id": "v-component",
       "layer": "component",
       "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
-      "status": "planned",
+      "status": "passing",
       "command": "npm run test:component",
-      "provenanceRef": "p-inferred"
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "14 files, 96/96 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes"
     }
   ],
   "e2eStatus": {
@@ -301,7 +329,7 @@
     "provenanceRef": "p-inferred"
   },
   "createdAt": "2026-11-25T19:49:30.642Z",
-  "updatedAt": "2026-11-25T19:49:31.897Z",
+  "updatedAt": "2026-11-25T19:56:32.694Z",
   "complexity": {
     "classification": "non-trivial",
     "rationale": "A new interactive component with colour-space conversion, pointer and keyboard interaction, text-input validation, and a HomeView change. No shared state, API or dependency change.",

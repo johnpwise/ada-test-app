@@ -1,0 +1,35 @@
+{
+  "status": "implementation-ready",
+  "expectedRedEvidence": [
+    {
+      "id": "red-colour-lib",
+      "testId": "t-colour-lib",
+      "expectedFailure": "src/lib/colour does not exist, so the test file fails to import it.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/colour",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./colour from src/lib/colour.unit.test.ts; 0 tests ran."
+    },
+    {
+      "id": "red-colour-widget",
+      "testId": "t-colour-widget",
+      "expectedFailure": "ColourPickerWidget module does not exist, so the test file fails to import it.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/colour-picker-widget",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./ColourPickerWidget from ColourPickerWidget.component.test.tsx; 0 tests ran."
+    },
+    {
+      "id": "red-home-colour",
+      "testId": "t-home-colour",
+      "expectedFailure": "HomeView renders no colour picker widget, so no 'Colour picker' region is found.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Unable to find an accessible element with the role region and name Colour picker; 1 failed, 10 passed."
+    }
+  ]
+}
