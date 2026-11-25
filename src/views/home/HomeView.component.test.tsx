@@ -121,4 +121,21 @@ describe("HomeView", () => {
       .map((widget) => widget.getAttribute("aria-label"));
     expect(names).toEqual(["Torus Widget", "Blue Torus Widget", "Pie Chart Widget"]);
   });
+
+  it("should render one calendar widget after the torus row with no date selected", () => {
+    // Arrange
+
+    // Act
+    render(<HomeView />);
+
+    // Assert
+    const row = screen.getByTestId(HOME_VIEW_TEST_IDS.torusRow);
+    const calendar = screen.getByRole("region", { name: "Calendar" });
+    expect(screen.getAllByRole("region", { name: "Calendar" })).toHaveLength(1);
+    expect(within(row).queryByRole("region", { name: "Calendar" })).not.toBeInTheDocument();
+    expect(
+      row.compareDocumentPosition(calendar) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(screen.getByText("No date selected")).toBeInTheDocument();
+  });
 });

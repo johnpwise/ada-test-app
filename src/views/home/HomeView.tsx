@@ -1,3 +1,4 @@
+import CalendarWidget from "../../components/calendar-widget/CalendarWidget";
 import Clock from "../../components/clock/Clock";
 import ModeToggle from "../../components/mode-toggle/ModeToggle";
 import PageViewsPanel from "../../components/page-views-panel/PageViewsPanel";
@@ -25,6 +26,7 @@ export default function HomeView() {
         <TorusWidget color="blue" />
         <PieChartWidget />
       </div>
+      <CalendarWidget />
     </section>
   );
 }

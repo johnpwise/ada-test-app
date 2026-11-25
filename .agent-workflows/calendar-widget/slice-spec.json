@@ -3,8 +3,8 @@
   "sliceId": "calendar-widget",
   "workflowId": "calendar-widget",
   "kind": "feature",
-  "revision": 2,
-  "status": "planned",
+  "revision": 5,
+  "status": "ready-for-closeout",
   "objective": {
     "statement": "Add a small calendar widget to HomeView.tsx that lets the user select a date, and display the selected date in the UI.",
     "provenanceRef": "p-user"
@@ -110,6 +110,13 @@
       "source": "src/views/home/HomeView.tsx, src/components/clock/Clock.tsx, src/lib/formatClock.ts, scripts/validate-component-layout.mjs, AGENTS.md, package.json",
       "capturedBy": "delivery-engineer",
       "capturedAt": "2026-11-25T14:21:48.841Z"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Plan approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-25T14:23:34.433Z; gate record 4002c0a74972a4e0c89af86a331f540770c3d3760e526daeb88137a6a34413ca",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-25T14:24:20.376Z"
     }
   ],
   "approvals": [
@@ -126,6 +133,14 @@
           "provenanceRef": "p-user",
           "decidedBy": "delivery-engineer",
           "decidedAt": "2026-11-25T14:21:48.841Z"
+        },
+        {
+          "id": "d-plan-2",
+          "status": "approved",
+          "rationale": "Owner approved the saved plan; gate record 4002c0a74972a4e0c89af86a331f540770c3d3760e526daeb88137a6a34413ca.",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-25T14:24:20.376Z"
         }
       ]
     }
@@ -186,7 +201,7 @@
       "verificationIds": [
         "v-unit"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     },
     {
@@ -202,7 +217,7 @@
       "verificationIds": [
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     },
     {
@@ -219,7 +234,7 @@
         "v-unit",
         "v-component"
       ],
-      "status": "planned",
+      "status": "complete",
       "provenanceRef": "p-inferred"
     }
   ],
@@ -254,22 +269,31 @@
       "id": "red-calendar-lib",
       "testId": "t-calendar-lib",
       "expectedFailure": "src/lib/calendarMonth does not exist, so the test file fails to import it.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/calendarMonth",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./calendarMonth from src/lib/calendarMonth.unit.test.ts; 0 tests ran."
     },
     {
       "id": "red-calendar-widget",
       "testId": "t-calendar-widget",
       "expectedFailure": "CalendarWidget module does not exist, so the test file fails to import it.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/calendar-widget",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./CalendarWidget from CalendarWidget.component.test.tsx; 0 tests ran."
     },
     {
       "id": "red-home-calendar",
       "testId": "t-home-calendar",
       "expectedFailure": "HomeView renders no calendar widget, so no 'Calendar' region is found.",
-      "status": "planned",
-      "provenanceRef": "p-inferred"
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Unable to find an accessible element with the role region and name Calendar; 1 failed, 9 passed."
     }
   ],
   "verification": [
@@ -277,17 +301,21 @@
       "id": "v-unit",
       "layer": "unit",
       "requirement": "npm run test:unit passes",
-      "status": "planned",
+      "status": "passing",
       "command": "npm run test:unit",
-      "provenanceRef": "p-inferred"
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "8 files, 40/40 tests passed"
     },
     {
       "id": "v-component",
       "layer": "component",
       "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
-      "status": "planned",
+      "status": "passing",
       "command": "npm run test:component",
-      "provenanceRef": "p-inferred"
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "13 files, 78/78 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes"
     }
   ],
   "e2eStatus": {
@@ -295,7 +323,7 @@
     "provenanceRef": "p-inferred"
   },
   "createdAt": "2026-11-25T14:21:48.841Z",
-  "updatedAt": "2026-11-25T14:21:50.274Z",
+  "updatedAt": "2026-11-25T14:27:35.874Z",
   "complexity": {
     "classification": "non-trivial",
     "rationale": "A new interactive component with month-grid date logic, local state, keyboard and assistive-technology behaviour, and a HomeView change. No shared state, API or dependency change.",
