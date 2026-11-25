@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "calendar-widget",
+    "workflowId": "calendar-widget",
+    "revision": 5,
+    "hash": "0fa2f0046fcbf4a161a3bc5110448d77c4f875a98c4575f13af72c48d9f2f550"
+  },
+  "diff": {
+    "files": [
+      ".agent-workflows/calendar-widget/approval-patch.json",
+      ".agent-workflows/calendar-widget/closeout-patch.json",
+      ".agent-workflows/calendar-widget/index.md",
+      ".agent-workflows/calendar-widget/red-patch.json",
+      ".agent-workflows/calendar-widget/review-lens-manifest.json",
+      ".agent-workflows/calendar-widget/slice-spec.json",
+      ".agent-workflows/calendar-widget/step-002.md",
+      "src/components/calendar-widget/CalendarWidget.component.test.tsx",
+      "src/components/calendar-widget/CalendarWidget.testIds.ts",
+      "src/components/calendar-widget/CalendarWidget.tsx",
+      "src/lib/calendarMonth.ts",
+      "src/lib/calendarMonth.unit.test.ts",
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "be3a243e791221262f678f0639f832c7635f2566308c61b9f9c2241da2b39572"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-change"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "shared-state-change"
+      ]
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "api-contract-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md",
+    "references/state-ownership.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "6337ecf596edee1a2047ae8d544bd0dd52f18ab705dd094e230dff391ee8f07d"
+}

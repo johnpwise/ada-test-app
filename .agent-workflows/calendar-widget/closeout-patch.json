@@ -1,0 +1,57 @@
+{
+  "status": "ready-for-closeout",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "A pure helper builds a month grid (weeks of day-or-blank cells, Sunday start) for a year and month, and formats a selected date as an en-US long label.",
+      "doneWhen": "The calendarMonth unit tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-calendar-lib"],
+      "verificationIds": ["v-unit"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "CalendarWidget renders a labelled month grid with previous and next month buttons; activating a day marks it selected and shows its date as text, starting from 'No date selected'.",
+      "doneWhen": "The CalendarWidget component tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-calendar-widget"],
+      "verificationIds": ["v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-3",
+      "behavior": "HomeView renders the calendar widget after the torus row, leaving the other sections unchanged.",
+      "doneWhen": "The HomeView component test passes, and the full unit and component suites, lint and build still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-home-calendar"],
+      "verificationIds": ["v-unit", "v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-unit",
+      "layer": "unit",
+      "requirement": "npm run test:unit passes",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:unit",
+      "exitCode": 0,
+      "result": "8 files, 40/40 tests passed"
+    },
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:component",
+      "exitCode": 0,
+      "result": "13 files, 78/78 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes"
+    }
+  ]
+}

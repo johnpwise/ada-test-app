@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "calendar-widget",
+  "workflowId": "calendar-widget",
+  "kind": "feature",
+  "revision": 1,
+  "status": "intake",
+  "objective": {
+    "statement": "Add a small calendar widget to HomeView.tsx that lets the user select a date, and display the selected date in the UI.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders a small calendar widget that shows a month grid of days.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "The user can select a date by activating a day in the grid, and the selected day is visibly marked.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "The selected date is displayed as text in the UI; before any selection the UI shows 'No date selected'.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-4",
+      "statement": "The user can move to the previous and next month so dates outside the initial month can be selected.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-5",
+      "statement": "The widget is operable by keyboard and by assistive technology: day cells are buttons with a full-date accessible name and aria-pressed for the selected day, and the selected-date text is announced politely when it changes.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-6",
+      "statement": "The existing HomeView sections and their tests are unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Add a CalendarWidget component with test ids and component tests, a small pure month-grid helper in src/lib with unit tests, and render the widget in HomeView.tsx with a HomeView component test.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "New dependencies (no date or calendar library), persisting the selection (store, URL or storage), events or scheduling, date ranges, min/max limits, internationalisation beyond a fixed en-US format, changes to other HomeView sections, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "The calendar is hand-built from native Date and Intl, so no dependency is needed. It is a month grid with weekday headers, weeks starting on Sunday, and leading and trailing blank cells.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "Initial state: no date is selected, the shown month is the current month, and the text reads 'No date selected'. Preselecting today was rejected as the more surprising behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-3",
+      "category": "assumption",
+      "statement": "Selected-date text uses a fixed en-US long format, for example 'Wednesday, November 25, 2026', built from local-time Date values (never parsed from ISO strings) so the day cannot shift with the time zone. Selecting the selected day again keeps it selected.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-4",
+      "category": "assumption",
+      "statement": "Placement: a separate full-width section after the existing torus row in HomeView, because the 200px torus row holds fixed-size widgets and a month grid is wider. The card says only 'on the HomeView.tsx'.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-5",
+      "category": "assumption",
+      "statement": "State is local to CalendarWidget (selected date and visible month); nothing is shared, stored or fetched. Styling follows Clock.tsx: Tailwind classes, the surface and border tokens, and data-id test ids from a CalendarWidget.testIds.ts file.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Calendar widget - On the HomeView.tsx, please create a small calendar widget that allows the user to select a date. The date selected should then be displayed in the UI. Plan approval required.",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, src/components/clock/Clock.tsx, src/lib/formatClock.ts, scripts/validate-component-layout.mjs, AGENTS.md, package.json",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p-user",
+      "decisions": [
+        {
+          "id": "d-plan-1",
+          "status": "pending",
+          "rationale": "Plan is saved and valid at the planned gate; waiting for the owner.",
+          "provenanceRef": "p-user",
+          "decidedBy": "delivery-engineer"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [],
+  "testMatrix": {},
+  "increments": [],
+  "tests": [],
+  "expectedRedEvidence": [],
+  "verification": [],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  }
+}
