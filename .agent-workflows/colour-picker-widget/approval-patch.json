@@ -1,0 +1,24 @@
+{
+  "provenance": [
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Plan approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-25T19:52:25.382Z; gate record 09fb0bcbfb696022d396ce4d23b6f44561620cc253b1bf5c26a5d48d206458cc",
+      "capturedBy": "delivery-engineer"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "decisions": [
+        {
+          "id": "d-plan-2",
+          "status": "approved",
+          "rationale": "Owner approved the saved plan; gate record 09fb0bcbfb696022d396ce4d23b6f44561620cc253b1bf5c26a5d48d206458cc.",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "status": "ready-for-closeout",
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "A pure helper converts between HSV, RGB and hex: hsvToRgb, rgbToHsv, rgbToHex, hsvToHex and parseHex (3 or 6 digits, optional #, case-insensitive, null when invalid).",
+      "doneWhen": "The colour unit tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-colour-lib"],
+      "verificationIds": ["v-unit"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "ColourPickerWidget renders the area, hue slider, saturation and brightness sliders, swatch, hex field and RGB readout, starting at #3B82F6; every control updates all the displays; valid hex typing sets the colour and invalid hex marks the field invalid without changing it.",
+      "doneWhen": "The ColourPickerWidget component tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-colour-widget"],
+      "verificationIds": ["v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-3",
+      "behavior": "HomeView renders the colour picker widget after the calendar widget, leaving the other sections unchanged.",
+      "doneWhen": "The HomeView component test passes, and the full unit and component suites, lint and build still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-home-colour"],
+      "verificationIds": ["v-unit", "v-component"],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-unit",
+      "layer": "unit",
+      "requirement": "npm run test:unit passes",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:unit",
+      "exitCode": 0,
+      "result": "9 files, 66/66 tests passed"
+    },
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
+      "status": "passing",
+      "provenanceRef": "p-inferred",
+      "command": "npm run test:component",
+      "exitCode": 0,
+      "result": "14 files, 96/96 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes"
+    }
+  ]
+}

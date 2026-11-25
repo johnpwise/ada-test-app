@@ -1,4 +1,5 @@
 import CalendarWidget from "../../components/calendar-widget/CalendarWidget";
+import ColourPickerWidget from "../../components/colour-picker-widget/ColourPickerWidget";
 import Clock from "../../components/clock/Clock";
 import ModeToggle from "../../components/mode-toggle/ModeToggle";
 import PageViewsPanel from "../../components/page-views-panel/PageViewsPanel";
@@ -27,6 +28,7 @@ export default function HomeView() {
         <PieChartWidget />
       </div>
       <CalendarWidget />
+      <ColourPickerWidget />
     </section>
   );
 }

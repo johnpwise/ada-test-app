@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 1,
+  "sliceId": "colour-picker-widget",
+  "workflowId": "colour-picker-widget",
+  "kind": "feature",
+  "revision": 5,
+  "status": "ready-for-closeout",
+  "objective": {
+    "statement": "Add a colour picker widget to HomeView.tsx, similar to an online colour picker: a saturation/brightness area, a hue slider, a live preview swatch and a hex value the user can read and type.",
+    "provenanceRef": "p-user"
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "ac-1",
+      "statement": "HomeView renders one colour picker widget with a saturation/brightness area, a hue slider, a preview swatch of the current colour and a hex text field.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-2",
+      "statement": "Clicking or dragging in the saturation/brightness area changes the saturation and brightness of the current colour; moving the hue slider changes its hue; the swatch, the hex field and an RGB readout update at once.",
+      "provenanceRef": "p-user"
+    },
+    {
+      "id": "ac-3",
+      "statement": "Typing a valid hex colour (3 or 6 digits, with or without a leading #) in the hex field sets the current colour and updates the area, hue slider, swatch and RGB readout; an invalid value marks the field invalid and leaves the current colour unchanged.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-4",
+      "statement": "The widget starts on a fixed colour (#3B82F6), shown as upper-case 6-digit hex.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-5",
+      "statement": "The widget is operable by keyboard and assistive technology: hue, saturation and brightness are native range inputs with accessible names, the hex field is labelled, and the pointer-only area is a convenience duplicated by the saturation and brightness sliders.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ac-6",
+      "statement": "The existing HomeView sections and their tests are unchanged.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "scope": {
+    "in": [
+      {
+        "id": "sc-1",
+        "statement": "Add a ColourPickerWidget component with test ids and component tests, a pure colour-conversion helper in src/lib with unit tests, and render the widget in HomeView.tsx with a HomeView component test.",
+        "provenanceRef": "p-user"
+      }
+    ],
+    "out": [
+      {
+        "id": "so-1",
+        "statement": "New dependencies (no colour-picker library), alpha/opacity, HSL/CMYK input modes, eyedropper, saved swatches or history, copy to clipboard, persisting or sharing the colour (store, URL or storage), applying the colour to the app theme, changes to other HomeView sections, and historical workflow records.",
+        "provenanceRef": "p-inferred"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "id": "ob-1",
+      "category": "assumption",
+      "statement": "'Similar to an online colour picker' is read as the common HSV design: a 2D saturation (x) by brightness (y) area over the current hue, a horizontal hue slider, a preview swatch, a hex field and an RGB readout. It is hand-built with native elements, no dependency.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-2",
+      "category": "assumption",
+      "statement": "State is HSV (h 0-360, s and v 0-100) held in the component, and hex and RGB are derived. A separate hex draft string is kept only while the user types, so partial input is not overwritten. Greys keep their last hue when saturation reaches 0, so dragging does not jump the hue.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-3",
+      "category": "assumption",
+      "statement": "The 2D area uses pointer events (down, move while pressed, up) clamped to its bounds and is not itself a keyboard control; the Saturation and Brightness range inputs are the accessible equivalent. Pointer capture is used only when the browser provides it, so jsdom component tests drive the area with mocked bounds.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-4",
+      "category": "assumption",
+      "statement": "Placement: a separate section after the CalendarWidget at the end of HomeView, matching how the calendar was added. The card says only 'on the Home view.tsx'.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-5",
+      "category": "assumption",
+      "statement": "The picked colour is not applied anywhere else; it only drives the widget's own display. Persistence or theming from it would be a separate card.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "ob-6",
+      "category": "assumption",
+      "statement": "State is local to ColourPickerWidget. Styling follows CalendarWidget: Tailwind classes, the surface and border tokens, and data-id test ids from a ColourPickerWidget.testIds.ts file. Gradients and the swatch colour use inline styles because the values are dynamic.",
+      "provenanceRef": "p-repo"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "p-user",
+      "sourceType": "user",
+      "source": "Card text: New Feature Colour picker widget - On the Home view.tsx please create a colour picker widget, similar to how you have in an online colour picker. Plan approval required.",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-25T19:49:30.642Z"
+    },
+    {
+      "id": "p-inferred",
+      "sourceType": "inferred",
+      "source": "Conservative planning decision by the delivery engineer",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-25T19:49:30.642Z"
+    },
+    {
+      "id": "p-repo",
+      "sourceType": "repository",
+      "source": "src/views/home/HomeView.tsx, src/components/calendar-widget/CalendarWidget.tsx, src/components/theme-picker/ThemePicker.tsx, AGENTS.md, .agent-workflows/calendar-widget/",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-25T19:49:30.642Z"
+    },
+    {
+      "id": "p-approval",
+      "sourceType": "approval",
+      "source": "Plan approved by 1RiWisgzmCfFPBeN49g4MPmbUzi1 at 2026-11-25T19:52:25.382Z; gate record 09fb0bcbfb696022d396ce4d23b6f44561620cc253b1bf5c26a5d48d206458cc",
+      "capturedBy": "delivery-engineer",
+      "capturedAt": "2026-11-25T19:53:07.792Z"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "a-plan",
+      "boundary": "plan-approval",
+      "requirement": "The owner must approve the plan before any test or production file is written.",
+      "provenanceRef": "p-user",
+      "decisions": [
+        {
+          "id": "d-plan-1",
+          "status": "pending",
+          "rationale": "Plan is saved and valid at the planned gate; waiting for the owner.",
+          "provenanceRef": "p-user",
+          "decidedBy": "delivery-engineer",
+          "decidedAt": "2026-11-25T19:49:30.642Z"
+        },
+        {
+          "id": "d-plan-2",
+          "status": "approved",
+          "rationale": "Owner approved the saved plan; gate record 09fb0bcbfb696022d396ce4d23b6f44561620cc253b1bf5c26a5d48d206458cc.",
+          "provenanceRef": "p-approval",
+          "decidedBy": "1RiWisgzmCfFPBeN49g4MPmbUzi1",
+          "decidedAt": "2026-11-25T19:53:07.792Z"
+        }
+      ]
+    }
+  ],
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React useState in ColourPickerWidget",
+      "rationale": "HSV colour and the hex draft text are component-local UI concerns.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No other component needs the colour; the card asks only for the widget.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "HSV/RGB/hex conversion and hex parsing are branching numeric logic worth isolating.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Area interaction, hue/saturation/brightness sliders, hex typing and validation, and the displayed values are the user-observable behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the HomeView component test renders the real ColourPickerWidget.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Self-contained widget with no navigation, network or persistence; component tests exercise the full interaction.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "A pure helper converts between HSV, RGB and hex: hsvToRgb, rgbToHsv, rgbToHex, hsvToHex and parseHex (3 or 6 digits, optional #, case-insensitive, null when invalid).",
+      "doneWhen": "The colour unit tests pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-colour-lib"
+      ],
+      "verificationIds": [
+        "v-unit"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "ColourPickerWidget renders the area, hue slider, saturation and brightness sliders, swatch, hex field and RGB readout, starting at #3B82F6; every control updates all the displays; valid hex typing sets the colour and invalid hex marks the field invalid without changing it.",
+      "doneWhen": "The ColourPickerWidget component tests pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-colour-widget"
+      ],
+      "verificationIds": [
+        "v-component"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-3",
+      "behavior": "HomeView renders the colour picker widget after the calendar widget, leaving the other sections unchanged.",
+      "doneWhen": "The HomeView component test passes, and the full unit and component suites, lint and build still pass.",
+      "capabilityOwnerKeys": [
+        "local_ui_state_owner"
+      ],
+      "testIds": [
+        "t-home-colour"
+      ],
+      "verificationIds": [
+        "v-unit",
+        "v-component"
+      ],
+      "status": "complete",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-colour-lib",
+      "layer": "unit",
+      "description": "src/lib/colour.unit.test.ts: hsvToRgb for primaries, white, black and a mid value; rgbToHsv round-trips those and returns hue 0 for greys; rgbToHex gives upper-case 6-digit hex with zero padding; hsvToHex(217, 76, 96) is '#3B82F6' within rounding; parseHex accepts '#3b82f6', '3B82F6', '#fff' (expands to FFFFFF) and rejects '', '#12', '#12345', 'GGGGGG' and 7+ digits by returning null.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/colour",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-colour-widget",
+      "layer": "component",
+      "description": "ColourPickerWidget (src/components/colour-picker-widget/ColourPickerWidget.component.test.tsx): region named 'Colour picker'; hex field labelled 'Hex colour' starts '#3B82F6' and the RGB readout shows 'rgb(59, 130, 246)'; the swatch exposes the current colour; changing the 'Hue' range to 0 gives a red-hued hex; changing 'Saturation' to 0 and 'Brightness' to 100 gives '#FFFFFF'; pointer down in the area with mocked bounds (top-left, bottom-right, centre) sets the matching saturation and brightness and moves the marker, and a drag (move while pressed) tracks while move after release does not; typing 'ff0000' or '#f00' sets '#FF0000' and updates the sliders, while 'zzz' sets aria-invalid on the field and keeps the colour; after an invalid entry, a valid one clears the invalid state.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/colour-picker-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home-colour",
+      "layer": "component",
+      "description": "HomeView renders one 'Colour picker' region after the 'Calendar' region, and the existing sections and accessible names are unchanged.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-colour-lib",
+      "testId": "t-colour-lib",
+      "expectedFailure": "src/lib/colour does not exist, so the test file fails to import it.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/colour",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./colour from src/lib/colour.unit.test.ts; 0 tests ran."
+    },
+    {
+      "id": "red-colour-widget",
+      "testId": "t-colour-widget",
+      "expectedFailure": "ColourPickerWidget module does not exist, so the test file fails to import it.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/colour-picker-widget",
+      "exitCode": 1,
+      "observedFailure": "Failed to resolve import ./ColourPickerWidget from ColourPickerWidget.component.test.tsx; 0 tests ran."
+    },
+    {
+      "id": "red-home-colour",
+      "testId": "t-home-colour",
+      "expectedFailure": "HomeView renders no colour picker widget, so no 'Colour picker' region is found.",
+      "status": "captured",
+      "provenanceRef": "p-inferred",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "exitCode": 1,
+      "observedFailure": "Unable to find an accessible element with the role region and name Colour picker; 1 failed, 10 passed."
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-unit",
+      "layer": "unit",
+      "requirement": "npm run test:unit passes",
+      "status": "passing",
+      "command": "npm run test:unit",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "9 files, 66/66 tests passed"
+    },
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
+      "status": "passing",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred",
+      "exitCode": 0,
+      "result": "14 files, 96/96 tests passed; npm run lint and npm run build clean; independent reviewer ADA-VERDICT approve-with-notes"
+    }
+  ],
+  "e2eStatus": {
+    "status": "N/A",
+    "provenanceRef": "p-inferred"
+  },
+  "createdAt": "2026-11-25T19:49:30.642Z",
+  "updatedAt": "2026-11-25T19:56:32.694Z",
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "A new interactive component with colour-space conversion, pointer and keyboard interaction, text-input validation, and a HomeView change. No shared state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  }
+}

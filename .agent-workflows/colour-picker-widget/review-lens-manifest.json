@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "stack": "react",
+  "sliceSpec": {
+    "sliceId": "colour-picker-widget",
+    "workflowId": "colour-picker-widget",
+    "revision": 5,
+    "hash": "cddc0fa1cc564a179bff777b8908b8dcdd154902c0efae16afba7b7207ee5a78"
+  },
+  "diff": {
+    "files": [
+      ".agent-workflows/colour-picker-widget/approval-patch.json",
+      ".agent-workflows/colour-picker-widget/closeout-patch.json",
+      ".agent-workflows/colour-picker-widget/index.md",
+      ".agent-workflows/colour-picker-widget/red-patch.json",
+      ".agent-workflows/colour-picker-widget/review-lens-manifest.json",
+      ".agent-workflows/colour-picker-widget/slice-spec.json",
+      ".agent-workflows/colour-picker-widget/step-002.md",
+      "src/components/colour-picker-widget/ColourPickerWidget.component.test.tsx",
+      "src/components/colour-picker-widget/ColourPickerWidget.testIds.ts",
+      "src/components/colour-picker-widget/ColourPickerWidget.tsx",
+      "src/lib/colour.ts",
+      "src/lib/colour.unit.test.ts",
+      "src/views/home/HomeView.component.test.tsx",
+      "src/views/home/HomeView.tsx"
+    ],
+    "hash": "9f2f5ffca39d27757c6611a11175c31ca1982c8f55a4f01da435c75fd62dc056"
+  },
+  "lenses": [
+    {
+      "id": "correctness",
+      "reference": "references/correctness.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "ALWAYS_ON"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "accessibility",
+      "reference": "references/accessibility.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "interactive-ui-change"
+      ]
+    },
+    {
+      "id": "react-composition",
+      "reference": "references/react-composition.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_PATH_TRIGGER"
+      ],
+      "evidence": [
+        "composition-boundary-path"
+      ]
+    },
+    {
+      "id": "state-ownership",
+      "reference": "references/state-ownership.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "shared-state-change"
+      ]
+    },
+    {
+      "id": "api-contracts",
+      "reference": "references/api-contracts.md",
+      "disposition": "include",
+      "reasonCodes": [
+        "DIFF_CONTENT_TRIGGER"
+      ],
+      "evidence": [
+        "api-contract-change"
+      ]
+    }
+  ],
+  "loadReferences": [
+    "references/correctness.md",
+    "references/accessibility.md",
+    "references/react-composition.md",
+    "references/state-ownership.md",
+    "references/api-contracts.md"
+  ],
+  "hash": "c5a1d525439bd9b8c763f00fb74e198926a005c822db4c1c60ea24449dfcbccb"
+}
