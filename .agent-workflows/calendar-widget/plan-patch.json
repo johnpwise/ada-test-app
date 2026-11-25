@@ -1,0 +1,149 @@
+{
+  "status": "planned",
+  "complexity": {
+    "classification": "non-trivial",
+    "rationale": "A new interactive component with month-grid date logic, local state, keyboard and assistive-technology behaviour, and a HomeView change. No shared state, API or dependency change.",
+    "provenanceRef": "p-inferred"
+  },
+  "capabilityOwners": [
+    {
+      "key": "local_ui_state_owner",
+      "owner": "React useState in CalendarWidget",
+      "rationale": "Selected date and visible month are component-local UI concerns.",
+      "provenanceRef": "p-repo"
+    },
+    {
+      "key": "shared_client_state_owner",
+      "owner": "none",
+      "rationale": "No other component needs the selection; the card asks only to display it in the widget.",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "key": "server_state_owner",
+      "owner": "none",
+      "rationale": "No remote data involved.",
+      "provenanceRef": "p-user"
+    }
+  ],
+  "testMatrix": {
+    "unit": {
+      "requirement": "required",
+      "rationale": "Month-grid construction (leading blanks, month lengths, leap February) and the date label are branching logic worth isolating.",
+      "provenanceRef": "p-inferred"
+    },
+    "component": {
+      "requirement": "required",
+      "rationale": "Selecting a date, month navigation, marking and the displayed text are the user-observable behaviour.",
+      "provenanceRef": "p-inferred"
+    },
+    "integration": {
+      "requirement": "N/A",
+      "rationale": "No cross-module behaviour; the HomeView component test renders the real CalendarWidget.",
+      "provenanceRef": "p-inferred"
+    },
+    "e2e": {
+      "requirement": "N/A",
+      "rationale": "Self-contained widget with no navigation, network or persistence; component tests exercise the full interaction.",
+      "provenanceRef": "p-inferred"
+    }
+  },
+  "increments": [
+    {
+      "id": "inc-1",
+      "behavior": "A pure helper builds a month grid (weeks of day-or-blank cells, Sunday start) for a year and month, and formats a selected date as an en-US long label.",
+      "doneWhen": "The calendarMonth unit tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-calendar-lib"],
+      "verificationIds": ["v-unit"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-2",
+      "behavior": "CalendarWidget renders a labelled month grid with previous and next month buttons; activating a day marks it selected and shows its date as text, starting from 'No date selected'.",
+      "doneWhen": "The CalendarWidget component tests pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-calendar-widget"],
+      "verificationIds": ["v-component"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "inc-3",
+      "behavior": "HomeView renders the calendar widget after the torus row, leaving the other sections unchanged.",
+      "doneWhen": "The HomeView component test passes, and the full unit and component suites, lint and build still pass.",
+      "capabilityOwnerKeys": ["local_ui_state_owner"],
+      "testIds": ["t-home-calendar"],
+      "verificationIds": ["v-unit", "v-component"],
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "tests": [
+    {
+      "id": "t-calendar-lib",
+      "layer": "unit",
+      "description": "src/lib/calendarMonth.unit.test.ts: buildMonthGrid returns rows of 7 cells with the first day under the right weekday (leading blanks), the right number of days for 30- and 31-day months, 29 days for February 2024 and 28 for February 2026, and trailing blanks filling the last week; formatSelectedDate(new Date(2026, 10, 25)) is 'Wednesday, November 25, 2026'.",
+      "command": "npx vitest run --config vitest.unit.config.ts src/lib/calendarMonth",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-calendar-widget",
+      "layer": "component",
+      "description": "CalendarWidget (src/components/calendar-widget/CalendarWidget.component.test.tsx, fake timers pin 'today'): region named 'Calendar'; shows the current month and year heading and 'No date selected'; clicking a day button shows that date's long text, sets aria-pressed true on it only, and clicking another day moves the selection; day buttons have full-date accessible names; next and previous month buttons change the heading and keep a selection made in another month; the selected-date text is a polite live region.",
+      "command": "npx vitest run --config vitest.component.config.ts src/components/calendar-widget",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "t-home-calendar",
+      "layer": "component",
+      "description": "HomeView renders one 'Calendar' region after the torus row, with 'No date selected' initially, and the existing sections and accessible names are unchanged.",
+      "command": "npx vitest run --config vitest.component.config.ts src/views/home",
+      "preImplementation": true,
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "expectedRedEvidence": [
+    {
+      "id": "red-calendar-lib",
+      "testId": "t-calendar-lib",
+      "expectedFailure": "src/lib/calendarMonth does not exist, so the test file fails to import it.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "red-calendar-widget",
+      "testId": "t-calendar-widget",
+      "expectedFailure": "CalendarWidget module does not exist, so the test file fails to import it.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "red-home-calendar",
+      "testId": "t-home-calendar",
+      "expectedFailure": "HomeView renders no calendar widget, so no 'Calendar' region is found.",
+      "status": "planned",
+      "provenanceRef": "p-inferred"
+    }
+  ],
+  "verification": [
+    {
+      "id": "v-unit",
+      "layer": "unit",
+      "requirement": "npm run test:unit passes",
+      "status": "planned",
+      "command": "npm run test:unit",
+      "provenanceRef": "p-inferred"
+    },
+    {
+      "id": "v-component",
+      "layer": "component",
+      "requirement": "npm run test:component passes (including component layout validation), and npm run lint and npm run build are clean",
+      "status": "planned",
+      "command": "npm run test:component",
+      "provenanceRef": "p-inferred"
+    }
+  ]
+}
